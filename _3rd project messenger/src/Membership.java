@@ -124,8 +124,10 @@ public class Membership extends JFrame {
 				boolean isValid = isValidPattern(str);
 				if (isValid) {
 					id_lbl.setText("사용가능");
+					idDupbtn.setEnabled(true);
 				} else {
 					id_lbl.setText("사용불가");
+					idDupbtn.setEnabled(false);
 				}
 				if (textField.getText().equals("")) {
 					id_lbl.setText("");
