@@ -2,10 +2,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -24,11 +28,14 @@ public class Membership extends JFrame {
 	private JLabel pictureLabel;
 	private JButton idDupbtn;
 	private JButton nickDupbtn;
-	private MembershipMethods membershipMethods;
+
 	private MembershipDAO membershipdao;
 	JLabel id_lbl;
 	
 	Boolean isRightId;
+	private JLabel pw_lbl;
+	private JLabel pw_lbl2;
+	private JLabel nick_lbl;
 
 	public Membership() {
 		extracted();
@@ -36,6 +43,7 @@ public class Membership extends JFrame {
 		membershipdao = new MembershipDAO();
 		listenerAll();
 		showGUI();
+		
 
 	}
 
@@ -53,7 +61,7 @@ public class Membership extends JFrame {
 					File[] selectedFiles = fileChooser.getSelectedFiles();
 					for (File file : selectedFiles) {
 						System.out.println("Selected File: " + file.getAbsolutePath());
-						membershipMethods.displayImage(file.getAbsolutePath());
+						displayImage(file.getAbsolutePath());
 					}
 				}
 			}
@@ -62,18 +70,11 @@ public class Membership extends JFrame {
 		confirmbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(id_lbl.eq))) {
+				String s = "사용가능";
+				if(id_lbl.getText().equals(s) && pw_lbl.getText().equals(s) &&  pw_lbl2.getText().equals(s)&& nick_lbl.getText().equals(s)) {
 					
 				}
-				// if(레이블문구 문제없으면) {
-				// db에 저장;
-				// 회원가입성공했다 다이얼로그(이건 옵션)
-				// dispose();
-				// } else{
-				// 위에 다이얼로그 할거면 여기도
-				// confirmbtn.setEnabled(false);
-				// confirmbtn.setEnabled(true);
-				// }
+		
 			}
 		});
 		idDupbtn.addActionListener(new ActionListener() {
@@ -99,6 +100,37 @@ public class Membership extends JFrame {
 			}
 		});
 
+	}
+	
+	public void displayImage(String filePath) {
+		try {
+			File file = new File(filePath);
+
+			if (!isImageFile(file)) {
+				JOptionPane.showMessageDialog(this, "올바른 이미지 파일이 아닙니다.", "에러", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			BufferedImage image = ImageIO.read(file);
+
+			if (image != null) {
+				ImageIcon icon = new ImageIcon(image);
+				// pictureLabel.setIcon(icon);
+			} else {
+				JOptionPane.showMessageDialog(this, "이미지를 읽을 수 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private boolean isImageFile(File file) {
+		try {
+			ImageIO.read(file);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
 	}
 
 	private void showGUI() {
@@ -185,17 +217,17 @@ public class Membership extends JFrame {
 		id_lbl.setBounds(138, 116, 133, 15);
 		getContentPane().add(id_lbl);
 
-		JLabel lblNewLabel_5 = new JLabel("해야");
-		lblNewLabel_5.setBounds(156, 172, 57, 15);
-		getContentPane().add(lblNewLabel_5);
+		pw_lbl = new JLabel("해야");
+		pw_lbl.setBounds(156, 172, 57, 15);
+		getContentPane().add(pw_lbl);
 
-		JLabel lblNewLabel_6 = new JLabel("하는");
-		lblNewLabel_6.setBounds(156, 226, 57, 15);
-		getContentPane().add(lblNewLabel_6);
+		pw_lbl2 = new JLabel("하는");
+		pw_lbl2.setBounds(156, 226, 57, 15);
+		getContentPane().add(pw_lbl2);
 
-		JLabel lblNewLabel_7 = new JLabel("라벨");
-		lblNewLabel_7.setBounds(156, 282, 57, 15);
-		getContentPane().add(lblNewLabel_7);
+		nick_lbl = new JLabel("라벨");
+		nick_lbl.setBounds(156, 282, 57, 15);
+		getContentPane().add(nick_lbl);
 
 		idDupbtn = new JButton("중복확인");
 		idDupbtn.setBounds(273, 84, 97, 23);
