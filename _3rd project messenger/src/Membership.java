@@ -1,16 +1,16 @@
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class Membership extends JFrame {
 	private JTextField id_tf;
@@ -89,11 +90,15 @@ public class Membership extends JFrame {
 						stmt.setString(1, id_tf.getText());
 						stmt.setString(2, password_pf2.getText());
 						stmt.setString(3, textField_3.getText());
-						stmt.setBytes(4, null);
+						
 
 						if (filePath != null) {
-							byte[] imageData = Files.readAllBytes(filePath.toPath());
+							BufferedImage originalImage = ImageIO.read(filePath);
+		                    BufferedImage resizedImage = resizeImage(originalImage, 200, 200);
+		                    byte[] imageData = imageToByteArray(resizedImage);
 							stmt.setBytes(4, imageData);
+						}else {
+							stmt.setBytes(4, null);
 						}
 						stmt.executeUpdate();
 
@@ -189,7 +194,37 @@ public class Membership extends JFrame {
 				}
 			}
 		});
+		textField_3.addKeyListener(new KeyAdapter() {
 
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String str = textField_3.getText();
+				boolean isValid = isValidNickNamePattern(str);
+				if (isValid) {
+					nick_lbl.setText("사용가능");
+				} else {
+					nick_lbl.setText("사용불가");
+				}
+				if (textField_3.getText().equals("")) {
+					nick_lbl.setText("");
+				}
+			}
+
+		});
+
+	}
+
+	private BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+		Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
+		BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+		resizedImage.getGraphics().drawImage(resultingImage, 0, 0, null);
+		return resizedImage;
+	}
+
+	private byte[] imageToByteArray(BufferedImage image) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "jpg", baos);
+		return baos.toByteArray();
 	}
 
 	public void displayImage(String filePath) {
@@ -205,7 +240,7 @@ public class Membership extends JFrame {
 
 			if (image != null) {
 				ImageIcon icon = new ImageIcon(image);
-				// pictureLabel.setIcon(icon);
+				 pictureLabel.setIcon(icon);
 			} else {
 				JOptionPane.showMessageDialog(this, "이미지를 읽을 수 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
 			}
@@ -284,19 +319,23 @@ public class Membership extends JFrame {
 		getContentPane().add(lblNewLabel_3);
 
 		id_lbl = new JLabel("2~10자 내외,특수문자불가");
-		id_lbl.setBounds(138, 116, 133, 15);
+		id_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		id_lbl.setBounds(102, 116, 169, 15);
 		getContentPane().add(id_lbl);
 
 		password_lbl = new JLabel("20자리 이하");
+		password_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		password_lbl.setBounds(128, 172, 116, 15);
 		getContentPane().add(password_lbl);
 
-		password_lbl2 = new JLabel("하는");
-		password_lbl2.setBounds(156, 226, 57, 15);
+		password_lbl2 = new JLabel("");
+		password_lbl2.setHorizontalAlignment(SwingConstants.CENTER);
+		password_lbl2.setBounds(128, 226, 116, 15);
 		getContentPane().add(password_lbl2);
 
-		nick_lbl = new JLabel("라벨");
-		nick_lbl.setBounds(156, 282, 57, 15);
+		nick_lbl = new JLabel("\uD55C,\uC601, \uC22B\uC790, \uD2B9\uC218\uBB38\uC790 20\uC790 \uC774\uD558");
+		nick_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		nick_lbl.setBounds(94, 282, 185, 15);
 		getContentPane().add(nick_lbl);
 
 		idDupbtn = new JButton("중복확인");
@@ -318,6 +357,13 @@ public class Membership extends JFrame {
 
 	private boolean isValidPasswordPattern(String input) {
 		String pattern = "^[a-zA-Z0-9]{1,20}$";
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(input);
+		return matcher.matches();
+	}
+
+	private boolean isValidNickNamePattern(String input) {
+		String pattern = "^[가-힣a-zA-Z0-9!@#$%^&*()-_=+]{1,20}$";
 		Pattern regex = Pattern.compile(pattern);
 		Matcher matcher = regex.matcher(input);
 		return matcher.matches();
