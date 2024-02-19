@@ -90,7 +90,9 @@ public class Membership extends JFrame {
 						stmt.setString(1, id_tf.getText());
 						stmt.setString(2, password_pf2.getText());
 						stmt.setString(3, textField_3.getText());
+						stmt.setBytes(4, null);
 						
+
 
 						if (filePath != null) {
 							BufferedImage originalImage = ImageIO.read(filePath);
@@ -99,6 +101,7 @@ public class Membership extends JFrame {
 							stmt.setBytes(4, imageData);
 						}else {
 							stmt.setBytes(4, null);
+
 						}
 						stmt.executeUpdate();
 
@@ -260,7 +263,6 @@ public class Membership extends JFrame {
 
 	private void showGUI() {
 		setSize(416, 500);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setLocationRelativeTo(null);
 

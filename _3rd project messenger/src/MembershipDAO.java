@@ -51,4 +51,19 @@ public class MembershipDAO {
 		}
 		return false;
 	}
+	public boolean CheckPW(String pw) {
+		String sql = "select * from user where password = '" + pw + "';";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+			if (!rs.next()) {
+				return true;
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

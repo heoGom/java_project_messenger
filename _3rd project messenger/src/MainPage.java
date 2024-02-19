@@ -5,11 +5,16 @@ import javax.swing.JLabel;
 public class MainPage extends JFrame{
 	public MainPage() {
 		extracted();
-		
+		showGUI();
 	
 	}
 
-	
+	private void showGUI() {
+		setSize(416, 500);
+		setVisible(true);
+		setLocationRelativeTo(null);
+
+	}
 	private void extracted() {
 		getContentPane().setLayout(null);
 		
