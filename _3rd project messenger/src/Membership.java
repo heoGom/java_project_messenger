@@ -86,12 +86,11 @@ public class Membership extends JFrame {
 					String query = "insert into jae.user(id, password, nickname, profilephoto)values(?, ?, ?, ?)";
 					try (Connection conn = MySqlConnectionProvider.getConnection();
 							PreparedStatement stmt = conn.prepareStatement(query)) {
-						stmt.setString(1, id_lbl.getText());
-						stmt.setString(2, password_lbl2.getText());
-						stmt.setString(3, nick_lbl.getText());
+						stmt.setString(1, id_tf.getText());
+						stmt.setString(2, password_pf2.getText());
+						stmt.setString(3, textField_3.getText());
 						
-						File file = new File("path_to_your_image.jpg");
-						byte[] imageData = Files.readAllBytes(file.toPath());
+						byte[] imageData = Files.readAllBytes(filePath.toPath());
 						stmt.setBytes(4, imageData);
 
 						stmt.executeUpdate();
