@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,6 +44,7 @@ public class Membership extends JFrame {
 	Boolean isRightId;
 	Boolean isRightNick;
 	private JLabel nick_lbl;
+	File filePath;
 
 	public Membership() {
 		extracted();
@@ -50,7 +52,6 @@ public class Membership extends JFrame {
 		membershipdao = new MembershipDAO();
 		listenerAll();
 		showGUI();
-		
 
 	}
 
@@ -69,6 +70,7 @@ public class Membership extends JFrame {
 					for (File file : selectedFiles) {
 						System.out.println("Selected File: " + file.getAbsolutePath());
 						displayImage(file.getAbsolutePath());
+						filePath = file.getAbsoluteFile();
 					}
 				}
 			}
@@ -78,22 +80,27 @@ public class Membership extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String s = "사용가능";
-				if(id_lbl.getText().equals(s) && password_lbl.getText().equals(s) &&  password_lbl2.getText().equals(s)&& nick_lbl.getText().equals(s)) {
-				
-					String query= "insert into jae.user(id, password, nickname, profilephoto)values(?, ?, ?, ?)";
-					try(Connection conn = MySqlConnectionProvider.getConnection();
-							PreparedStatement stmt = conn.prepareStatement(query)){
-						stmt.setString(1,id_lbl.getText());
+				if (id_lbl.getText().equals(s) && password_lbl.getText().equals(s) && password_lbl2.getText().equals(s)
+						&& nick_lbl.getText().equals(s)) {
+
+					String query = "insert into jae.user(id, password, nickname, profilephoto)values(?, ?, ?, ?)";
+					try (Connection conn = MySqlConnectionProvider.getConnection();
+							PreparedStatement stmt = conn.prepareStatement(query)) {
+						stmt.setString(1, id_lbl.getText());
 						stmt.setString(2, password_lbl2.getText());
 						stmt.setString(3, nick_lbl.getText());
-						//stmt.setString(4, pictureLabel.createImage(producer));
-					//	ResultSet rs = stmt.executeQuery()
-					} catch (SQLException e1) {
+						
+						File file = new File("path_to_your_image.jpg");
+						byte[] imageData = Files.readAllBytes(file.toPath());
+						stmt.setBytes(4, imageData);
+
+						stmt.executeUpdate();
+
+					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}
 				}
-				
-		
+
 			}
 		});
 		idDupbtn.addActionListener(new ActionListener() {
@@ -125,8 +132,60 @@ public class Membership extends JFrame {
 			}
 		});
 
+		id_tf.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String str = id_tf.getText();
+				boolean isValid = isValidIdPattern(str);
+				if (isValid) {
+					id_lbl.setText("사용가능");
+				} else {
+					id_lbl.setText("사용불가");
+				}
+				if (id_tf.getText().equals("")) {
+					id_lbl.setText("");
+				}
+
+			}
+
+		});
+		password_pf.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char[] row = password_pf.getPassword();
+				String password = new String(row);
+
+				boolean isValid = isValidPasswordPattern(password);
+				if (isValid) {
+					password_lbl.setText("사용가능");
+				} else {
+					password_lbl.setText("사용불가");
+				}
+
+			}
+
+		});
+
+		password_pf2.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char[] origin = password_pf.getPassword();
+				String sOrigin = new String(origin);
+				char[] copy = password_pf2.getPassword();
+				String sCopy = new String(copy);
+				if (sOrigin.equals(sCopy)) {
+					password_lbl2.setText("사용가능");
+				} else {
+					password_lbl2.setText("사용불가");
+				}
+			}
+		});
+
 	}
-	
+
 	public void displayImage(String filePath) {
 		try {
 			File file = new File(filePath);
@@ -178,66 +237,16 @@ public class Membership extends JFrame {
 		id_tf.setBounds(128, 85, 116, 21);
 		getContentPane().add(id_tf);
 		id_tf.setColumns(10);
-		id_tf.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				String str = id_tf.getText();
-				boolean isValid = isValidIdPattern(str);
-				if (isValid) {
-					id_lbl.setText("사용가능");
-				} else {
-					id_lbl.setText("사용불가");
-				}
-				if (id_tf.getText().equals("")) {
-					id_lbl.setText("");
-				}
-
-			}
-
-		});
 
 		password_pf = new JPasswordField();
 		password_pf.setBounds(128, 141, 116, 21);
 		getContentPane().add(password_pf);
 		password_pf.setColumns(10);
-		password_pf.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				char[] row = password_pf.getPassword();
-				String password = new String(row);
-
-				boolean isValid = isValidPasswordPattern(password);
-				if (isValid) {
-					password_lbl.setText("사용가능");
-				} else {
-					password_lbl.setText("사용불가");
-				}
-
-			}
-
-		});
 
 		password_pf2 = new JPasswordField();
 		password_pf2.setBounds(128, 195, 116, 21);
 		getContentPane().add(password_pf2);
 		password_pf2.setColumns(10);
-		password_pf2.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				char[] origin = password_pf.getPassword();
-				String sOrigin = new String(origin);
-				char[] copy = password_pf2.getPassword();
-				String sCopy = new String(copy);
-				if (sOrigin.equals(sCopy)) {
-					password_lbl2.setText("사용가능");
-				} else {
-					password_lbl2.setText("사용불가");
-				}
-			}
-		});
 
 		textField_3 = new JTextField();
 		textField_3.setBounds(128, 251, 116, 21);
@@ -272,8 +281,7 @@ public class Membership extends JFrame {
 		id_lbl.setBounds(138, 116, 133, 15);
 		getContentPane().add(id_lbl);
 
-
-    password_lbl = new JLabel("20자리 이하");
+		password_lbl = new JLabel("20자리 이하");
 		password_lbl.setBounds(128, 172, 116, 15);
 		getContentPane().add(password_lbl);
 
