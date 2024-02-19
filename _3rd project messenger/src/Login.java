@@ -1,9 +1,11 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 import javax.swing.JButton;
 
@@ -14,8 +16,13 @@ public class Login extends JFrame {
 	private JButton membershipbtn;
 	private Membership membership;
 	
+	private MembershipDAO membershipDAO;
+	Boolean isRight;
+	Boolean isRightPw;
+	
 	public Login() {
 		extracted();
+		membershipDAO = new MembershipDAO();
 		allListener();
 		showGUI();
 	
@@ -26,18 +33,19 @@ public class Login extends JFrame {
 		loginbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * if(db에 일치하는 아이디 비번이 존재할시에 ){
-				 * dispose;
-				 * 메인화면창 띄우기 ;
-				 * }
-				 * else{
-				 * 쇼다이얼로그 띄우던가 안띄우던가
-				 * loginbtn.setenable(false);
-				 * loginbtn.setenable(true);
-				 * }
-				 */
+			
 				
+				isRight = membershipDAO.CheckId(textField.getText());
+				isRightPw = membershipDAO.CheckPW(textField_1.getText());
+				if (!isRight && !isRightPw) {
+					dispose();
+					MainPage mainPage = new MainPage();
+					mainPage.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "정보가없습니다");
+					loginbtn.setEnabled(false);
+					loginbtn.setEnabled(true);
+				}
 			}
 		});
 		
