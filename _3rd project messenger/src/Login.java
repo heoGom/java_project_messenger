@@ -97,6 +97,7 @@ public class Login extends JFrame {
 		getContentPane().add(membershipbtn);
 	}
 	public static void main(String[] args) {
+		new MySqlConnectionProvider();
 		new Login();
 	}
 }

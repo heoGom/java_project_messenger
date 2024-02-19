@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 public class MainPage extends JFrame{
 	public MainPage() {
 		extracted();
-
+		
 	
 	}
 
