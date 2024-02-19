@@ -25,7 +25,8 @@ public class Membership extends JFrame {
 	private JLabel pictureLabel;
 	private JButton idDupbtn;
 	private JButton nickDupbtn;
-
+	private MembershipMethods membershipMethods;
+	
 	public Membership() {
 		extracted();
 		frame = this;
@@ -48,7 +49,7 @@ public class Membership extends JFrame {
 					File[] selectedFiles = fileChooser.getSelectedFiles();
 					for (File file : selectedFiles) {
 						System.out.println("Selected File: " + file.getAbsolutePath());
-						displayImage(file.getAbsolutePath());
+						membershipMethods.displayImage(file.getAbsolutePath());
 					}
 				}
 			}
@@ -84,45 +85,7 @@ public class Membership extends JFrame {
 		
 	}
 	
-	private void checkingDB() {
-		//아이디와 닉네임 db에 있는지 체킹하는 메소드
-	}
-
-	private void allLabelSet() {
-		//텍스트필드에 들어가는 입력값에따라 
-		//밑에 라벨들의 문구 가 변하는 메소드
-	}
-	private void displayImage(String filePath) {
-		try {
-			File file = new File(filePath);
-
-			if (!isImageFile(file)) {
-				JOptionPane.showMessageDialog(this, "올바른 이미지 파일이 아닙니다.", "에러", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
-			BufferedImage image = ImageIO.read(file);
-
-			if (image != null) {
-				ImageIcon icon = new ImageIcon(image);
-				pictureLabel.setIcon(icon);
-			} else {
-				JOptionPane.showMessageDialog(this, "이미지를 읽을 수 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private boolean isImageFile(File file) {
-		try {
-			ImageIO.read(file);
-			return true;
-		} catch (IOException e) {
-			return false;
-		}
-	}
-
+	
 	private void showGUI() {
 		setSize(416, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
