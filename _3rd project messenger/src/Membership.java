@@ -15,12 +15,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Membership extends JFrame {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField id_tf;
+	private JPasswordField password_pf;
+	private JPasswordField password_pf2;
 	private JTextField textField_3;
 	private JButton picturebtn;
 	private JButton confirmbtn;
@@ -31,7 +32,9 @@ public class Membership extends JFrame {
 
 	private MembershipDAO membershipdao;
 	JLabel id_lbl;
-	
+	JLabel password_lbl;
+	JLabel password_lbl2;
+
 	Boolean isRightId;
 	Boolean isRightNick;
 	private JLabel pw_lbl;
@@ -82,12 +85,13 @@ public class Membership extends JFrame {
 		idDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				isRightId = null;
-				isRightId = membershipdao.CheckId(textField.getText());
-				if(isRightId) {
+
+				isRightId = null;
+				isRightId = membershipdao.CheckId(id_tf.getText());
+				if (isRightId) {
 					JOptionPane.showMessageDialog(null, "사용가능한 아이디입니다.");
-					id_lbl.setText("사용가능");
-				}else {
+				} else {
+
 					JOptionPane.showMessageDialog(null, "사용불가한 아이디입니다.");
 					id_lbl.setText("중복된 아이디 입니다.");
 				}
@@ -156,24 +160,22 @@ public class Membership extends JFrame {
 		pictureLabel.setBounds(12, 294, 200, 200);
 		getContentPane().add(pictureLabel);
 
-		textField = new JTextField();
-		textField.setBounds(128, 85, 116, 21);
-		getContentPane().add(textField);
-		textField.setColumns(10);
-		textField.addKeyListener(new KeyAdapter() {
+		id_tf = new JTextField();
+		id_tf.setBounds(128, 85, 116, 21);
+		getContentPane().add(id_tf);
+		id_tf.setColumns(10);
+		id_tf.addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				String str = textField.getText();
-				boolean isValid = isValidPattern(str);
+				String str = id_tf.getText();
+				boolean isValid = isValidIdPattern(str);
 				if (isValid) {
 					id_lbl.setText("사용가능");
-					idDupbtn.setEnabled(true);
 				} else {
 					id_lbl.setText("사용불가");
-					idDupbtn.setEnabled(false);
 				}
-				if (textField.getText().equals("")) {
+				if (id_tf.getText().equals("")) {
 					id_lbl.setText("");
 				}
 
@@ -181,15 +183,47 @@ public class Membership extends JFrame {
 
 		});
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(128, 141, 116, 21);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		password_pf = new JPasswordField();
+		password_pf.setBounds(128, 141, 116, 21);
+		getContentPane().add(password_pf);
+		password_pf.setColumns(10);
+		password_pf.addKeyListener(new KeyAdapter() {
 
-		textField_2 = new JTextField();
-		textField_2.setBounds(128, 195, 116, 21);
-		getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char[] row = password_pf.getPassword();
+				String password = new String(row);
+
+				boolean isValid = isValidPasswordPattern(password);
+				if (isValid) {
+					password_lbl.setText("사용가능");
+				} else {
+					password_lbl.setText("사용불가");
+				}
+
+			}
+
+		});
+
+		password_pf2 = new JPasswordField();
+		password_pf2.setBounds(128, 195, 116, 21);
+		getContentPane().add(password_pf2);
+		password_pf2.setColumns(10);
+		password_pf2.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char[] origin = password_pf.getPassword();
+				String sOrigin = new String(origin);
+				char[] copy = password_pf2.getPassword();
+				String sCopy = new String(copy);
+				if (sOrigin.equals(sCopy)) {
+					password_lbl2.setText("사용가능");
+				} else {
+					password_lbl2.setText("사용불가");
+				}
+			}
+		});
 
 		textField_3 = new JTextField();
 		textField_3.setBounds(128, 251, 116, 21);
@@ -224,13 +258,14 @@ public class Membership extends JFrame {
 		id_lbl.setBounds(138, 116, 133, 15);
 		getContentPane().add(id_lbl);
 
-		pw_lbl = new JLabel("해야");
-		pw_lbl.setBounds(156, 172, 57, 15);
-		getContentPane().add(pw_lbl);
 
-		pw_lbl2 = new JLabel("하는");
-		pw_lbl2.setBounds(156, 226, 57, 15);
-		getContentPane().add(pw_lbl2);
+    password_lbl = new JLabel("20자리 이하");
+		password_lbl.setBounds(128, 172, 116, 15);
+		getContentPane().add(password_lbl);
+
+		password_lbl2 = new JLabel("하는");
+		password_lbl2.setBounds(156, 226, 57, 15);
+		getContentPane().add(password_lbl2);
 
 		nick_lbl = new JLabel("라벨");
 		nick_lbl.setBounds(156, 282, 57, 15);
@@ -246,8 +281,15 @@ public class Membership extends JFrame {
 
 	}
 
-	private static boolean isValidPattern(String input) {
+	private boolean isValidIdPattern(String input) {
 		String pattern = "^[a-zA-Z0-9]{2,10}$";
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(input);
+		return matcher.matches();
+	}
+
+	private boolean isValidPasswordPattern(String input) {
+		String pattern = "^[a-zA-Z0-9]{1,20}$";
 		Pattern regex = Pattern.compile(pattern);
 		Matcher matcher = regex.matcher(input);
 		return matcher.matches();
