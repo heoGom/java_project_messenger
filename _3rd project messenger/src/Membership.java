@@ -62,6 +62,9 @@ public class Membership extends JFrame {
 		confirmbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(id_lbl.eq))) {
+					
+				}
 				// if(레이블문구 문제없으면) {
 				// db에 저장;
 				// 회원가입성공했다 다이얼로그(이건 옵션)
@@ -80,8 +83,10 @@ public class Membership extends JFrame {
 				isRightId = membershipdao.CheckId(textField.getText());
 				if(isRightId) {
 					JOptionPane.showMessageDialog(null, "사용가능한 아이디입니다.");
+					id_lbl.setText("사용가능");
 				}else {
 					JOptionPane.showMessageDialog(null, "사용불가한 아이디입니다.");
+					id_lbl.setText("중복된 아이디 입니다.");
 				}
 
 			}
@@ -176,8 +181,8 @@ public class Membership extends JFrame {
 		lblNewLabel_3.setBounds(41, 254, 57, 15);
 		getContentPane().add(lblNewLabel_3);
 
-		id_lbl = new JLabel("");
-		id_lbl.setBounds(156, 116, 57, 15);
+		id_lbl = new JLabel("2~10자 내외,특수문자불가");
+		id_lbl.setBounds(138, 116, 133, 15);
 		getContentPane().add(id_lbl);
 
 		JLabel lblNewLabel_5 = new JLabel("해야");
