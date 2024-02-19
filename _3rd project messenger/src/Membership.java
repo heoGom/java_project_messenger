@@ -23,6 +23,8 @@ public class Membership extends JFrame {
 	private JButton confirmbtn;
 	private JFrame frame;
 	private JLabel pictureLabel;
+	private JButton idDupbtn;
+	private JButton nickDupbtn;
 
 	public Membership() {
 		extracted();
@@ -66,6 +68,24 @@ public class Membership extends JFrame {
 				// }
 			}
 		});
+		idDupbtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		nickDupbtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+	}
+	
+	private void checkingDB() {
+		//아이디와 닉네임 db에 있는지 체킹하는 메소드
 	}
 
 	private void allLabelSet() {
@@ -116,7 +136,7 @@ public class Membership extends JFrame {
 
 		pictureLabel = new JLabel();
 		pictureLabel.setText("임시로넣어둔");
-		pictureLabel.setBounds(300, 50, 200, 200);
+		pictureLabel.setBounds(12, 294, 200, 200);
 		getContentPane().add(pictureLabel);
 
 		textField = new JTextField();
@@ -178,6 +198,13 @@ public class Membership extends JFrame {
 		JLabel lblNewLabel_7 = new JLabel("라벨");
 		lblNewLabel_7.setBounds(156, 282, 57, 15);
 		getContentPane().add(lblNewLabel_7);
+		
+		idDupbtn = new JButton("중복확인");
+		idDupbtn.setBounds(273, 84, 97, 23);
+		getContentPane().add(idDupbtn);
+		
+		nickDupbtn = new JButton("중복 확인");
+		nickDupbtn.setBounds(273, 250, 97, 23);
+		getContentPane().add(nickDupbtn);
 	}
-
 }
