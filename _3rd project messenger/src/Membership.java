@@ -2,10 +2,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -19,19 +23,23 @@ public class Membership extends JFrame {
 	private JPasswordField password_pf;
 	private JPasswordField password_pf2;
 	private JTextField textField_3;
-	private JButton pictuerebtn;
+	private JButton picturebtn;
 	private JButton confirmbtn;
 	private JFrame frame;
 	private JLabel pictureLabel;
 	private JButton idDupbtn;
 	private JButton nickDupbtn;
-	private MembershipMethods membershipMethods;
+
 	private MembershipDAO membershipdao;
 	JLabel id_lbl;
 	JLabel password_lbl;
 	JLabel password_lbl2;
 
 	Boolean isRightId;
+	Boolean isRightNick;
+	private JLabel pw_lbl;
+	private JLabel pw_lbl2;
+	private JLabel nick_lbl;
 
 	public Membership() {
 		extracted();
@@ -39,11 +47,12 @@ public class Membership extends JFrame {
 		membershipdao = new MembershipDAO();
 		listenerAll();
 		showGUI();
+		
 
 	}
 
 	private void listenerAll() {
-		pictuerebtn.addActionListener(new ActionListener() {
+		picturebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -56,7 +65,7 @@ public class Membership extends JFrame {
 					File[] selectedFiles = fileChooser.getSelectedFiles();
 					for (File file : selectedFiles) {
 						System.out.println("Selected File: " + file.getAbsolutePath());
-						membershipMethods.displayImage(file.getAbsolutePath());
+						displayImage(file.getAbsolutePath());
 					}
 				}
 			}
@@ -65,26 +74,26 @@ public class Membership extends JFrame {
 		confirmbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// if(레이블문구 문제없으면) {
-				// db에 저장;
-				// 회원가입성공했다 다이얼로그(이건 옵션)
-				// dispose();
-				// } else{
-				// 위에 다이얼로그 할거면 여기도
-				// confirmbtn.setEnabled(false);
-				// confirmbtn.setEnabled(true);
-				// }
+				String s = "사용가능";
+				if(id_lbl.getText().equals(s) && pw_lbl.getText().equals(s) &&  pw_lbl2.getText().equals(s)&& nick_lbl.getText().equals(s)) {
+					
+				}
+				
+		
 			}
 		});
 		idDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				isRightId = null;
 				isRightId = membershipdao.CheckId(id_tf.getText());
 				if (isRightId) {
 					JOptionPane.showMessageDialog(null, "사용가능한 아이디입니다.");
 				} else {
+
 					JOptionPane.showMessageDialog(null, "사용불가한 아이디입니다.");
+					id_lbl.setText("중복된 아이디 입니다.");
 				}
 
 			}
@@ -93,10 +102,46 @@ public class Membership extends JFrame {
 		nickDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				isRightNick = membershipdao.CheckNick(textField_3.getText());
+				if (isRightNick) {
+					JOptionPane.showMessageDialog(null, "사용가능한 닉네임입니다.");
+				} else {
+					JOptionPane.showMessageDialog(null, "사용불가능한 닉네임입니다.");
+				}
 			}
 		});
 
+	}
+	
+	public void displayImage(String filePath) {
+		try {
+			File file = new File(filePath);
+
+			if (!isImageFile(file)) {
+				JOptionPane.showMessageDialog(this, "올바른 이미지 파일이 아닙니다.", "에러", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			BufferedImage image = ImageIO.read(file);
+
+			if (image != null) {
+				ImageIcon icon = new ImageIcon(image);
+				// pictureLabel.setIcon(icon);
+			} else {
+				JOptionPane.showMessageDialog(this, "이미지를 읽을 수 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private boolean isImageFile(File file) {
+		try {
+			ImageIO.read(file);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
 	}
 
 	private void showGUI() {
@@ -185,9 +230,9 @@ public class Membership extends JFrame {
 		getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 
-		pictuerebtn = new JButton("프로필 사진등록");
-		pictuerebtn.setBounds(116, 310, 155, 36);
-		getContentPane().add(pictuerebtn);
+		picturebtn = new JButton("프로필 사진등록");
+		picturebtn.setBounds(116, 310, 155, 36);
+		getContentPane().add(picturebtn);
 
 		confirmbtn = new JButton("확인");
 		confirmbtn.setBounds(291, 411, 97, 23);
@@ -209,11 +254,12 @@ public class Membership extends JFrame {
 		lblNewLabel_3.setBounds(41, 254, 57, 15);
 		getContentPane().add(lblNewLabel_3);
 
-		id_lbl = new JLabel("");
-		id_lbl.setBounds(156, 116, 57, 15);
+		id_lbl = new JLabel("2~10자 내외,특수문자불가");
+		id_lbl.setBounds(138, 116, 133, 15);
 		getContentPane().add(id_lbl);
 
-		password_lbl = new JLabel("20자리 이하");
+
+    password_lbl = new JLabel("20자리 이하");
 		password_lbl.setBounds(128, 172, 116, 15);
 		getContentPane().add(password_lbl);
 
@@ -221,9 +267,9 @@ public class Membership extends JFrame {
 		password_lbl2.setBounds(156, 226, 57, 15);
 		getContentPane().add(password_lbl2);
 
-		JLabel lblNewLabel_7 = new JLabel("라벨");
-		lblNewLabel_7.setBounds(156, 282, 57, 15);
-		getContentPane().add(lblNewLabel_7);
+		nick_lbl = new JLabel("라벨");
+		nick_lbl.setBounds(156, 282, 57, 15);
+		getContentPane().add(nick_lbl);
 
 		idDupbtn = new JButton("중복확인");
 		idDupbtn.setBounds(273, 84, 97, 23);
