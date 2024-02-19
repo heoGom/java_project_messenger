@@ -5,6 +5,11 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,7 +77,18 @@ public class Membership extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String s = "사용가능";
 				if(id_lbl.getText().equals(s) && pw_lbl.getText().equals(s) &&  pw_lbl2.getText().equals(s)&& nick_lbl.getText().equals(s)) {
-					
+				
+					String query= "insert into jae.user(id, password, nickname, profilephoto)values(?, ?, ?, ?)";
+					try(Connection conn = MySqlConnectionProvider.getConnection();
+							PreparedStatement stmt = conn.prepareStatement(query)){
+						stmt.setString(1,id_lbl.getText());
+						stmt.setString(2, pw_lbl2.getText());
+						stmt.setString(3, nick_lbl.getText());
+						//stmt.setString(4, pictureLabel.createImage(producer));
+					//	ResultSet rs = stmt.executeQuery()
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 		
 			}
