@@ -43,7 +43,7 @@ public class Membership extends JFrame {
 
 	Boolean isRightId;
 	Boolean isRightNick;
-	private JLabel nick_lbl;
+	JLabel nick_lbl;
 	File filePath;
 
 	public Membership() {
@@ -86,12 +86,11 @@ public class Membership extends JFrame {
 					String query = "insert into jae.user(id, password, nickname, profilephoto)values(?, ?, ?, ?)";
 					try (Connection conn = MySqlConnectionProvider.getConnection();
 							PreparedStatement stmt = conn.prepareStatement(query)) {
-						stmt.setString(1, id_lbl.getText());
-						stmt.setString(2, password_lbl2.getText());
-						stmt.setString(3, nick_lbl.getText());
+						stmt.setString(1, id_tf.getText());
+						stmt.setString(2, password_pf2.getText());
+						stmt.setString(3, textField_3.getText());
 						
-						File file = new File("path_to_your_image.jpg");
-						byte[] imageData = Files.readAllBytes(file.toPath());
+						byte[] imageData = Files.readAllBytes(filePath.toPath());
 						stmt.setBytes(4, imageData);
 
 						stmt.executeUpdate();
@@ -99,6 +98,7 @@ public class Membership extends JFrame {
 					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}
+					
 				}
 
 			}
@@ -126,8 +126,12 @@ public class Membership extends JFrame {
 				isRightNick = membershipdao.CheckNick(textField_3.getText());
 				if (isRightNick) {
 					JOptionPane.showMessageDialog(null, "사용가능한 닉네임입니다.");
+					nick_lbl.setText("사용가능");
+					
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "사용불가능한 닉네임입니다.");
+					nick_lbl.setText("사용불가");
 				}
 			}
 		});
