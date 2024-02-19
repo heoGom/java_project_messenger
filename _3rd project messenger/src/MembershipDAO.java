@@ -1,14 +1,33 @@
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-import com.mysql.cj.protocol.Resultset;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MembershipDAO {
 
+	private Membership membership;
+
 	public MembershipDAO() {
+	}
+
+	public MembershipDAO(Membership membership) {
+		super();
+		this.membership = membership;
+	}
+
+	public boolean CheckId(String id) {
+		String sql = "select * from user where id = '" + id + "';";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
-				Resultset rs = stmt.execute();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+			if (!rs.next()) {
+				return false;
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return true;
 	}
 }

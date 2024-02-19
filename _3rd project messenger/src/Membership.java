@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class Membership extends JFrame {
@@ -24,11 +25,15 @@ public class Membership extends JFrame {
 	private JButton idDupbtn;
 	private JButton nickDupbtn;
 	private MembershipMethods membershipMethods;
+	private MembershipDAO membershipdao;
 	JLabel id_lbl;
+	
+	Boolean isRightId;
 
 	public Membership() {
 		extracted();
 		frame = this;
+		membershipdao = new MembershipDAO();
 		listenerAll();
 		showGUI();
 
@@ -71,6 +76,13 @@ public class Membership extends JFrame {
 		idDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isRightId = null;
+				isRightId = membershipdao.CheckId(textField.getText());
+				if(isRightId) {
+					JOptionPane.showMessageDialog(null, "사용가능한 아이디입니다.");
+				}else {
+					JOptionPane.showMessageDialog(null, "사용불가한 아이디입니다.");
+				}
 
 			}
 		});
@@ -189,7 +201,7 @@ public class Membership extends JFrame {
 	}
 
 	private static boolean isValidPattern(String input) {
-		String pattern = "^[a-zA-Z0-9]{1,10}$";
+		String pattern = "^[a-zA-Z0-9]{2,10}$";
 		Pattern regex = Pattern.compile(pattern);
 		Matcher matcher = regex.matcher(input);
 		return matcher.matches();
