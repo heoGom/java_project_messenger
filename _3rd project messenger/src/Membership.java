@@ -43,7 +43,7 @@ public class Membership extends JFrame {
 
 	Boolean isRightId;
 	Boolean isRightNick;
-	private JLabel nick_lbl;
+	JLabel nick_lbl;
 	File filePath;
 
 	public Membership() {
@@ -98,6 +98,7 @@ public class Membership extends JFrame {
 					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}
+					
 				}
 
 			}
@@ -125,8 +126,12 @@ public class Membership extends JFrame {
 				isRightNick = membershipdao.CheckNick(textField_3.getText());
 				if (isRightNick) {
 					JOptionPane.showMessageDialog(null, "사용가능한 닉네임입니다.");
+					nick_lbl.setText("사용가능");
+					
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "사용불가능한 닉네임입니다.");
+					nick_lbl.setText("사용불가");
 				}
 			}
 		});
