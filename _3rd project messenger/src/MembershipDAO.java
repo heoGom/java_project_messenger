@@ -22,7 +22,22 @@ public class MembershipDAO {
 				ResultSet rs = stmt.executeQuery(sql)) {
 			if (!rs.next()) {
 				return true;
+				
+			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean CheckNick(String nickname) {
+		String sql = "select * from user where nickname = '" + nickname + "';";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+			if (!rs.next()) {
+				return true;
 			}
 
 		} catch (SQLException e) {

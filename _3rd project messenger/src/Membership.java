@@ -29,6 +29,7 @@ public class Membership extends JFrame {
 	JLabel id_lbl;
 	
 	Boolean isRightId;
+	Boolean isRightNick;
 
 	public Membership() {
 		extracted();
@@ -76,7 +77,7 @@ public class Membership extends JFrame {
 		idDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				isRightId = null;
+//				isRightId = null;
 				isRightId = membershipdao.CheckId(textField.getText());
 				if(isRightId) {
 					JOptionPane.showMessageDialog(null, "사용가능한 아이디입니다.");
@@ -90,7 +91,12 @@ public class Membership extends JFrame {
 		nickDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				isRightNick = membershipdao.CheckNick(textField_3.getText());
+				if (isRightNick) {
+					JOptionPane.showMessageDialog(null, "사용가능한 닉네임입니다.");
+				} else {
+					JOptionPane.showMessageDialog(null, "사용불가능한 닉네임입니다.");
+				}
 			}
 		});
 
