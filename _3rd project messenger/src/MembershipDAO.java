@@ -21,13 +21,13 @@ public class MembershipDAO {
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
 			if (!rs.next()) {
-				return false;
+				return true;
 
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 }
