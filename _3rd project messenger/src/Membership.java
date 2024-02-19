@@ -89,16 +89,19 @@ public class Membership extends JFrame {
 						stmt.setString(1, id_tf.getText());
 						stmt.setString(2, password_pf2.getText());
 						stmt.setString(3, textField_3.getText());
-						
-						byte[] imageData = Files.readAllBytes(filePath.toPath());
-						stmt.setBytes(4, imageData);
+						stmt.setBytes(4, null);
 
+						if (filePath != null) {
+							byte[] imageData = Files.readAllBytes(filePath.toPath());
+							stmt.setBytes(4, imageData);
+						}
 						stmt.executeUpdate();
 
 					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}
-					
+					dispose();
+
 				}
 
 			}
@@ -127,8 +130,7 @@ public class Membership extends JFrame {
 				if (isRightNick) {
 					JOptionPane.showMessageDialog(null, "사용가능한 닉네임입니다.");
 					nick_lbl.setText("사용가능");
-					
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null, "사용불가능한 닉네임입니다.");
 					nick_lbl.setText("사용불가");
