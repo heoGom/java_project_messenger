@@ -9,18 +9,17 @@ import javax.swing.JOptionPane;
 
 public class MembershipMethods extends JFrame {
 	private Membership membership = new Membership();
-	
-	
-	
-	 void checkingDB() {
-		//아이디와 닉네임 db에 있는지 체킹하는 메소드
+
+	public void checkingDB() {
+		// 아이디와 닉네임 db에 있는지 체킹하는 메소드
 	}
 
-	 void allLabelSet() {
-		//텍스트필드에 들어가는 입력값에따라 
-		//밑에 라벨들의 문구 가 변하는 메소드
+	public void allLabelSet() {
+		// 텍스트필드에 들어가는 입력값에따라
+		// 밑에 라벨들의 문구 가 변하는 메소드
 	}
-	 void displayImage(String filePath) {
+
+	public void displayImage(String filePath) {
 		try {
 			File file = new File(filePath);
 
@@ -33,7 +32,7 @@ public class MembershipMethods extends JFrame {
 
 			if (image != null) {
 				ImageIcon icon = new ImageIcon(image);
-				//pictureLabel.setIcon(icon);
+				// pictureLabel.setIcon(icon);
 			} else {
 				JOptionPane.showMessageDialog(this, "이미지를 읽을 수 없습니다.", "에러", JOptionPane.ERROR_MESSAGE);
 			}
@@ -52,4 +51,5 @@ public class MembershipMethods extends JFrame {
 	}
 	
 	
+
 }
