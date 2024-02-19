@@ -16,7 +16,7 @@ public class MainPage extends JFrame{
 	}
 
 	private void showGUI() {
-		setSize(455, 574);
+		setSize(469, 574);
 		setVisible(true);
 		setLocationRelativeTo(null);
 

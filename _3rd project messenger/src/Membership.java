@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -61,6 +62,7 @@ public class Membership extends JFrame {
 	}
 
 	private void listenerAll() {
+		
 		picturebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -139,12 +141,14 @@ public class Membership extends JFrame {
 
 						}
 						stmt.executeUpdate();
-
+						JOptionPane.showMessageDialog(null, "회원가입성공");
 					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}
 					dispose();
 
+				} else {
+					JOptionPane.showMessageDialog(null, "필수항목 누락");
 				}
 
 			}
@@ -183,6 +187,13 @@ public class Membership extends JFrame {
 			}
 		});
 
+		id_tf.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        idDupbtn.doClick();
+		    }
+		});
+		
 		id_tf.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -201,6 +212,7 @@ public class Membership extends JFrame {
 			}
 
 		});
+		
 		password_pf.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -234,6 +246,13 @@ public class Membership extends JFrame {
 
 		});
 
+		password_pf2.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        confirmbtn.doClick();
+		    }
+		});
+		
 		password_pf2.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -255,6 +274,14 @@ public class Membership extends JFrame {
 
 			}
 		});
+		
+		textField_3.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        nickDupbtn.doClick();
+		    }
+		});
+		
 		textField_3.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -272,7 +299,8 @@ public class Membership extends JFrame {
 			}
 
 		});
-
+		
+		
 	}
 
 	private BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
@@ -331,6 +359,7 @@ public class Membership extends JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 
+		 id_tf.requestFocusInWindow();
 	}
 
 	private void extracted() {

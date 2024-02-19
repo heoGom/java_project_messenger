@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
@@ -17,7 +18,7 @@ import javax.swing.JButton;
 
 public class Login extends JFrame {
 	private JTextField textField;
-	private JTextField textField_1;
+	private JPasswordField textField_1;
 	private JButton loginbtn;
 	private JButton membershipbtn;
 	private Membership membership;
@@ -70,6 +71,24 @@ public class Login extends JFrame {
 				membership.setVisible(true);
 			}
 		});
+		textField_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				isRight = membershipDAO.CheckId(textField.getText());
+				isRightPw = membershipDAO.CheckPW(textField_1.getText());
+				if (!isRight && !isRightPw) {
+					dispose();
+					user = readDB();
+					MainPage mainPage = new MainPage(user);
+					mainPage.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "정보가없습니다");
+					loginbtn.setEnabled(false);
+					loginbtn.setEnabled(true);
+				}
+			}
+		});
 	}
 
 	public User readDB() {
@@ -116,6 +135,8 @@ public class Login extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setLocationRelativeTo(null);
+		
+		 textField.requestFocusInWindow();
 	}
 
 	private void extracted() {
@@ -130,7 +151,7 @@ public class Login extends JFrame {
 		getContentPane().add(textField);
 		textField.setColumns(10);
 
-		textField_1 = new JTextField();
+		textField_1 = new JPasswordField();
 		textField_1.setBounds(155, 271, 116, 21);
 		getContentPane().add(textField_1);
 		textField_1.setColumns(10);
