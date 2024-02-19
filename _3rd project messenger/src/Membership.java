@@ -1,18 +1,16 @@
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class Membership extends JFrame {
 	private JTextField textField;
@@ -26,7 +24,8 @@ public class Membership extends JFrame {
 	private JButton idDupbtn;
 	private JButton nickDupbtn;
 	private MembershipMethods membershipMethods;
-	
+	JLabel id_lbl;
+
 	public Membership() {
 		extracted();
 		frame = this;
@@ -67,26 +66,24 @@ public class Membership extends JFrame {
 				// confirmbtn.setEnabled(false);
 				// confirmbtn.setEnabled(true);
 				// }
-				
 			}
 		});
 		idDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
-		
+
 		nickDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
-		
+
 	}
-	
-	
+
 	private void showGUI() {
 		setSize(416, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -107,6 +104,24 @@ public class Membership extends JFrame {
 		textField.setBounds(128, 85, 116, 21);
 		getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String str = textField.getText();
+				boolean isValid = isValidPattern(str);
+				if (isValid) {
+					id_lbl.setText("사용가능");
+				} else {
+					id_lbl.setText("사용불가");
+				}
+				if (textField.getText().equals("")) {
+					id_lbl.setText("");
+				}
+
+			}
+
+		});
 
 		textField_1 = new JTextField();
 		textField_1.setBounds(128, 141, 116, 21);
@@ -147,9 +162,9 @@ public class Membership extends JFrame {
 		lblNewLabel_3.setBounds(41, 254, 57, 15);
 		getContentPane().add(lblNewLabel_3);
 
-		JLabel lblNewLabel_4 = new JLabel("수정");
-		lblNewLabel_4.setBounds(156, 116, 57, 15);
-		getContentPane().add(lblNewLabel_4);
+		id_lbl = new JLabel("");
+		id_lbl.setBounds(156, 116, 57, 15);
+		getContentPane().add(id_lbl);
 
 		JLabel lblNewLabel_5 = new JLabel("해야");
 		lblNewLabel_5.setBounds(156, 172, 57, 15);
@@ -162,13 +177,21 @@ public class Membership extends JFrame {
 		JLabel lblNewLabel_7 = new JLabel("라벨");
 		lblNewLabel_7.setBounds(156, 282, 57, 15);
 		getContentPane().add(lblNewLabel_7);
-		
+
 		idDupbtn = new JButton("중복확인");
 		idDupbtn.setBounds(273, 84, 97, 23);
 		getContentPane().add(idDupbtn);
-		
+
 		nickDupbtn = new JButton("중복 확인");
 		nickDupbtn.setBounds(273, 250, 97, 23);
 		getContentPane().add(nickDupbtn);
+
+	}
+
+	private static boolean isValidPattern(String input) {
+		String pattern = "^[a-zA-Z0-9]{1,10}$";
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(input);
+		return matcher.matches();
 	}
 }
