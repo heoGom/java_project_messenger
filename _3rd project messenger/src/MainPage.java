@@ -3,18 +3,29 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class MainPage extends JFrame{
-	public MainPage() {
+	private JLabel nick_lbl;
+	private JLabel picture_lbl;
+	User user;
+	
+	public MainPage(User user) {
+		this.user = user;
 		extracted();
+		changelbl();
 		showGUI();
 	
 	}
 
 	private void showGUI() {
-		setSize(416, 500);
+		setSize(455, 574);
 		setVisible(true);
 		setLocationRelativeTo(null);
 
 	}
+	private void changelbl() {
+		nick_lbl.setText(user.nick);
+		picture_lbl.setIcon(user.image);
+	}
+	
 	private void extracted() {
 		getContentPane().setLayout(null);
 		
@@ -38,13 +49,13 @@ public class MainPage extends JFrame{
 		btnNewButton_4.setBounds(326, 10, 97, 23);
 		getContentPane().add(btnNewButton_4);
 		
-		JLabel lblNewLabel = new JLabel("사진들어갈");
-		lblNewLabel.setBounds(12, 14, 81, 15);
-		getContentPane().add(lblNewLabel);
+		picture_lbl = new JLabel("사진들어갈");
+		picture_lbl.setBounds(12, 14, 81, 15);
+		getContentPane().add(picture_lbl);
 		
-		JLabel lblNewLabel_1 = new JLabel("닉네임 들어갈");
-		lblNewLabel_1.setBounds(105, 14, 88, 15);
-		getContentPane().add(lblNewLabel_1);
+		nick_lbl = new JLabel("닉네임 들어갈");
+		nick_lbl.setBounds(105, 14, 88, 15);
+		getContentPane().add(nick_lbl);
 		
 		JButton btnNewButton_5 = new JButton("로그아웃 필요 하겠지?");
 		btnNewButton_5.setBounds(27, 469, 188, 23);
