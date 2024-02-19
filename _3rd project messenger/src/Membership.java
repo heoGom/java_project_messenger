@@ -42,8 +42,6 @@ public class Membership extends JFrame {
 
 	Boolean isRightId;
 	Boolean isRightNick;
-	private JLabel pw_lbl;
-	private JLabel pw_lbl2;
 	private JLabel nick_lbl;
 
 	public Membership() {
@@ -80,13 +78,13 @@ public class Membership extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String s = "사용가능";
-				if(id_lbl.getText().equals(s) && pw_lbl.getText().equals(s) &&  pw_lbl2.getText().equals(s)&& nick_lbl.getText().equals(s)) {
+				if(id_lbl.getText().equals(s) && password_lbl.getText().equals(s) &&  password_lbl2.getText().equals(s)&& nick_lbl.getText().equals(s)) {
 				
 					String query= "insert into jae.user(id, password, nickname, profilephoto)values(?, ?, ?, ?)";
 					try(Connection conn = MySqlConnectionProvider.getConnection();
 							PreparedStatement stmt = conn.prepareStatement(query)){
 						stmt.setString(1,id_lbl.getText());
-						stmt.setString(2, pw_lbl2.getText());
+						stmt.setString(2, password_lbl2.getText());
 						stmt.setString(3, nick_lbl.getText());
 						//stmt.setString(4, pictureLabel.createImage(producer));
 					//	ResultSet rs = stmt.executeQuery()
