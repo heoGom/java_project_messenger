@@ -21,7 +21,7 @@ public class Login extends JFrame {
 	
 	}
 	
-	
+
 	private void allListener() {
 		loginbtn.addActionListener(new ActionListener() {
 			@Override

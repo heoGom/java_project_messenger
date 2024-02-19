@@ -12,11 +12,11 @@ public class ChatRoomListPage extends JFrame{
 	private void extracted() {
 		getContentPane().setLayout(null);
 		
-		testlbl = new JLabel("New label");
+		testlbl = new JLabel("가입자 전체 채팅방");
 		testlbl.setBounds(156, 181, 57, 15);
 		getContentPane().add(testlbl);
 		testlbl.setEnabled(false);
-		testlbl.setText("");
+		
 		
 	}
 	private void showGUI() {

@@ -67,6 +67,7 @@ public class Membership extends JFrame {
 				// confirmbtn.setEnabled(false);
 				// confirmbtn.setEnabled(true);
 				// }
+				
 			}
 		});
 		idDupbtn.addActionListener(new ActionListener() {
