@@ -48,7 +48,7 @@ public class MainPage extends JFrame {
 		chatRoomListbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChatRoomListPage chatRoomListPage = new ChatRoomListPage();
+				ChatRoomListPage chatRoomListPage = new ChatRoomListPage(user);
 				chatRoomListPage.setVisible(true);
 			}
 		});
