@@ -19,10 +19,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 
 public class MyPage extends JFrame {
-	List<User> userList;
+	
 
 	public MyPage() {
 		User user = new User();
+		
 		getContentPane().setLayout(null);
 
 		setTitle("마이 프로필");
@@ -43,6 +44,7 @@ public class MyPage extends JFrame {
 		btnNickCh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				user.readAllUser();
 				JDialog dialog = new JDialog();
 				dialog.setTitle("닉네임 변경");
 				dialog.setSize(400, 300);
@@ -66,7 +68,7 @@ public class MyPage extends JFrame {
 				btnApply.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						for (User user : userList) {
+						for (User user : user.list) {
 							if (user.getNick().equals(tx.getText())) {
 								JOptionPane.showMessageDialog(null, "이미 사용중인 닉네임 입니다.", "경고",
 										JOptionPane.ERROR_MESSAGE);
@@ -84,7 +86,6 @@ public class MyPage extends JFrame {
 						System.out.println("뿅뿅");
 					}
 				});
-				
 				dialog.setVisible(true); // 모달이 적용되면 setVisible이 아래흐름으로 안흘러감.
 			}
 		});
