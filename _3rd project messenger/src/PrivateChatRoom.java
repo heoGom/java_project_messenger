@@ -1,17 +1,27 @@
-import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import java.awt.Dimension;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class PrivateChatRoom extends JFrame {
-	public PrivateChatRoom() {
+	private User user;
+	private User another;
+	private List<TextDate> TDList;
+	
+	public PrivateChatRoom(User user, User another) {
+		this.user = user;
+		this.another = another;
+		
 		extracted();
 		showGUI();
 		
@@ -25,14 +35,14 @@ public class PrivateChatRoom extends JFrame {
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("\uC0AC\uC9C4");
-		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel.setBounds(12, 9, 35, 35);
-		panel.add(lblNewLabel);
+		JLabel another_Pt_Lbl = new JLabel("\uC0AC\uC9C4");
+		another_Pt_Lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
+		another_Pt_Lbl.setBounds(12, 9, 35, 35);
+		panel.add(another_Pt_Lbl);
 		
-		JLabel lblNewLabel_1 = new JLabel("\uC0C1\uB300 \uB2C9\uB124\uC784");
-		lblNewLabel_1.setBounds(63, 20, 64, 15);
-		panel.add(lblNewLabel_1);
+		JLabel another_NN_Lbl = new JLabel(another.getNick());
+		another_NN_Lbl.setBounds(63, 20, 64, 15);
+		panel.add(another_NN_Lbl);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setPreferredSize(new Dimension(10, 110));
@@ -62,11 +72,20 @@ public class PrivateChatRoom extends JFrame {
 	}
 	private void showGUI() {
 		setSize(450, 500);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 
 	}
-	public static void main(String[] args) {
-		new PrivateChatRoom();
-	}
+//	private List<TextDate> readDB(){
+//		List<TextDate> td = new ArrayList<>();
+//		//물음표 4개
+//		String sql ="SELECT * FROM private_chatlist "
+//				+ "WHERE (sender_id = ? AND receiver_id = ?) "
+//				+ "OR (sender_id = ? AND receiver_id = ?) "
+//				+ "ORDER BY text_time;";
+//		
+//		
+//		
+//	}
+	
+	
 }
