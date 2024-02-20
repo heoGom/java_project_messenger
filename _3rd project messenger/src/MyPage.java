@@ -19,13 +19,10 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 
 public class MyPage extends JFrame {
-	User user;
 	List<User> userList;
 
 	public MyPage() {
-		user = new User();
-		user.readAllUser();
-		userList = new ArrayList<>();
+		User user = new User();
 		getContentPane().setLayout(null);
 
 		setTitle("마이 프로필");
@@ -87,6 +84,7 @@ public class MyPage extends JFrame {
 						System.out.println("뿅뿅");
 					}
 				});
+				
 				dialog.setVisible(true); // 모달이 적용되면 setVisible이 아래흐름으로 안흘러감.
 			}
 		});
@@ -135,7 +133,6 @@ public class MyPage extends JFrame {
 		btnImageCh.setBorderPainted(false);
 
 		showGUI();
-
 	}
 
 	private void showGUI() {
@@ -143,4 +140,5 @@ public class MyPage extends JFrame {
 		setVisible(true);
 		
 	}
+	
 }
