@@ -27,7 +27,6 @@ public class MainPage extends JFrame {
 	private JButton logoutbtn;
 
 	public MainPage(User user, List<User> userList) {
-
 		this.user = user;
 		this.userList = userList;
 		extracted();
