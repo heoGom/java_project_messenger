@@ -45,7 +45,7 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				isRight = membershipDAO.CheckId(textField.getText());
-				isRightPw = membershipDAO.CheckPW(textField_1.getText());
+				isRightPw = membershipDAO.CheckPW(textField.getText(),textField_1.getText());
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
@@ -78,7 +78,7 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				isRight = membershipDAO.CheckId(textField.getText());
-				isRightPw = membershipDAO.CheckPW(textField_1.getText());
+				isRightPw = membershipDAO.CheckPW(textField.getText(),textField_1.getText());
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
