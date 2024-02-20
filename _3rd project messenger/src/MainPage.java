@@ -3,6 +3,11 @@ import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.List;
+
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,10 +19,21 @@ public class MainPage extends JFrame {
 	private JLabel picture_lbl;
 	User user;
 
-	public MainPage(User user) {
+	private List<User> userList;
+	private JButton userListbtn;
+	private JButton chatRoomListbtn;
+	private JButton votebtn;
+	private JButton minigame;
+	private JButton myprofilebtn;
+	private JButton logoutbtn;
+
+	public MainPage(User user, List<User> userList) {
+
 		this.user = user;
+		this.userList = userList;
 		extracted();
 		changelbl();
+		listenerAll();
 		showGUI();
 
 	}
@@ -33,6 +49,7 @@ public class MainPage extends JFrame {
 		nick_lbl.setText(user.nick);
 		picture_lbl.setIcon(user.image);
 	}
+
 
 	private void extracted() {
 		getContentPane().setLayout(null);
@@ -88,6 +105,7 @@ public class MainPage extends JFrame {
 			}
 		});
 
+
 		picture_lbl = new JLabel("사진들어갈");
 		picture_lbl.setBounds(12, 14, 81, 15);
 		getContentPane().add(picture_lbl);
@@ -96,9 +114,11 @@ public class MainPage extends JFrame {
 		nick_lbl.setBounds(105, 14, 88, 15);
 		getContentPane().add(nick_lbl);
 
+
 		JButton btnNewButton_5 = new JButton("로그아웃 필요 하겠지?");
 		btnNewButton_5.setBounds(27, 469, 188, 23);
 		getContentPane().add(btnNewButton_5);
+
 	}
 
 }

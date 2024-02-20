@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,6 +28,7 @@ public class Login extends JFrame {
 	Boolean isRight;
 	Boolean isRightPw;
 	User user;
+	private List<User> list;
 
 	public Login() {
 		extracted();
@@ -47,7 +49,7 @@ public class Login extends JFrame {
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
-					MainPage mainPage = new MainPage(user);
+					MainPage mainPage = new MainPage(user,list);
 					mainPage.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
@@ -80,7 +82,7 @@ public class Login extends JFrame {
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
-					MainPage mainPage = new MainPage(user);
+					MainPage mainPage = new MainPage(user,list);
 					mainPage.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
@@ -90,6 +92,7 @@ public class Login extends JFrame {
 			}
 		});
 	}
+	
 
 	public User readDB() {
 		String sql = "select id,password,nickname,profilePhoto from jae.user where id = ?";
