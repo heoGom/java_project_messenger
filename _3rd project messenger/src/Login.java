@@ -49,6 +49,7 @@ public class Login extends JFrame {
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
+					membershipDAO.changeStatus(textField.getText());
 					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 				} else {

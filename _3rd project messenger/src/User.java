@@ -13,6 +13,8 @@ public class User {
 	String nick = null;
 	ImageIcon image = null;
 	static List<User> list = new ArrayList<>();
+	int status;
+
 	public User() {
 	}
 
@@ -22,6 +24,14 @@ public class User {
 		this.pw = pw;
 		this.nick = nick;
 		this.image = image;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public String getId() {

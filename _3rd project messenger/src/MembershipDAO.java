@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,6 +15,7 @@ public class MembershipDAO {
 		super();
 		this.membership = membership;
 	}
+
 	/**
 	 * 입력한 아이디가 데이터베이스 있는지 확인
 	 * 
@@ -28,7 +30,7 @@ public class MembershipDAO {
 				ResultSet rs = stmt.executeQuery(sql)) {
 			if (!rs.next()) {
 				return true;
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -36,7 +38,7 @@ public class MembershipDAO {
 		}
 		return false;
 	}
-	
+
 	public boolean CheckNick(String nickname) {
 		String sql = "select * from user where nickname = '" + nickname + "';";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
@@ -51,19 +53,62 @@ public class MembershipDAO {
 		}
 		return false;
 	}
+
 	public boolean CheckPW(String id, String pw) {
-		String sql = "select * from user where password = '"+pw+"' and id ='"+id+"'";
+		String sql = "select * from user where password = '" + pw + "' and id ='" + id + "'";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
 			if (!rs.next()) {
 				return true;
-				
+
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	// 상태 1로
+	public void changeStatus(String id) {
+		String sql = "UPDATE jae.user SET status = 1 WHERE id = ?";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, id);
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 상태 0으로
+	public void resetStatus(String id) {
+		String sql = "UPDATE jae.user SET status = 0 WHERE id = ?";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, id);
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void readStatus(int status) {
+		String sql = "select * from jae.user where status = ?";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, status);
+
+			try (ResultSet rs = stmt.executeQuery();) {
+				while(rs.next()) {
+					rs.getInt("status");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
