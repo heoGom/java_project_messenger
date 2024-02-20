@@ -6,13 +6,18 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 public class MainPage extends JFrame {
 	private JLabel nick_lbl;
 	private JLabel picture_lbl;
 	User user;
+
 	private List<User> userList;
 	private JButton userListbtn;
 	private JButton chatRoomListbtn;
@@ -22,6 +27,7 @@ public class MainPage extends JFrame {
 	private JButton logoutbtn;
 
 	public MainPage(User user, List<User> userList) {
+
 		this.user = user;
 		this.userList = userList;
 		extracted();
@@ -42,6 +48,7 @@ public class MainPage extends JFrame {
 		nick_lbl.setText(user.nick);
 		picture_lbl.setIcon(user.image);
 	}
+
 
 	private void listenerAll() {
 
@@ -94,6 +101,38 @@ public class MainPage extends JFrame {
 		myprofilebtn.setBounds(326, 10, 97, 23);
 		getContentPane().add(myprofilebtn);
 
+
+		myprofilebtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JPanel panel = new JPanel();
+				JLabel label = new JLabel("비밀번호를 입력해주세요.");
+				JPasswordField pwField = new JPasswordField(20);
+				panel.add(label);
+				panel.add(pwField);
+				String[] options = { "확인", "취소" };
+				while (true) {
+					int optionSelect = JOptionPane.showOptionDialog(null, panel, "비밀번호 입력", JOptionPane.NO_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+					if (optionSelect == 0) {
+						if (user.getPw().equals(pwField.getText())) {
+							MyPage myPage = new MyPage();
+							myPage.show();
+							break;
+						} else {
+							JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.", "경고", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					if (optionSelect == 1) {
+						break;
+					}
+					if (optionSelect == JOptionPane.CLOSED_OPTION) {
+						break;
+					}
+				}
+			}
+		});
+
 		picture_lbl = new JLabel("사진들어갈");
 		picture_lbl.setBounds(12, 14, 81, 15);
 		getContentPane().add(picture_lbl);
@@ -105,6 +144,7 @@ public class MainPage extends JFrame {
 		logoutbtn = new JButton("로그아웃 필요 하겠지?");
 		logoutbtn.setBounds(27, 469, 256, 23);
 		getContentPane().add(logoutbtn);
+
 	}
 
 }

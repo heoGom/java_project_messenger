@@ -366,9 +366,8 @@ public class Membership extends JFrame {
 		getContentPane().setLayout(null);
 
 		pictureLabel = new JLabel();
-		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pictureLabel.setText("\uD504\uB85C\uD544 \uC0AC\uC9C4 \uB4F1\uB85D");
-		pictureLabel.setBounds(111, 287, 150, 150);
+		pictureLabel.setText("임시로넣어둔");
+		pictureLabel.setBounds(12, 312, 103, 139);
 		getContentPane().add(pictureLabel);
 
 		id_tf = new JTextField();
@@ -436,7 +435,7 @@ public class Membership extends JFrame {
 		nick_lbl.setBounds(94, 252, 185, 15);
 		getContentPane().add(nick_lbl);
 
-		idDupbtn = new JButton("중복확인");
+		idDupbtn = new JButton("중복 확인");
 		idDupbtn.setBounds(273, 54, 97, 23);
 		getContentPane().add(idDupbtn);
 
