@@ -49,7 +49,7 @@ public class Login extends JFrame {
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
-					MainPage mainPage = new MainPage(user,list);
+					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
@@ -82,7 +82,7 @@ public class Login extends JFrame {
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
-					MainPage mainPage = new MainPage(user,list);
+					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");

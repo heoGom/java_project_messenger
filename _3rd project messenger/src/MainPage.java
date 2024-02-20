@@ -18,7 +18,7 @@ public class MainPage extends JFrame {
 	private JLabel picture_lbl;
 	User user;
 
-	private List<User> userList;
+	
 	private JButton userListbtn;
 	private JButton chatRoomListbtn;
 	private JButton votebtn;
@@ -26,10 +26,11 @@ public class MainPage extends JFrame {
 	private JButton myprofilebtn;
 	private JButton logoutbtn;
 
-	public MainPage(User user, List<User> userList) {
+	
+
+	public MainPage(User user) {
 
 		this.user = user;
-		this.userList = userList;
 		extracted();
 		changelbl();
 		listenerAll();
@@ -63,8 +64,9 @@ public class MainPage extends JFrame {
 		userListbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				User.list.clear();
 				user.readAllUser();
-				UserList userList = new UserList(user, user.list);
+				UserList userList = new UserList(user);
 				userList.setVisible(true);
 			}
 		});

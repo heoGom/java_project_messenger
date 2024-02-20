@@ -12,7 +12,7 @@ public class User {
 	String pw = null;
 	String nick = null;
 	ImageIcon image = null;
-	List<User> list = new ArrayList<>();
+	static List<User> list = new ArrayList<>();
 	public User() {
 	}
 

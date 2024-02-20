@@ -70,5 +70,6 @@ public class MyPage extends JFrame {
 	private void showGUI() {
 		setSize(469, 300);
 		setVisible(true);
+		
 	}
 }
