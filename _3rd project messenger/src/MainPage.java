@@ -30,8 +30,9 @@ public class MainPage extends JFrame {
 
 	
 
-	public MainPage(User user) {
 
+
+	public MainPage(User user) {
 		this.user = user;
 		extracted();
 		changelbl();
