@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,6 +59,7 @@ public class ChatRoomListPage extends JFrame {
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 
 		for (int i = 0; i < list.size(); i++) {
+			final int INDEX=i;
 			JLabel label = new JLabel(list.get(i).getNick());
 
 			Dimension preferredSize = new Dimension(label.getPreferredSize());
@@ -67,6 +70,15 @@ public class ChatRoomListPage extends JFrame {
 			label.setMaximumSize(new Dimension(Integer.MAX_VALUE, label.getPreferredSize().height));
 			// 테두리 표현
 			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			
+			label.addMouseListener(new MouseAdapter() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					new PrivateChatRoom(user, list.get(INDEX));
+				}
+				
+			});
 
 			panel_1.add(label);
 		}
@@ -141,11 +153,6 @@ public class ChatRoomListPage extends JFrame {
 			return new ImageIcon(bytes);
 		}
 		return null;
-	}
-
-	public static void main(String[] args) {
-		User user = new User("tjdwo12", "qwer", "asdasd", null);
-		new ChatRoomListPage(user);
 	}
 
 }

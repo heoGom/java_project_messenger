@@ -45,11 +45,11 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				isRight = membershipDAO.CheckId(textField.getText());
-				isRightPw = membershipDAO.CheckPW(textField_1.getText());
+				isRightPw = membershipDAO.CheckPW(textField.getText(),textField_1.getText());
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
-					MainPage mainPage = new MainPage(user,list);
+					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
@@ -78,11 +78,11 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				isRight = membershipDAO.CheckId(textField.getText());
-				isRightPw = membershipDAO.CheckPW(textField_1.getText());
+				isRightPw = membershipDAO.CheckPW(textField.getText(),textField_1.getText());
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
-					MainPage mainPage = new MainPage(user,list);
+					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");

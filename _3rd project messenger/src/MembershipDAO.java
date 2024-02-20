@@ -51,8 +51,8 @@ public class MembershipDAO {
 		}
 		return false;
 	}
-	public boolean CheckPW(String pw) {
-		String sql = "select * from user where password = '" + pw + "';";
+	public boolean CheckPW(String id, String pw) {
+		String sql = "select * from user where password = '"+pw+"' and id ='"+id+"'";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
