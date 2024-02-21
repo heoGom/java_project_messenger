@@ -78,21 +78,24 @@
 							if (changetx.getText().isEmpty()) {
 								JOptionPane.showMessageDialog(null, "닉네임을 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
 							} else {
+								boolean Check = false;
 								for (User user : user.list) {
-									if (user.getNick().equals(changetx.getText())) {
-										JOptionPane.showMessageDialog(null, "이미 사용중인 닉네임 입니다.", "경고",
-												JOptionPane.ERROR_MESSAGE);
-										break;
-									} else {
-										user.setNick(changetx.getText());
-//										mainpage.changelbl();										
-										MyPageDAO dao = new MyPageDAO();
-										dao.changeNick(changetx.getText(), user.id);
-										JOptionPane.showMessageDialog(null, "닉네임이 변경되었습니다.", "알림",
-												JOptionPane.INFORMATION_MESSAGE);
-										dialog.dispose();
+									if (user.nick.equals(changetx.getText())) {
+										Check = true;
 										break;
 									}
+								}
+								if (Check) {
+									JOptionPane.showMessageDialog(null, "이미 사용중인 닉네임 입니다.", "경고",
+											JOptionPane.ERROR_MESSAGE);
+								} else {
+									user.setNick(changetx.getText());
+//										mainpage.changelbl();										
+									MyPageDAO dao = new MyPageDAO();
+									dao.changeNick(changetx.getText(), user.id);
+									JOptionPane.showMessageDialog(null, "닉네임이 변경되었습니다.", "알림",
+											JOptionPane.INFORMATION_MESSAGE);
+									dialog.dispose();
 								}
 							}
 						}
