@@ -8,14 +8,17 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -26,6 +29,7 @@ public class PrivateChatRoom extends JFrame {
 	private User user;
 	private User another;
 	private List<TextDate> TDList;
+	private JPanel panel_2;
 
 	public PrivateChatRoom(User user, User another) {
 		this.user = user;
@@ -73,30 +77,16 @@ public class PrivateChatRoom extends JFrame {
 		JTextArea textArea = new JTextArea();
 		panel_1.add(textArea, BorderLayout.CENTER);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		getContentPane().add(scrollPane, BorderLayout.CENTER);
-
-		JPanel panel_2 = new JPanel();
-		scrollPane.setViewportView(panel_2);
+		panel_2 = new JPanel();
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+
+		JScrollPane scrollPane = new JScrollPane(panel_2);
+
+		add(scrollPane, BorderLayout.CENTER);
 		if (TDList != null) {
-			for (int i = 0; i < TDList.size(); i++) {
-				JLabel label = new JLabel(TDList.get(i).getText());
-				if (TDList.get(i).getSender_id().equals(user.getId())) {
-					label.setHorizontalAlignment(SwingConstants.RIGHT);
-				}
+			for (TextDate sen : TDList) {
 
-				Dimension preferredSize = new Dimension(label.getPreferredSize());
-				// preferredSize.height = 200; // 원하는 세로 크기로 조절
-				label.setPreferredSize(preferredSize);
-
-				// 가로 길이 창에 맞추기
-				label.setMaximumSize(new Dimension(Integer.MAX_VALUE, label.getPreferredSize().height));
-				// 테두리 표현
-				label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-				panel_2.add(label);
+				addChat(sen.getText(), user.getId().equals(sen.getSender_id()), sen.getTime());
 			}
 		}
 	}
@@ -104,6 +94,7 @@ public class PrivateChatRoom extends JFrame {
 	private void showGUI() {
 		setSize(450, 500);
 		setVisible(true);
+		setLocationRelativeTo(null);
 
 	}
 
@@ -137,6 +128,65 @@ public class PrivateChatRoom extends JFrame {
 
 	}
 
-	 
+	private void addChat(String message, boolean sentByMe, Timestamp time) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+		String time1 = sdf.format(time);
+
+		// 문자열을 10자씩 나누어 처리
+		int startIndex = 0;
+		while (startIndex < message.length()) {
+			int endIndex = Math.min(startIndex + 10, message.length());
+			String subMessage = message.substring(startIndex, endIndex);
+			startIndex = endIndex;
+			// 새로운 패널을 생성하여 라벨들을 추가
+			JPanel messagePanel = new JPanel();
+			messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
+//			messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+			// 메시지를 담은 JLabel 생성
+			JLabel subMessageLabel = new JLabel(subMessage);
+//			setBlackBorder(subMessageLabel);
+
+			// 패널에 라벨 추가
+			// 시간을 담은 JLabel 생성
+			JLabel timeLabel = new JLabel("[" + time1 + "]");
+//			setBlackBorder(timeLabel);
+
+			// 메시지를 오른쪽에 보내는 경우
+			if (sentByMe) {
+				messagePanel.add(Box.createHorizontalGlue());
+				if(startIndex>=message.length()) {
+				messagePanel.add(timeLabel);
+				}
+				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+				messagePanel.add(subMessageLabel);
+			} else { // 메시지를 왼쪽에서 받는 경우
+				messagePanel.add(subMessageLabel);
+				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+				if(startIndex>=message.length()) {
+				messagePanel.add(timeLabel);
+				}
+				messagePanel.add(Box.createHorizontalGlue());
+			}
+
+			// 현재 텍스트에 추가
+			panel_2.add(messagePanel);
+
+			// 다음 부분 처리를 위해 시작 인덱스 갱신
+			
+		}
+
+		// 스크롤을 자동으로 내려가게끔
+		scrollDown();
+	}
+
+//	private void setBlackBorder(JLabel label) {
+//		label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//	}
+
+	private void scrollDown() {
+		JScrollBar verticalScrollBar = ((JScrollPane) panel_2.getParent().getParent()).getVerticalScrollBar();
+		verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+	}
 
 }
