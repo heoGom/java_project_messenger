@@ -48,7 +48,7 @@ public class MainPage extends JFrame {
 
 	}
 
-	private void changelbl() {
+	public void changelbl() {
 		nick_lbl.setText(user.nick);
 		picture_lbl.setIcon(user.image);
 	}
@@ -122,7 +122,7 @@ public class MainPage extends JFrame {
 							JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 					if (optionSelect == 0) {
 						if (user.getPw().equals(pwField.getText())) {
-							MyPage myPage = new MyPage();
+							MyPage myPage = new MyPage(user);
 							myPage.show();
 							break;
 						} else {
