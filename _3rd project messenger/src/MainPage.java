@@ -26,6 +26,7 @@ public class MainPage extends JFrame {
 	private JButton myprofilebtn;
 	private JButton logoutbtn;
 	
+	MembershipDAO mdao = new MembershipDAO();
 
 	public MainPage(User user) {
 		this.user = user;
@@ -40,7 +41,7 @@ public class MainPage extends JFrame {
 		setSize(469, 574);
 		setVisible(true);
 		setLocationRelativeTo(null);
-
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public void changelbl() {
@@ -146,7 +147,15 @@ public class MainPage extends JFrame {
 		logoutbtn = new JButton("로그아웃 필요 하겠지?");
 		logoutbtn.setBounds(27, 469, 256, 23);
 		getContentPane().add(logoutbtn);
-
+		logoutbtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Login login = new Login();
+				login.setVisible(true);
+				mdao.resetStatus(user.id);
+			}
+		});
 	}
 
 }

@@ -84,8 +84,10 @@ public class Login extends JFrame {
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
+					membershipDAO.changeStatus(textField.getText());
 					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
+					System.out.println(user.nick);
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
 					loginbtn.setEnabled(false);
