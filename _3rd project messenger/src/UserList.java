@@ -26,7 +26,7 @@ public class UserList extends JFrame {
 	MainPage mainPage;
 	MembershipDAO membershipDAO;
 
-	private JLabel lbl2;
+	public JLabel lbl2;
 
 	private List<JLabel> lbl2List = new ArrayList<>();
 
@@ -96,6 +96,8 @@ public class UserList extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				readStatus();
+				User.list.clear();
+				user.readAllUser();
 			}
 		});
 	}

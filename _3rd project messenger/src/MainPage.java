@@ -71,6 +71,7 @@ public class MainPage extends JFrame {
 				user.readAllUser();
 				UserList userList = new UserList(user);
 				userList.setVisible(true);
+				userList.readStatus();
 			}
 		});
 		
@@ -83,7 +84,6 @@ public class MainPage extends JFrame {
 		
 	}
 	
-
 	private void extracted() {
 		getContentPane().setLayout(null);
 
