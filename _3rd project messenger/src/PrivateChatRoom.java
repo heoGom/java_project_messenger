@@ -30,6 +30,7 @@ public class PrivateChatRoom extends JFrame {
 	private User another;
 	private List<TextDate> TDList;
 	private JPanel panel_2;
+	private ChatClient chatClient;
 
 	public PrivateChatRoom(User user, User another) {
 		this.user = user;
@@ -38,6 +39,7 @@ public class PrivateChatRoom extends JFrame {
 		TDList = readDB();
 		extracted();
 		showGUI();
+		chatClient = new ChatClient("192.168.0.100", 12345);
 
 	}
 
@@ -141,30 +143,30 @@ public class PrivateChatRoom extends JFrame {
 			// 새로운 패널을 생성하여 라벨들을 추가
 			JPanel messagePanel = new JPanel();
 			messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
-//			messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			// messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 			// 메시지를 담은 JLabel 생성
 			JLabel subMessageLabel = new JLabel(subMessage);
-//			setBlackBorder(subMessageLabel);
+			// setBlackBorder(subMessageLabel);
 
 			// 패널에 라벨 추가
 			// 시간을 담은 JLabel 생성
 			JLabel timeLabel = new JLabel("[" + time1 + "]");
-//			setBlackBorder(timeLabel);
+			// setBlackBorder(timeLabel);
 
 			// 메시지를 오른쪽에 보내는 경우
 			if (sentByMe) {
 				messagePanel.add(Box.createHorizontalGlue());
-				if(startIndex>=message.length()) {
-				messagePanel.add(timeLabel);
+				if (startIndex >= message.length()) {
+					messagePanel.add(timeLabel);
 				}
 				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 				messagePanel.add(subMessageLabel);
 			} else { // 메시지를 왼쪽에서 받는 경우
 				messagePanel.add(subMessageLabel);
 				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
-				if(startIndex>=message.length()) {
-				messagePanel.add(timeLabel);
+				if (startIndex >= message.length()) {
+					messagePanel.add(timeLabel);
 				}
 				messagePanel.add(Box.createHorizontalGlue());
 			}
@@ -173,16 +175,16 @@ public class PrivateChatRoom extends JFrame {
 			panel_2.add(messagePanel);
 
 			// 다음 부분 처리를 위해 시작 인덱스 갱신
-			
+
 		}
 
 		// 스크롤을 자동으로 내려가게끔
 		scrollDown();
 	}
 
-//	private void setBlackBorder(JLabel label) {
-//		label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-//	}
+	// private void setBlackBorder(JLabel label) {
+	// label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	// }
 
 	private void scrollDown() {
 		JScrollBar verticalScrollBar = ((JScrollPane) panel_2.getParent().getParent()).getVerticalScrollBar();
