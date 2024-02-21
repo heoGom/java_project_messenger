@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JLabel;
+
 public class MembershipDAO {
 
 	private Membership membership;
@@ -96,19 +98,5 @@ public class MembershipDAO {
 		}
 	}
 
-	public void readStatus(int status) {
-		String sql = "select * from jae.user where status = ?";
-		try (Connection conn = MySqlConnectionProvider.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setInt(1, status);
-
-			try (ResultSet rs = stmt.executeQuery();) {
-				while(rs.next()) {
-					rs.getInt("status");
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	
 }

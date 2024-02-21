@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class User {
 	String id = null;
@@ -14,6 +15,7 @@ public class User {
 	ImageIcon image = null;
 	static List<User> list = new ArrayList<>();
 	int status;
+	
 
 	public User() {
 	}
@@ -25,6 +27,8 @@ public class User {
 		this.nick = nick;
 		this.image = image;
 	}
+
+	
 
 	public int getStatus() {
 		return status;
