@@ -110,6 +110,7 @@ public class User {
 	}
 
 	public void readAllUser2() {
+
 	      String sql = "select * from jae.user;";
 	      try (Connection conn = MySqlConnectionProvider.getConnection();
 	            Statement stmt = conn.createStatement();
@@ -138,3 +139,4 @@ public class User {
 	      }
 	   }
 }
+		
