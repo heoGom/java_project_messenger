@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 public class MainPage extends JFrame {
-	private JLabel nick_lbl;
-	private JLabel picture_lbl;
+	public JLabel nick_lbl;
+	public JLabel picture_lbl;
 	User user;
 
 	public JButton userListbtn;
@@ -119,8 +119,9 @@ public class MainPage extends JFrame {
 							JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 					if (optionSelect == 0) {
 						if (user.getPw().equals(pwField.getText())) {
+							dispose();
 							MyPage myPage = new MyPage(user);
-							myPage.show();
+							myPage.setVisible(true);
 							break;
 						} else {
 							JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.", "경고", JOptionPane.ERROR_MESSAGE);
