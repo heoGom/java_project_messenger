@@ -44,7 +44,7 @@
 			btnNickCh.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					user.readAllUser();
+					user.readAllUser2();
 					JDialog dialog = new JDialog();
 					dialog.setTitle("닉네임 변경");
 					dialog.setSize(400, 300);

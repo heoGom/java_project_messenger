@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -75,33 +76,65 @@ public class User {
 		return "User [id=" + id + ", pw=" + pw + ", nick=" + nick + ", image=" + image + "]";
 	}
 
-	public void readAllUser() {
-		String sql = "select * from jae.user;";
-		try (Connection conn = MySqlConnectionProvider.getConnection();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
+	public void readAllUser(String nickname) {
+	    String sql = "SELECT * FROM jae.user WHERE nickname != ?";
+	    try (Connection conn = MySqlConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			while (rs.next()) {
-				String id = rs.getString("id");
-				String pw = rs.getString("password");
-				String nick = rs.getString("nickname");
-				byte[] imageBytes = rs.getBytes("profilePhoto");
-				ImageIcon image = (imageBytes != null) ? new ImageIcon(imageBytes) : null;
+	        pstmt.setString(1, nickname); // 물음표에 해당하는 값을 설정
 
-				User user = new User();
-				user.setId(id);
-				user.setPw(pw);
-				user.setNick(nick);
-				user.setImage(image);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                String id = rs.getString("id");
+	                String pw = rs.getString("password");
+	                String nick = rs.getString("nickname");
+	                byte[] imageBytes = rs.getBytes("profilePhoto");
+	                ImageIcon image = (imageBytes != null) ? new ImageIcon(imageBytes) : null;
 
-				list.add(user);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		for (User user : list) {
-			System.out.println(user);
-		}
+	                User user = new User();
+	                user.setId(id);
+	                user.setPw(pw);
+	                user.setNick(nick);
+	                user.setImage(image);
+
+	                list.add(user);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    for (User user : list) {
+	        System.out.println(user);
+	    }
 	}
 
+	public void readAllUser2() {
+	      String sql = "select * from jae.user;";
+	      try (Connection conn = MySqlConnectionProvider.getConnection();
+	            Statement stmt = conn.createStatement();
+	            ResultSet rs = stmt.executeQuery(sql)) {
+
+	         while (rs.next()) {
+	            String id = rs.getString("id");
+	            String pw = rs.getString("password");
+	            String nick = rs.getString("nickname");
+	            byte[] imageBytes = rs.getBytes("profilePhoto");
+	            ImageIcon image = (imageBytes != null) ? new ImageIcon(imageBytes) : null;
+
+	            User user = new User();
+	            user.setId(id);
+	            user.setPw(pw);
+	            user.setNick(nick);
+	            user.setImage(image);
+
+	            list.add(user);
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }
+	      for (User user : list) {
+	         System.out.println(user);
+	      }
+	   }
 }

@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,17 +19,13 @@ public class MainPage extends JFrame {
 	private JLabel picture_lbl;
 	User user;
 
-	
-	private JButton userListbtn;
+	public JButton userListbtn;
 	private JButton chatRoomListbtn;
 	private JButton votebtn;
 	private JButton minigame;
 	private JButton myprofilebtn;
 	private JButton logoutbtn;
-
 	
-
-
 
 	public MainPage(User user) {
 		this.user = user;
@@ -49,10 +44,9 @@ public class MainPage extends JFrame {
 	}
 
 	public void changelbl() {
-		nick_lbl.setText(user.nick);
+		nick_lbl.setText(user.getNick());
 		picture_lbl.setIcon(user.image);
 	}
-
 
 	private void listenerAll() {
 
@@ -68,22 +62,25 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				User.list.clear();
-				user.readAllUser();
+				user.readAllUser(user.getNick());
 				UserList userList = new UserList(user);
+				int mainPageX = getX();
+				int mainPageY = getY();
+				userList.setLocation(mainPageX - userList.getWidth(), mainPageY);
 				userList.setVisible(true);
 				userList.readStatus();
 			}
 		});
-		
+
 		myprofilebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
-		
+
 	}
-	
+
 	private void extracted() {
 		getContentPane().setLayout(null);
 
@@ -106,7 +103,6 @@ public class MainPage extends JFrame {
 		myprofilebtn = new JButton("마이프로필");
 		myprofilebtn.setBounds(326, 10, 97, 23);
 		getContentPane().add(myprofilebtn);
-
 
 		myprofilebtn.addActionListener(new ActionListener() {
 			@Override
