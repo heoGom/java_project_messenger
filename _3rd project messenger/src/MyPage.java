@@ -1,173 +1,282 @@
-	import javax.swing.JFrame;
-	import javax.swing.JLabel;
-	import javax.swing.JOptionPane;
-	import javax.swing.JPanel;
-	import javax.swing.JPasswordField;
-	import javax.swing.JTextField;
-	import javax.swing.JButton;
-	import javax.swing.JDialog;
-	import javax.swing.SwingConstants;
-	
-	import java.awt.BorderLayout;
-	import java.awt.Color;
-	import java.awt.Dialog;
-	import java.awt.TextField;
-	import java.awt.event.ActionListener;
-	import java.util.ArrayList;
-	import java.util.List;
-	import java.awt.event.ActionEvent;
-	import java.awt.Font;
-	
-	public class MyPage extends JFrame {
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.TextField;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+
+public class MyPage extends JFrame {
 //		MainPage mainpage;
-		User user;
-	
-		public MyPage(User user) {
-			this.user = user;
-			getContentPane().setLayout(null);
-	
-			setTitle("마이 프로필");
-			JLabel Myimage = new JLabel("     내 사진");
-			Myimage.setBounds(62, 38, 87, 111);
-			getContentPane().add(Myimage);
-	
-			JLabel UserNick = new JLabel("내 별명");
-			UserNick.setBounds(314, 86, 60, 15);
-			getContentPane().add(UserNick);
-	
-			JButton btnNickCh = new JButton("닉네임 변경");
-			btnNickCh.setFont(new Font("굴림", Font.BOLD, 11));
-			btnNickCh.setBounds(22, 183, 120, 30);
-			getContentPane().add(btnNickCh);
-			btnNickCh.setBackground(Color.white);
-			btnNickCh.setBorderPainted(false);
-			btnNickCh.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					user.readAllUser();
-					JDialog dialog = new JDialog();
-					dialog.setTitle("닉네임 변경");
-					dialog.setSize(400, 300);
-					dialog.setModal(true);
-					JPanel panel = new JPanel();
-					panel.setLayout(null);
-					JLabel label = new JLabel("현재 닉네임");
-					JLabel currentNick = new JLabel(user.getNick());
-					JLabel changeNick = new JLabel("변경할 닉네임을 입력해주세요.");
-					JTextField changetx = new JTextField(20);
-					label.setBounds(100, 30, 200, 50);
-					currentNick.setBounds(200, 30, 200, 50);
-					changeNick.setBounds(103, 100, 200, 20);
-					changetx.setBounds(95, 130, 200, 20);
-					panel.add(changeNick);
-					panel.add(currentNick);
-					panel.add(changetx);
-					panel.add(label);
-					JButton btnApply = new JButton("적용");
-					btnApply.setBounds(40, 200, 100, 30);
-					panel.add(btnApply);
-					JButton btnCancle = new JButton("취소");
-					btnCancle.setBounds(240, 200, 100, 30);
-					panel.add(btnCancle);
-					dialog.add(panel, BorderLayout.CENTER);
-					dialog.setLocationRelativeTo(null);
-	
-					btnApply.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							if (changetx.getText().isEmpty()) {
-								JOptionPane.showMessageDialog(null, "닉네임을 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
-							} else {
-								boolean Check = false;
-								for (User user : user.list) {
-									if (user.nick.equals(changetx.getText())) {
-										Check = true;
-										break;
-									}
-								}
-								if (Check) {
-									JOptionPane.showMessageDialog(null, "이미 사용중인 닉네임 입니다.", "경고",
-											JOptionPane.ERROR_MESSAGE);
-								} else {
-									user.setNick(changetx.getText());
-//										mainpage.changelbl();										
-									MyPageDAO dao = new MyPageDAO();
-									dao.changeNick(changetx.getText(), user.id);
-									JOptionPane.showMessageDialog(null, "닉네임이 변경되었습니다.", "알림",
-											JOptionPane.INFORMATION_MESSAGE);
-									dialog.dispose();
+	User user;
+
+	public MyPage(User user) {
+		this.user = user;
+		getContentPane().setLayout(null);
+
+		setTitle("마이 프로필");
+		JLabel Myimage = new JLabel("     내 사진");
+		Myimage.setBounds(62, 38, 87, 111);
+		getContentPane().add(Myimage);
+
+		JLabel UserNick = new JLabel("내 별명");
+		UserNick.setBounds(314, 86, 60, 15);
+		getContentPane().add(UserNick);
+
+		JButton btnNickCh = new JButton("닉네임 변경");
+		btnNickCh.setFont(new Font("굴림", Font.BOLD, 11));
+		btnNickCh.setBounds(22, 183, 120, 30);
+		getContentPane().add(btnNickCh);
+		btnNickCh.setBackground(Color.white);
+		btnNickCh.setBorderPainted(false);
+		btnNickCh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				user.readAllUser2();
+				JDialog dialog = new JDialog();
+				dialog.setTitle("닉네임 변경");
+				dialog.setSize(400, 300);
+				dialog.setModal(true);
+				JPanel panel = new JPanel();
+				panel.setLayout(null);
+				JLabel label = new JLabel("현재 닉네임");
+				JLabel currentNick = new JLabel(user.getNick());
+				JLabel changeNick = new JLabel("변경할 닉네임을 입력해주세요.");
+				JTextField changetx = new JTextField(20);
+				label.setBounds(100, 30, 200, 50);
+				currentNick.setBounds(200, 30, 200, 50);
+				changeNick.setBounds(103, 100, 200, 20);
+				changetx.setBounds(95, 130, 200, 20);
+				panel.add(changeNick);
+				panel.add(currentNick);
+				panel.add(changetx);
+				panel.add(label);
+				JButton btnApply = new JButton("적용");
+				btnApply.setBounds(40, 200, 100, 30);
+				panel.add(btnApply);
+				JButton btnCancle = new JButton("취소");
+				btnCancle.setBounds(240, 200, 100, 30);
+				panel.add(btnCancle);
+				dialog.add(panel, BorderLayout.CENTER);
+				dialog.setLocationRelativeTo(null);
+
+				btnApply.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (changetx.getText().isEmpty()) {
+							JOptionPane.showMessageDialog(null, "닉네임을 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
+						} else {
+							boolean Check = false;
+							for (User user : user.list) {
+								if (user.nick.equals(changetx.getText())) {
+									Check = true;
+									break;
 								}
 							}
+							if (Check) {
+								JOptionPane.showMessageDialog(null, "이미 사용중인 닉네임 입니다.", "경고",
+										JOptionPane.ERROR_MESSAGE);
+							} else {
+								user.setNick(changetx.getText());
+//										mainpage.changelbl();										
+								MyPageDAO dao = new MyPageDAO();
+								dao.changeNick(changetx.getText(), user.id);
+								JOptionPane.showMessageDialog(null, "닉네임이 변경되었습니다.", "알림",
+										JOptionPane.INFORMATION_MESSAGE);
+								dialog.dispose();
+								new Login();
+							}
 						}
-					});
-					btnCancle.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							dialog.dispose();
-							System.out.println("뿅뿅");
-						}
-					});
-					dialog.setVisible(true); // 모달이 적용되면 setVisible이 아래흐름으로 안흘러감.
-				}
-			});
-	
-			JButton btnPwCh = new JButton("비밀번호 변경");
-			btnPwCh.setFont(new Font("굴림", Font.BOLD, 11));
-			btnPwCh.setBounds(162, 183, 120, 30);
-			getContentPane().add(btnPwCh);
-			btnPwCh.setBackground(Color.white);
-			btnPwCh.setBorderPainted(false);
-			btnPwCh.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					JDialog dialog = new JDialog();
-					dialog.setTitle("비밀번호 변경");
-					dialog.setSize(400, 300);
-					dialog.setModal(true);
-					JPanel panel = new JPanel();
-					panel.setLayout(null);
-					JLabel label = new JLabel("새 비밀번호를 입력");
-					JPasswordField pwfield = new JPasswordField(20);
-					JLabel label2 = new JLabel("새 비밀번호 재확인");
-					JPasswordField pwfield2 = new JPasswordField(20);
-					JButton btnChange = new JButton("변경");
-					JButton btnCancle = new JButton("취소");
-					
-					panel.add(label);
-					panel.add(pwfield);
-					panel.add(label2);
-					panel.add(pwfield2);
-					panel.add(btnChange);
-					panel.add(btnCancle);
-					dialog.add(panel);
-					label.setBounds(20, 20, 200, 20);
-					pwfield.setBounds(150, 20, 200, 20);
-					label2.setBounds(20, 40, 300, 20);
-					btnChange.setBounds(40, 200, 100, 30);
-					dialog.add(panel, BorderLayout.CENTER);
-					dialog.setLocationRelativeTo(null);
+					}
+				});
+				btnCancle.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						dialog.dispose();
+						System.out.println("뿅뿅");
+					}
+				});
+				dialog.setVisible(true); // 모달이 적용되면 setVisible이 아래흐름으로 안흘러감.
+			}
+		});
 
-					dialog.setVisible(true);
+		JButton btnPwCh = new JButton("비밀번호 변경");
+		btnPwCh.setFont(new Font("굴림", Font.BOLD, 11));
+		btnPwCh.setBounds(162, 183, 120, 30);
+		getContentPane().add(btnPwCh);
+		btnPwCh.setBackground(Color.white);
+		btnPwCh.setBorderPainted(false);
+		btnPwCh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = new JDialog();
+				dialog.setTitle("비밀번호 변경");
+				dialog.setSize(400, 300);
+				dialog.setModal(true);
+				JPanel panel = new JPanel();
+				panel.setLayout(null);
+				JLabel label = new JLabel("새 비밀번호를 입력");
+				JPasswordField pwfield = new JPasswordField(20);
+				JLabel label2 = new JLabel("새 비밀번호 재확인");
+				JPasswordField pwfield2 = new JPasswordField(20);
+				JButton btnChange = new JButton("변경");
+				JButton btnCancle = new JButton("취소");
+				panel.add(label);
+				panel.add(pwfield);
+				panel.add(label2);
+				panel.add(pwfield2);
+				panel.add(btnChange);
+				panel.add(btnCancle);
+				dialog.add(panel);
+				label.setBounds(20, 60, 150, 20);
+				pwfield.setBounds(150, 60, 200, 20);
+				label2.setBounds(20, 120, 150, 20);
+				pwfield2.setBounds(150, 120, 200, 20);
+				btnChange.setBounds(40, 200, 100, 30);
+				btnCancle.setBounds(240, 200, 100, 30);
+				dialog.add(panel, BorderLayout.CENTER);
+				dialog.setLocationRelativeTo(null);
+
+				btnChange.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String password1 = new String(pwfield.getPassword());
+						String password2 = new String(pwfield2.getPassword());
+						if (password1.isEmpty() || password2.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
+						} else if (user.getPw().equals(password2)) {
+							JOptionPane.showMessageDialog(null, "전에 비밀번호와 다른비밀번호를 입력하세요.", "경고"
+									, JOptionPane.ERROR_MESSAGE);
+						} else {
+							if (password1.equals(password2)) {
+								JOptionPane.showMessageDialog(null, "비밀번호가 변경되었습니다.", "알림",
+										JOptionPane.INFORMATION_MESSAGE);
+								MyPageDAO dao = new MyPageDAO();
+								dao.changePW(password2, user.id);
+								user.setPw(password2);
+								dialog.dispose();
+							} else {
+								JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.", "경고", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
+				});
+
+				btnCancle.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						dialog.dispose();
+					}
+				});
+
+				dialog.setVisible(true);
+			}
+		});
+
+		JButton btnImageCh = new JButton("프로필사진 변경");
+		btnImageCh.setFont(new Font("굴림", Font.BOLD, 11));
+		btnImageCh.setBounds(305, 183, 125, 30);
+		getContentPane().add(btnImageCh);
+		btnImageCh.setBackground(Color.white);
+		btnImageCh.setBorderPainted(false);
+		
+		btnImageCh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = new JDialog();
+				JFrame frame = new JFrame();
+				dialog.setTitle("프로필 사진 변경");
+				dialog.setSize(400, 300);
+				dialog.setModal(true);
+				JPanel panel = new JPanel();
+				panel.setLayout(null);
+				JLabel label = new JLabel("현재 사진");
+				JLabel label2 = new JLabel(user.image);
+				panel.add(label);
+				panel.add(label2);
+				JButton btnfindPhoto = new JButton("사진 찾기");
+				JButton btnOK = new JButton("적용");
+				JButton btnReturn = new JButton("되돌리기");
+				panel.add(btnfindPhoto);
+				panel.add(btnOK);
+				panel.add(btnReturn);
+				label.setBounds(65, 0, 100, 100);
+				label2.setBounds(20, 70, 150, 150);
+				if (user.getImage() == null) {
+					label2.setText("사진이 없습니다.");
 				}
-			});
-	
-			JButton btnImageCh = new JButton("프로필사진 변경");
-			btnImageCh.setFont(new Font("굴림", Font.BOLD, 11));
-			btnImageCh.setBounds(305, 183, 125, 30);
-			getContentPane().add(btnImageCh);
-			btnImageCh.setBackground(Color.white);
-			btnImageCh.setBorderPainted(false);
-	
-			showGUI();
-			setResizable(false);
-			setLocationRelativeTo(null);
-		}
-	
-		private void showGUI() {
-			setSize(469, 300);
-			setVisible(true);
-	
-		}
-	
+				btnfindPhoto.setBounds(190, 75, 100, 30);
+				btnOK.setBounds(190, 120, 90, 30);
+				btnReturn.setBounds(190, 160, 90, 30);
+				dialog.add(panel);
+				dialog.setLocationRelativeTo(null);
+				btnfindPhoto.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JFileChooser fileChooser = new JFileChooser();
+						FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "png", "jpeg", "gif");
+						fileChooser.setFileFilter(filter);
+						fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+						fileChooser.setMultiSelectionEnabled(true);
+						int result = fileChooser.showOpenDialog(frame);
+
+						if (result == JFileChooser.APPROVE_OPTION) {
+							File[] selectedFiles = fileChooser.getSelectedFiles();
+							for (File file : selectedFiles) {
+								System.out.println("Selected File: " + file.getAbsolutePath());
+								label.setText("바뀐 사진");
+								label2.setIcon(new ImageIcon(file.getAbsolutePath()));
+							}
+						}
+					}
+				});
+				
+				btnOK.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						MyPageDAO dao = new MyPageDAO();
+						dao.changeImage(label2.getText(), user.id);
+						
+					}
+				});
+				
+				btnReturn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+					}
+				});
+				
+				dialog.setVisible(true);
+			}
+		});
+		
+		showGUI();
+		setResizable(false);
+		setLocationRelativeTo(null);
 	}
+
+	private void showGUI() {
+		setSize(469, 300);
+		setVisible(true);
+
+	}
+
+}

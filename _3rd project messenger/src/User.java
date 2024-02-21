@@ -104,4 +104,33 @@ public class User {
 		}
 	}
 
+	public void readAllUser2() {
+		String sql = "select * from jae.user;";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String pw = rs.getString("password");
+				String nick = rs.getString("nickname");
+				byte[] imageBytes = rs.getBytes("profilePhoto");
+				ImageIcon image = (imageBytes != null) ? new ImageIcon(imageBytes) : null;
+
+				User user = new User();
+				user.setId(id);
+				user.setPw(pw);
+				user.setNick(nick);
+				user.setImage(image);
+
+				list.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		for (User user : list) {
+			System.out.println(user);
+		}
+	}
+
 }
