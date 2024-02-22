@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.TextField;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Graphics2D;
 
 public class MyPage extends JFrame {
 	User user;
@@ -270,12 +272,16 @@ public class MyPage extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						// 이미지 아이콘을 가져옵니다.
 						ImageIcon icon = (ImageIcon) label2.getIcon();
+						Image image = icon.getImage();
+						BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+						Graphics2D g2d = bufferedImage.createGraphics();
+						g2d.drawImage(image, 0, 0, null);
+						g2d.dispose();
+						icon = new ImageIcon(bufferedImage);
 						// 사용자 ID를 가져옵니다.
 						String userId = user.getId();
-						// DAO 객체를 생성하여 이미지를 변경합니다.
 						MyPageDAO dao = new MyPageDAO();
 						if (icon.getImage() != null) {
-							// 성공적으로 데이터베이스에 저장되었음을 알리는 메시지를 표시합니다.
 							user.setImage(icon);
 							Image scaledImage = icon.getImage().getScaledInstance(mainpage.picture_lbl.getWidth(),
 									mainpage.picture_lbl.getHeight(), Image.SCALE_SMOOTH);
@@ -324,14 +330,9 @@ public class MyPage extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	public void closeWindow() {
-		this.dispose(); // 창을 닫음
-	}
-
 	private void showGUI() {
 		setSize(469, 300);
 		setVisible(true);
 
 	}
-
 }

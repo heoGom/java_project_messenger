@@ -130,7 +130,7 @@ public class Membership extends JFrame {
 						stmt.setString(2, password_pf2.getText());
 						stmt.setString(3, textField_3.getText());
 						stmt.setBytes(4, null);
-
+						
 						if (filePath != null) {
 							BufferedImage originalImage = ImageIO.read(filePath);
 							BufferedImage resizedImage = resizeImage(originalImage, 150, 150);
