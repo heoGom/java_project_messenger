@@ -24,12 +24,15 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PrivateChatRoom extends JFrame {
 	private User user;
 	private User another;
 	private List<TextDate> TDList;
 	private JPanel panel_2;
+
 	private ChatClient chatClient;
 	public JTextArea textArea;
 	public JButton sendbtn;
@@ -41,7 +44,7 @@ public class PrivateChatRoom extends JFrame {
 		TDList = readDB();
 		extracted();
 		showGUI();
-		chatClient = new ChatClient(12345);
+		
 
 	}
 
@@ -75,8 +78,8 @@ public class PrivateChatRoom extends JFrame {
 		sendbtn = new JButton("\uC804   \uC1A1");
 		panel_3.add(sendbtn, BorderLayout.EAST);
 
-		JButton btnNewButton_1 = new JButton("\uD30C\uC77C");
-		panel_3.add(btnNewButton_1, BorderLayout.WEST);
+		
+		
 
 		textArea = new JTextArea();
 		panel_1.add(textArea, BorderLayout.CENTER);
@@ -86,13 +89,14 @@ public class PrivateChatRoom extends JFrame {
 
 		JScrollPane scrollPane = new JScrollPane(panel_2);
 
-		add(scrollPane, BorderLayout.CENTER);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		if (TDList != null) {
 			for (TextDate sen : TDList) {
 
 				addChat(sen.getText(), user.getId().equals(sen.getSender_id()), sen.getTime());
 			}
 		}
+		
 	}
 
 	private void showGUI() {
@@ -190,6 +194,9 @@ public class PrivateChatRoom extends JFrame {
 	private void scrollDown() {
 		JScrollBar verticalScrollBar = ((JScrollPane) panel_2.getParent().getParent()).getVerticalScrollBar();
 		verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+	}
+	public void addBtnListener(ActionListener listener) {
+		sendbtn.addActionListener(listener);
 	}
 
 }

@@ -83,9 +83,9 @@ public class VoteMainPage extends JFrame {
 			});
 		}
 	}
-	public void readAgendas() {
-		String sql = "select * from jae.agendas;";
-		try(Connection conn = MySqlConnectionProvider.getConnection();
-				Statement stmt = conn.createStatement())
-	}
+//	public void readAgendas() {
+//		String sql = "select * from jae.agendas;";
+//		try(Connection conn = MySqlConnectionProvider.getConnection();
+//				Statement stmt = conn.createStatement())
+//	}
 }

@@ -75,7 +75,7 @@ public class ChatRoomListPage extends JFrame {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					new PrivateChatRoom(user, list.get(INDEX));
+					new PrivateChatClient(user, list.get(INDEX));
 					
 				}
 
