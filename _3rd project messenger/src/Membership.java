@@ -187,12 +187,7 @@ public class Membership extends JFrame {
 			}
 		});
 
-		id_tf.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        idDupbtn.doClick();
-		    }
-		});
+		
 		
 		id_tf.addKeyListener(new KeyAdapter() {
 
@@ -275,12 +270,7 @@ public class Membership extends JFrame {
 			}
 		});
 		
-		textField_3.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        nickDupbtn.doClick();
-		    }
-		});
+	
 		
 		textField_3.addKeyListener(new KeyAdapter() {
 
@@ -367,8 +357,8 @@ public class Membership extends JFrame {
 		getContentPane().setLayout(null);
 
 		pictureLabel = new JLabel();
-		pictureLabel.setText("임시로넣어둔");
-		pictureLabel.setBounds(12, 312, 103, 139);
+		pictureLabel.setText("        사진등록하기");
+		pictureLabel.setBounds(102, 301, 129, 139);
 		getContentPane().add(pictureLabel);
 
 		id_tf = new JTextField();

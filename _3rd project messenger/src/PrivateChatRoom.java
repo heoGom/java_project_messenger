@@ -31,6 +31,8 @@ public class PrivateChatRoom extends JFrame {
 	private List<TextDate> TDList;
 	private JPanel panel_2;
 	private ChatClient chatClient;
+	public JTextArea textArea;
+	public JButton sendbtn;
 
 	public PrivateChatRoom(User user, User another) {
 		this.user = user;
@@ -70,13 +72,13 @@ public class PrivateChatRoom extends JFrame {
 		panel_1.add(panel_3, BorderLayout.SOUTH);
 		panel_3.setLayout(new BorderLayout(0, 0));
 
-		JButton btnNewButton = new JButton("\uC804   \uC1A1");
-		panel_3.add(btnNewButton, BorderLayout.EAST);
+		sendbtn = new JButton("\uC804   \uC1A1");
+		panel_3.add(sendbtn, BorderLayout.EAST);
 
 		JButton btnNewButton_1 = new JButton("\uD30C\uC77C");
 		panel_3.add(btnNewButton_1, BorderLayout.WEST);
 
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		panel_1.add(textArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
@@ -129,7 +131,7 @@ public class PrivateChatRoom extends JFrame {
 
 	}
 
-	private void addChat(String message, boolean sentByMe, Timestamp time) {
+	public void addChat(String message, boolean sentByMe, Timestamp time) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 		String time1 = sdf.format(time);
 

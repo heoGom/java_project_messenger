@@ -73,10 +73,14 @@ public class MainPage extends JFrame {
 			}
 		});
 
-		myprofilebtn.addActionListener(new ActionListener() {
+		votebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				VoteMainPage voteMainPage = new VoteMainPage();
+				int mainPageX = getX();
+				int mainPageY = getY();
+				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth(), mainPageY);
+				voteMainPage.setVisible(true);
 			}
 		});
 
@@ -145,7 +149,7 @@ public class MainPage extends JFrame {
 		nick_lbl.setBounds(105, 14, 88, 20);
 		getContentPane().add(nick_lbl);
 
-		logoutbtn = new JButton("로그아웃 필요 하겠지?");
+		logoutbtn = new JButton("로그아웃");
 		logoutbtn.setBounds(27, 469, 256, 23);
 		getContentPane().add(logoutbtn);
 		logoutbtn.addActionListener(new ActionListener() {
