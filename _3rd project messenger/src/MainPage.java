@@ -138,11 +138,11 @@ public class MainPage extends JFrame {
 		});
 
 		picture_lbl = new JLabel("사진들어갈");
-		picture_lbl.setBounds(12, 14, 81, 15);
+		picture_lbl.setBounds(12, 14, 50, 50);
 		getContentPane().add(picture_lbl);
 
 		nick_lbl = new JLabel("닉네임 들어갈");
-		nick_lbl.setBounds(105, 14, 88, 15);
+		nick_lbl.setBounds(105, 14, 88, 20);
 		getContentPane().add(nick_lbl);
 
 		logoutbtn = new JButton("로그아웃 필요 하겠지?");
