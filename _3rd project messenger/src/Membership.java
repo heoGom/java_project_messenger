@@ -315,6 +315,7 @@ public class Membership extends JFrame {
 
 		return resizedImage;
 	}
+	
 
 	private byte[] imageToByteArray(BufferedImage image) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -39,7 +39,7 @@ public class PrivateChatRoom extends JFrame {
 		TDList = readDB();
 		extracted();
 		showGUI();
-		chatClient = new ChatClient("192.168.0.100", 12345);
+		chatClient = new ChatClient(12345);
 
 	}
 
@@ -119,7 +119,6 @@ public class PrivateChatRoom extends JFrame {
 					Timestamp time = rs.getTimestamp("text_time");
 					TextDate a = new TextDate(sender_id, receiver_id, text, time);
 					td.add(a);
-					System.out.println(a);
 				}
 				return td;
 			}
