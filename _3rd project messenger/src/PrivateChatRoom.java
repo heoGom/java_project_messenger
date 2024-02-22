@@ -33,7 +33,6 @@ public class PrivateChatRoom extends JFrame {
 	private List<TextDate> TDList;
 	private JPanel panel_2;
 
-	private ChatClient chatClient;
 	public JTextArea textArea;
 	public JButton sendbtn;
 

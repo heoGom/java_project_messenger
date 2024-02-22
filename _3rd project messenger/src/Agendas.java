@@ -1,3 +1,9 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Agendas {
 	private String id;
@@ -6,7 +12,11 @@ public class Agendas {
 	private int final_time;
 	private int progress_or_not;
 
-	public Agendas() {}
+	public static List<Agendas> agendaList = new ArrayList<Agendas>();
+	public static List<Agendas> pastAgendaList = new ArrayList<>();
+
+	public Agendas() {
+	}
 
 	public Agendas(String id, String agenda, int regist_time, int final_time, int progress_or_not) {
 		super();
@@ -56,6 +66,35 @@ public class Agendas {
 	public void setProgress_or_not(int progress_or_not) {
 		this.progress_or_not = progress_or_not;
 	}
-	
-	
+
+	public void readAgendas() {
+		String sql = "select * from jae.agendas;";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery()) {
+			while (rs.next()) {
+				String agenda = rs.getString("agenda");
+				String id = rs.getString("id");
+				int progress = rs.getInt("progress_or_not");
+
+				Agendas agendas = new Agendas();
+				if (progress == 1) {
+					agendas.setId(id);
+					agendas.setAgenda(agenda);
+					agendas.setProgress_or_not(progress);
+
+					agendaList.add(agendas);
+				} else {
+					agendas.setId(id);
+					agendas.setAgenda(agenda);
+					agendas.setProgress_or_not(progress);
+					pastAgendaList.add(agendas);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

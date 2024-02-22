@@ -36,13 +36,11 @@ class SharedSessionWithSynchedBlock {
 class ClientPerThread extends Thread {
 	private SharedSessionWithSynchedBlock session;
 	private Socket socket;
-	private UUID uuid;
 	private boolean go = true;
 
 	public ClientPerThread(Socket socket, SharedSessionWithSynchedBlock session) {
 		this.socket = socket;
 		this.session = session;
-		this.uuid = UUID.randomUUID();
 	}
 
 	@Override
@@ -57,7 +55,7 @@ class ClientPerThread extends Thread {
 
 			while (go && !isInterrupted()) {
 				String fromClient = br.readLine();
-				session.sendMessageToAll(uuid.toString());
+				session.sendMessageToAll(fromClient);
 				if (fromClient.equals("Bye Bye")) {
 					throw new InterruptedException("종료");
 				}

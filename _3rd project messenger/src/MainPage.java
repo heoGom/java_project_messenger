@@ -18,6 +18,7 @@ public class MainPage extends JFrame {
 	public JLabel nick_lbl;
 	public JLabel picture_lbl;
 	User user;
+	Agendas agendas;
 
 	public JButton userListbtn;
 	private JButton chatRoomListbtn;
@@ -76,6 +77,7 @@ public class MainPage extends JFrame {
 		votebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				VoteMainPage voteMainPage = new VoteMainPage();
 				int mainPageX = getX();
 				int mainPageY = getY();
