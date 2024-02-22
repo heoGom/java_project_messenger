@@ -29,19 +29,19 @@ public class ClientHandler implements Runnable {
         }
     }
 
-//    @Override
-//    public void run() {
-//        try {
-//            while (true) {
-//                String message = (String) ois.readObject();
-//                saveMessageToDatabase(message);
-//                chatServer.broadcastMessage(message, this);
-//            }
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } finally {
-//            closeConnection();
-//        }
+    @Override
+    public void run() {
+        try {
+            while (true) {
+                String message = (String) ois.readObject();
+                saveMessageToDatabase(message);
+                chatServer.broadcastMessage(message, this);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
     }
 
     public void sendMessage(String message) {
