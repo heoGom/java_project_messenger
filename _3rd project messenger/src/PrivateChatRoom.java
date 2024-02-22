@@ -33,8 +33,7 @@ public class PrivateChatRoom extends JFrame {
 	private List<TextDate> TDList;
 	private JPanel panel_2;
 
-	private ChatClient chatClient;
-	public JTextArea textArea;
+	public JTextArea snedTextArea;
 	public JButton sendbtn;
 
 	public PrivateChatRoom(User user, User another) {
@@ -81,8 +80,8 @@ public class PrivateChatRoom extends JFrame {
 		
 		
 
-		textArea = new JTextArea();
-		panel_1.add(textArea, BorderLayout.CENTER);
+		snedTextArea = new JTextArea();
+		panel_1.add(snedTextArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
