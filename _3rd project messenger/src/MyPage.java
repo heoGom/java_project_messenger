@@ -33,7 +33,8 @@ public class MyPage extends JFrame {
 	User user;
 	private File selectedImageFile;
 	private JLabel nick;
-	private JLabel picture;
+	public JLabel picture;
+	public JLabel currentPhoto;
 
 	public MyPage(User user) {
 		MainPage mainpage = new MainPage(user);
@@ -224,9 +225,9 @@ public class MyPage extends JFrame {
 				JPanel panel = new JPanel();
 				panel.setLayout(null);
 				JLabel label = new JLabel("현재 사진");
-				JLabel label2 = new JLabel(user.image);
+				currentPhoto = new JLabel(user.image);
 				panel.add(label);
-				panel.add(label2);
+				panel.add(currentPhoto);
 				JButton btnfindPhoto = new JButton("사진 찾기");
 				JButton btnOK = new JButton("적용");
 				JButton btnReturn = new JButton("되돌리기");
@@ -236,16 +237,23 @@ public class MyPage extends JFrame {
 				panel.add(btnReturn);
 				panel.add(btnDelete);
 				label.setBounds(65, 0, 100, 100);
-				label2.setBounds(20, 70, 150, 150);
-				if (user.getImage() == null) {
-					label2.setText("사진이 없습니다.");
-				}
+				currentPhoto.setBounds(20, 70, 150, 150);
 				btnfindPhoto.setBounds(190, 75, 100, 30);
 				btnOK.setBounds(190, 120, 90, 30);
 				btnReturn.setBounds(190, 160, 90, 30);
 				btnDelete.setBounds(190, 200, 150, 30);
 				dialog.getContentPane().add(panel);
 				dialog.setLocationRelativeTo(null);
+				if (user.getImage() == null) {
+					currentPhoto.setText("사진이 없습니다.");
+				} else {
+					ImageIcon icon = user.getImage();
+					Image scaledImage = icon.getImage().getScaledInstance(
+							currentPhoto.getWidth(), currentPhoto.getHeight(), Image.SCALE_SMOOTH);
+					ImageIcon scaledIcon = new ImageIcon(scaledImage);
+					currentPhoto.setIcon(scaledIcon);
+							
+				}
 				btnfindPhoto.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -255,15 +263,19 @@ public class MyPage extends JFrame {
 						fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 						fileChooser.setMultiSelectionEnabled(true);
 						int result = fileChooser.showOpenDialog(frame);
-
 						if (result == JFileChooser.APPROVE_OPTION) {
 							File[] selectedFiles = fileChooser.getSelectedFiles();
 							for (File file : selectedFiles) {
 								System.out.println("Selected File: " + file.getAbsolutePath());
 								label.setText("바뀐 사진");
-								label2.setIcon(new ImageIcon(file.getAbsolutePath()));
+								currentPhoto.setIcon(new ImageIcon(file.getAbsolutePath()));
 							}
 						}
+						ImageIcon icon = (ImageIcon) currentPhoto.getIcon();
+						Image scaledImage = icon.getImage().getScaledInstance(
+								currentPhoto.getWidth(), currentPhoto.getHeight(), Image.SCALE_SMOOTH);
+						ImageIcon scaledIcon = new ImageIcon(scaledImage);
+						currentPhoto.setIcon(scaledIcon);
 					}
 				});
 
@@ -271,7 +283,7 @@ public class MyPage extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// 이미지 아이콘을 가져옵니다.
-						ImageIcon icon = (ImageIcon) label2.getIcon();
+						ImageIcon icon = (ImageIcon) currentPhoto.getIcon();
 						Image image = icon.getImage();
 						BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 						Graphics2D g2d = bufferedImage.createGraphics();
@@ -286,7 +298,7 @@ public class MyPage extends JFrame {
 							Image scaledImage = icon.getImage().getScaledInstance(mainpage.picture_lbl.getWidth(),
 									mainpage.picture_lbl.getHeight(), Image.SCALE_SMOOTH);
 							ImageIcon scaledIcon = new ImageIcon(scaledImage);
-							picture.setIcon(label2.getIcon());
+							picture.setIcon(currentPhoto.getIcon());
 							mainpage.picture_lbl.setIcon(scaledIcon);
 							dao.changeImage(icon.getImage(), userId);
 							JOptionPane.showMessageDialog(null, "이미지가 성공적으로 저장되었습니다.", "성공",
@@ -301,15 +313,15 @@ public class MyPage extends JFrame {
 				btnDelete.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						label2.setIcon(null);
-						label2.setText("기본사진");
+						currentPhoto.setIcon(null);
+						currentPhoto.setText("기본사진");
 						MyPageDAO dao = new MyPageDAO();
 						dao.deleteImage(user.id);
 						JOptionPane.showMessageDialog(null, "이미지가 성공적으로 삭제되었습니다.", "성공",
 								JOptionPane.INFORMATION_MESSAGE);
 						user.setImage(null);
-						mainpage.picture_lbl.setIcon(label2.getIcon());
-						picture.setIcon(label2.getIcon());
+						mainpage.picture_lbl.setIcon(currentPhoto.getIcon());
+						picture.setIcon(currentPhoto.getIcon());
 						dialog.dispose();
 					}
 				});
@@ -318,7 +330,7 @@ public class MyPage extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						label.setText("현재 사진");
-						label2.setIcon(user.image);
+						currentPhoto.setIcon(user.image);
 					}
 				});
 				dialog.setVisible(true);

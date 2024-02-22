@@ -70,7 +70,6 @@ public class MyPageDAO {
         if (icon instanceof BufferedImage) {
             return (BufferedImage) icon;
         }
-
         // BufferedImage로 변환합니다.
         BufferedImage bufferedImage = new BufferedImage(
                 icon.getWidth(null), icon.getHeight(null), BufferedImage.TYPE_INT_RGB);
