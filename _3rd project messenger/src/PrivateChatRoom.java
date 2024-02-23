@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerAdapter;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -37,6 +39,7 @@ public class PrivateChatRoom extends JFrame {
 	public JTextArea sendTextArea;
 	public JButton sendbtn;
 	private JScrollPane scrollPane;
+	private JLabel another_Pt_Lbl;
 
 	public PrivateChatRoom(User user, User another) {
 		this.user = user;
@@ -56,10 +59,17 @@ public class PrivateChatRoom extends JFrame {
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
 
-		JLabel another_Pt_Lbl = new JLabel("\uC0AC\uC9C4");
+		another_Pt_Lbl = new JLabel(" ");
 		another_Pt_Lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
 		another_Pt_Lbl.setBounds(12, 9, 35, 35);
 		panel.add(another_Pt_Lbl);
+//		if (!(another_Pt_Lbl == null)) {
+//			ImageIcon icon = another.getImage();
+//			Image scaledImage = icon.getImage().getScaledInstance(another_Pt_Lbl.getWidth(), another_Pt_Lbl.getHeight(),
+//					Image.SCALE_SMOOTH);
+//			ImageIcon scalecIcon = new ImageIcon(scaledImage);
+//			another_Pt_Lbl.setIcon(scalecIcon);
+//		}
 
 		JLabel another_NN_Lbl = new JLabel(another.getNick());
 		another_NN_Lbl.setBounds(63, 20, 64, 15);
