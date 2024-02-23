@@ -24,10 +24,14 @@ public class ChatRoomListPage extends JFrame {
 
 	User user;
 	List<User> list;
+	static List<User> openingList;
+	static boolean openingPublic;
 
 	public ChatRoomListPage(User user) {
 		this.user = user;
 		list = privateChatUserList(user);
+		openingList = new ArrayList<>();
+		openingPublic = false;
 		showGUI();
 		extracted();
 
@@ -56,6 +60,30 @@ public class ChatRoomListPage extends JFrame {
 		JPanel panel_1 = new JPanel();
 		scrollPane.setViewportView(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+		JLabel labelpb = new JLabel("단체방");
+
+		Dimension preferredSizepb = new Dimension(labelpb.getPreferredSize());
+		preferredSizepb.height = 50; // 원하는 세로 크기로 조절
+		labelpb.setPreferredSize(preferredSizepb);
+
+		// 가로 길이 창에 맞추기
+		labelpb.setMaximumSize(new Dimension(Integer.MAX_VALUE, labelpb.getPreferredSize().height));
+		// 테두리 표현
+		labelpb.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+		labelpb.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!openingPublic) {
+				new PublicChatClient(user);
+				openingPublic = true;
+				}
+				
+			}
+
+		});
+		panel_1.add(labelpb);
 
 		for (int i = 0; i < list.size(); i++) {
 			final int INDEX = i;
@@ -74,7 +102,11 @@ public class ChatRoomListPage extends JFrame {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					new PrivateChatClient(user, list.get(INDEX));
+					if(!openingList.contains(list.get(INDEX))){
+						new PrivateChatClient(user, list.get(INDEX));
+						openingList.add(list.get(INDEX));
+						
+					}
 					
 				}
 
@@ -154,5 +186,6 @@ public class ChatRoomListPage extends JFrame {
 		}
 		return null;
 	}
+
 
 }

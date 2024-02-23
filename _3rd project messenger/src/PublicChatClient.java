@@ -1,3 +1,4 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -12,17 +13,17 @@ import java.time.LocalDateTime;
 
 import javax.swing.SwingUtilities;
 
-public class PrivateChatClient {
-	private PrivateChatRoom pr;
+public class PublicChatClient {
+	private PublicChatRoom pr;
 	private Socket socket;
 
-	public PrivateChatClient(User user, User another) {
+	public PublicChatClient(User user) {
 
 		LocalDateTime currentTime = LocalDateTime.now();
 
 		Socket socket = null;
 		PrintWriter in = null;
-		pr = new PrivateChatRoom(user, another);
+		pr = new PublicChatRoom(user);
 		try {
 			socket = new Socket("192.168.0.100", 12345);
 			System.out.println("[서버와 연결되었습니다]");
@@ -31,7 +32,7 @@ public class PrivateChatClient {
 			pw.flush();
 			System.out.println("클라이언트에서 아이디를 송출합니다");
 
-			ReadThread a = new ReadThread(pr, socket);
+			PublicReadThread a = new PublicReadThread(pr, socket);
 
 			a.start();
 			pr.addBtnListener(new ActionListener() {
@@ -39,30 +40,29 @@ public class PrivateChatClient {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					pw.println(
-							user.getId() + "/" + another.getId() + "/" + currentTime + "/" + pr.sendTextArea.getText());
+							user.getId() + "/" + "AllChat" + "/" + currentTime + "/" + pr.sendTextArea.getText());
 					pw.flush();
 					Timestamp time = Timestamp.valueOf(currentTime);
 					pr.addChat(pr.sendTextArea.getText(), true, time);
 					pr.sendTextArea.setText("");
-					
+
 				}
 			});
 			pr.sendTextArea.addKeyListener(new KeyAdapter() {
 				@Override
-				public void keyPressed (KeyEvent e) {
-					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						e.consume();
 						pr.sendbtn.doClick();
 					}
 				}
 			});
-			 pr.addWindowListener(new java.awt.event.WindowAdapter() {
-	                @Override
-	                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-	                	ChatRoomListPage.openingList.remove(another);
-	                }
-	            });
-			
+			pr.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                	ChatRoomListPage.openingPublic=false;
+                }
+            });
 
 		} catch (IOException e) {
 			System.out.println("[서버 접속끊김]");
@@ -71,14 +71,14 @@ public class PrivateChatClient {
 
 }
 
-class ReadThread extends Thread {
+class PublicReadThread extends Thread {
 
 	Socket socket = null;
 	private BufferedReader br;
 	private boolean go = true;
-	private PrivateChatRoom pr;
+	private PublicChatRoom pr;
 
-	public ReadThread(PrivateChatRoom pr, Socket socket) throws IOException {
+	public PublicReadThread(PublicChatRoom pr, Socket socket) throws IOException {
 		this.socket = socket;
 		this.pr = pr;
 		this.br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -93,7 +93,7 @@ class ReadThread extends Thread {
 	public void run() {
 		try {
 			while (go && !isInterrupted()) {
-
+				String sender_id = br.readLine();
 				String message = br.readLine();
 				String rawtime = br.readLine();
 				LocalDateTime dateTime = LocalDateTime.parse(rawtime);
@@ -101,7 +101,7 @@ class ReadThread extends Thread {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						pr.addChat(message, false, time);
+						pr.addChatPr(sender_id, message, time);
 					}
 				});
 

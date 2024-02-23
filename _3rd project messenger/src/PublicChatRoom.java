@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,19 +29,17 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
-public class PrivateChatRoom extends JFrame {
+public class PublicChatRoom extends JFrame {
 	private User user;
-	private User another;
-	private List<TextDate> TDList;
+	private List<PublicTextDate> TDList;
 	private JPanel panel_2;
 
 	public JTextArea sendTextArea;
 	public JButton sendbtn;
 	private JScrollPane scrollPane;
 
-	public PrivateChatRoom(User user, User another) {
+	public PublicChatRoom(User user) {
 		this.user = user;
-		this.another = another;
 		new TextDate();
 		TDList = readDB();
 		extracted();
@@ -61,7 +60,7 @@ public class PrivateChatRoom extends JFrame {
 		another_Pt_Lbl.setBounds(12, 9, 35, 35);
 		panel.add(another_Pt_Lbl);
 
-		JLabel another_NN_Lbl = new JLabel(another.getNick());
+		JLabel another_NN_Lbl = new JLabel("단체방");
 		another_NN_Lbl.setBounds(63, 20, 64, 15);
 		panel.add(another_NN_Lbl);
 
@@ -99,11 +98,11 @@ public class PrivateChatRoom extends JFrame {
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		if (TDList != null) {
-			for (TextDate sen : TDList) {
+			for (PublicTextDate sen : TDList) {
 
 				addChat(sen.getText(), user.getId().equals(sen.getSender_id()), sen.getTime());
 			}
-//         scrollDown();
+//	         scrollDown();
 		}
 
 	}
@@ -115,24 +114,18 @@ public class PrivateChatRoom extends JFrame {
 
 	}
 
-	private List<TextDate> readDB() {
-		List<TextDate> td = new ArrayList<>();
+	private List<PublicTextDate> readDB() {
+		List<PublicTextDate> td = new ArrayList<>();
 		// 물음표 4개
-		String sql = "SELECT * FROM private_chatlist " + "WHERE (sender_id = ? AND receiver_id = ?) "
-				+ "OR (sender_id = ? AND receiver_id = ?) " + "ORDER BY text_time;";
+		String sql = "SELECT * FROM jae.public_chatlist ORDER BY text_time;";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, user.getId());
-			stmt.setString(2, another.getId());
-			stmt.setString(3, another.getId());
-			stmt.setString(4, user.getId());
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					String sender_id = rs.getString("sender_id");
-					String receiver_id = rs.getString("receiver_id");
 					String text = rs.getString("text");
 					Timestamp time = rs.getTimestamp("text_time");
-					TextDate a = new TextDate(sender_id, receiver_id, text, time);
+					PublicTextDate a = new PublicTextDate(sender_id, text, time);
 					td.add(a);
 				}
 				return td;
@@ -141,6 +134,62 @@ public class PrivateChatRoom extends JFrame {
 			e.printStackTrace();
 		}
 		return null;
+
+	}
+
+	public void addChatPr(String sender_id, String message, Timestamp time) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+		String time1 = sdf.format(time);
+
+		// 문자열을 10자씩 나누어 처리
+		int startIndex = 0;
+		boolean once = true;
+		while (startIndex < message.length()) {
+			int endIndex = Math.min(startIndex + 10, message.length());
+			String subMessage = message.substring(startIndex, endIndex);
+			startIndex = endIndex;
+			// 새로운 패널을 생성하여 라벨들을 추가
+			JPanel messagePanel = new JPanel();
+			messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
+			// messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+			// 메시지를 담은 JLabel 생성
+			
+			
+			JLabel subMessageLabel = new JLabel(subMessage);
+			
+			// setBlackBorder(subMessageLabel);
+
+			// 패널에 라벨 추가
+			// 시간을 담은 JLabel 생성
+			JLabel timeLabel = new JLabel("[" + time1 + "]");
+			// setBlackBorder(timeLabel);
+
+			// 메시지를 오른쪽에 보내는 경우
+			// 메시지를 왼쪽에서 받는 경우
+			messagePanel.add(subMessageLabel);
+			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+			if(once) {
+				JLabel senderIdLbl = new JLabel(sender_id);
+				messagePanel.add(senderIdLbl);
+				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+			}
+			once = false;
+			if (startIndex >= message.length()) {
+				messagePanel.add(timeLabel);
+			}
+			messagePanel.add(Box.createHorizontalGlue());
+
+			// 현재 텍스트에 추가
+			panel_2.add(messagePanel);
+			panel_2.revalidate();
+			panel_2.repaint();
+			messagePanel.scrollRectToVisible(messagePanel.getBounds());
+//	         scrollDown();
+			sendTextArea.requestFocusInWindow();
+			// 다음 부분 처리를 위해 시작 인덱스 갱신
+
+		}
 
 	}
 
@@ -189,8 +238,7 @@ public class PrivateChatRoom extends JFrame {
 			panel_2.add(messagePanel);
 			panel_2.revalidate();
 			panel_2.repaint();
-			messagePanel.scrollRectToVisible(messagePanel.getBounds());
-//         scrollDown();
+//	         scrollDown();
 			sendTextArea.requestFocusInWindow();
 			// 다음 부분 처리를 위해 시작 인덱스 갱신
 

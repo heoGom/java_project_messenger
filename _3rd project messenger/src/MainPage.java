@@ -33,7 +33,7 @@ public class MainPage extends JFrame {
 
 	public MainPage(User user) {
 		this.user = user;
-		setTitle("임시로 메뉴로 할게요");
+		setTitle("");
 		extracted();
 		changelbl();
 		listenerAll();
