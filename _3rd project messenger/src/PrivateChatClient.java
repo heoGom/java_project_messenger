@@ -24,7 +24,7 @@ public class PrivateChatClient {
 		PrintWriter in = null;
 		pr = new PrivateChatRoom(user, another);
 		try {
-			socket = new Socket("localhost", 12345);
+			socket = new Socket("192.168.0.100", 12345);
 			System.out.println("[서버와 연결되었습니다]");
 			PrintWriter pw = new PrintWriter(socket.getOutputStream());
 			pw.println(user.getId());
