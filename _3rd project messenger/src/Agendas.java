@@ -13,16 +13,15 @@ public class Agendas {
 	private int progress_or_not;
 	private String nickname;
 	private int no;
-
+	private String item;
+	
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
 	public static List<Agendas> pastAgendaList = new ArrayList<>();
+	public static List<Agendas> itemList = new ArrayList<>();
+	public Agendas() {}
 
-	public Agendas() {
-	}
-
-	
 	public Agendas(String id, String agenda, int regist_time, int final_time, int progress_or_not, String nickname,
-			int no) {
+			int no, String item) {
 		super();
 		this.id = id;
 		this.agenda = agenda;
@@ -31,6 +30,15 @@ public class Agendas {
 		this.progress_or_not = progress_or_not;
 		this.nickname = nickname;
 		this.no = no;
+		this.item = item;
+	}
+
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
 	}
 
 
@@ -90,6 +98,9 @@ public class Agendas {
 
 	public void setProgress_or_not(int progress_or_not) {
 		this.progress_or_not = progress_or_not;
+	}
+	public void readItem() {
+		
 	}
 
 	public void readAgendas() {
