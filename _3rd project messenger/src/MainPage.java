@@ -66,6 +66,9 @@ public class MainPage extends JFrame {
 		            // chatRoomListPage가 이미 열려 있는 경우 해당 페이지를 활성화합니다.
 		            chatRoomListPage.toFront();
 		        }
+		        int mainPageX = getX();
+		        int mainPageY = getY();
+		        chatRoomListPage.setLocation(mainPageX - chatRoomListPage.getWidth(), mainPageY);
 		    }
 		});
 
@@ -73,16 +76,20 @@ public class MainPage extends JFrame {
 
 
 		userListbtn.addActionListener(new ActionListener() {
-			
+			private UserList userList;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				User.list.clear();
 				user.readAllUser(user.getNick());
-				UserList userList = new UserList(user);
+				if (userList == null || !userList.isVisible()) {
+					userList = new UserList(user);
+					userList.setVisible(true);
+				} else {
+					userList.toFront();
+				}
 				int mainPageX = getX();
 				int mainPageY = getY();
 				userList.setLocation(mainPageX - userList.getWidth(), mainPageY);
-				userList.setVisible(true);
 				userList.readStatus();
 			}
 		});
