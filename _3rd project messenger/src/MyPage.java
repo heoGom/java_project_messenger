@@ -19,6 +19,8 @@ import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.TextField;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,7 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-public class MyPage extends JFrame {
+public class MyPage {
 	User user;
 	MainPage mainPage;
 	private File selectedImageFile;
@@ -41,16 +43,17 @@ public class MyPage extends JFrame {
 	private ImageIcon currentSelectedIcon;
 	private MyPageDAO dao;
 	private Image image;
-	private ImageIcon scaledIcon;
+	public ImageIcon scaledIcon;
 	public ImageIcon scaledIcon2;
+	private JDialog mainDL;
 
 	public MyPage(User user, MainPage mainPage) {
 		this.user = user;
 		this.mainPage = mainPage;
 		
-		JDialog dialog = new JDialog();
-		dialog.setTitle("마이 프로필");
-		dialog.setModal(true);
+		mainDL = new JDialog();
+		mainDL.setTitle("마이 프로필");
+		mainDL.setModal(true);
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		JLabel myImage = new JLabel("현재 사진");
@@ -297,8 +300,8 @@ public class MyPage extends JFrame {
 				btnOK.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (!(currentSelectedIcon != null)) {
-							if (currentSelectedIcon.equals(user.getImage())) {
+						if (currentSelectedIcon != null) {
+							if (!(currentSelectedIcon.equals(user.getImage()))) {
 								image = currentSelectedIcon.getImage();
 								String userId = user.getId();
 								scaledIcon = ImageScaler.getScaledImageIcon(image, 50, 50);
@@ -349,16 +352,14 @@ public class MyPage extends JFrame {
 			}
 
 		});
-		dialog.add(panel, BorderLayout.CENTER);
-		dialog.setSize(469, 300);
-		dialog.setVisible(true);
-		dialog.setResizable(false);
-		dialog.setLocationRelativeTo(null);
+		mainDL.getContentPane().add(panel);
+		mainDL.setSize(469, 300);
+		mainDL.setLocationRelativeTo(mainPage);
+		mainDL.setResizable(false);
+	}
+	
+	public void showGUI() {
+		mainDL.setVisible(true);
 	}
 
-	private void showGUI() {
-		setSize(469, 300);
-		setVisible(true);
-
-	}
-}
+}	

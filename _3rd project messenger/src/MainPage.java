@@ -55,14 +55,25 @@ public class MainPage extends JFrame {
 
 	private void listenerAll() {
 		chatRoomListbtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChatRoomListPage chatRoomListPage = new ChatRoomListPage(user);
-				chatRoomListPage.setVisible(true);
-			}
+			private ChatRoomListPage chatRoomListPage;
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // chatRoomListPage가 null이거나 숨겨져 있는 경우에만 새로운 창을 생성하고 보여줍니다.
+		        if (chatRoomListPage == null || !chatRoomListPage.isVisible()) {
+		            chatRoomListPage = new ChatRoomListPage(user);
+		            chatRoomListPage.setVisible(true);
+		        } else {
+		            // chatRoomListPage가 이미 열려 있는 경우 해당 페이지를 활성화합니다.
+		            chatRoomListPage.toFront();
+		        }
+		    }
 		});
 
+
+
+
 		userListbtn.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				User.list.clear();
@@ -100,7 +111,7 @@ public class MainPage extends JFrame {
 		chatRoomListbtn = new JButton("채팅방 목록");
 		chatRoomListbtn.setBounds(143, 183, 113, 23);
 		getContentPane().add(chatRoomListbtn);
-
+		
 		votebtn = new JButton("투표 하기");
 		votebtn.setBounds(143, 270, 113, 23);
 		getContentPane().add(votebtn);
@@ -134,9 +145,9 @@ public class MainPage extends JFrame {
 										myPage.picture.getHeight(), Image.SCALE_SMOOTH);
 								ImageIcon scalecIcon2 = new ImageIcon(scaledImage2);
 								myPage.picture.setIcon(scalecIcon2);
-								myPage.setVisible(true);
+								myPage.showGUI();
 							} else { // 사진이 등록 되어있지않을때
-								myPage.setVisible(true);
+								myPage.showGUI();
 							}
 							break;
 						} else {
