@@ -23,7 +23,7 @@ public class VoteMainPage extends JFrame {
 	private JPanel pnl;
 	private JLabel lbl2;
 	private JLabel lbl3;
-	private JPanel panel;
+	public JPanel panel;
 	private JLabel lbl1;
 	private JLabel lbl4;
 	private JButton btnNewButton_1;
