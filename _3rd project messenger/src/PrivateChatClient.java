@@ -1,5 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,14 +39,24 @@ public class PrivateChatClient {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					pw.println(
-							user.getId() + "/" + another.getId() + "/" + currentTime + "/" + pr.snedTextArea.getText());
+							user.getId() + "/" + another.getId() + "/" + currentTime + "/" + pr.sendTextArea.getText());
 					pw.flush();
 					Timestamp time = Timestamp.valueOf(currentTime);
-					pr.addChat(pr.snedTextArea.getText(), true, time);
-					pr.snedTextArea.setText("");
+					pr.addChat(pr.sendTextArea.getText(), true, time);
+					pr.sendTextArea.setText("");
 					
 				}
 			});
+			pr.sendTextArea.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed (KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+						e.consume();
+						pr.sendbtn.doClick();
+					}
+				}
+			});
+			
 
 		} catch (IOException e) {
 			System.out.println("[서버 접속끊김]");
@@ -78,8 +90,6 @@ class ReadThread extends Thread {
 
 				String message = br.readLine();
 				String rawtime = br.readLine();
-				System.out.println(message);
-				System.out.println(rawtime);
 				LocalDateTime dateTime = LocalDateTime.parse(rawtime);
 				Timestamp time = Timestamp.valueOf(dateTime);
 				SwingUtilities.invokeLater(new Runnable() {

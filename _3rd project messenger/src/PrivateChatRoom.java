@@ -1,6 +1,11 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.event.ActionListener;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,24 +13,20 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class PrivateChatRoom extends JFrame {
 	private User user;
@@ -33,8 +34,9 @@ public class PrivateChatRoom extends JFrame {
 	private List<TextDate> TDList;
 	private JPanel panel_2;
 
-	public JTextArea snedTextArea;
+	public JTextArea sendTextArea;
 	public JButton sendbtn;
+	private JScrollPane scrollPane;
 
 	public PrivateChatRoom(User user, User another) {
 		this.user = user;
@@ -80,13 +82,28 @@ public class PrivateChatRoom extends JFrame {
 		
 		
 
-		snedTextArea = new JTextArea();
-		panel_1.add(snedTextArea, BorderLayout.CENTER);
+		sendTextArea = new JTextArea();
+		panel_1.add(sendTextArea, BorderLayout.CENTER);
+		
 
 		panel_2 = new JPanel();
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+		panel_2.addContainerListener(new ContainerAdapter() {
+	          @Override
+	          public void componentAdded(final ContainerEvent e) {
+	              SwingUtilities.invokeLater(new Runnable() {
+	                  @Override
+	                  public void run() {
+	                      JComponent comp = (JComponent) e.getChild();
+	                      Rectangle bounds = new Rectangle(comp.getBounds());
+	                      comp.scrollRectToVisible(bounds);
+	                  }
+	              });
 
-		JScrollPane scrollPane = new JScrollPane(panel_2);
+	          }
+	      });
+		scrollPane = new JScrollPane(panel_2);
+		
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		if (TDList != null) {
@@ -94,7 +111,9 @@ public class PrivateChatRoom extends JFrame {
 
 				addChat(sen.getText(), user.getId().equals(sen.getSender_id()), sen.getTime());
 			}
+//			scrollDown();
 		}
+		
 		
 	}
 
@@ -177,13 +196,16 @@ public class PrivateChatRoom extends JFrame {
 
 			// 현재 텍스트에 추가
 			panel_2.add(messagePanel);
-
+			panel_2.revalidate();
+			panel_2.repaint();
+//			scrollDown();
+			sendTextArea.requestFocusInWindow();
 			// 다음 부분 처리를 위해 시작 인덱스 갱신
 
 		}
 
 		// 스크롤을 자동으로 내려가게끔
-		scrollDown();
+		
 	}
 
 	// private void setBlackBorder(JLabel label) {
@@ -191,11 +213,16 @@ public class PrivateChatRoom extends JFrame {
 	// }
 
 	private void scrollDown() {
-		JScrollBar verticalScrollBar = ((JScrollPane) panel_2.getParent().getParent()).getVerticalScrollBar();
+		JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 		verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+		System.out.println("Current Value: " + verticalScrollBar.getValue());
+		System.out.println("Maximum Value: " + verticalScrollBar.getMaximum());
 	}
 	public void addBtnListener(ActionListener listener) {
 		sendbtn.addActionListener(listener);
+	}
+	public void addTextAreaListener(KeyListener listener) {
+		sendTextArea.addKeyListener(listener);
 	}
 
 }

@@ -4,6 +4,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -66,11 +72,8 @@ class ClientPerThread extends Thread {
 		pw = null;
 		br = null;
 		try {
-			System.out.println("1");
 			pw = new PrintWriter(socket.getOutputStream());
-			System.out.println("2");
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			System.out.println("3");
 
 			tid = br.readLine();
 			System.out.println("아이디를 입력함");
@@ -78,7 +81,22 @@ class ClientPerThread extends Thread {
 
 			while (go && !isInterrupted()) {
 				String fromClient = br.readLine();
+				//유저아이디//받는사람아이디//시간// 내용순으로 들어오고 배열로 자름
 				String[] a = splitString(fromClient);
+				String sql = "insert into private_chatlist (sender_id, receiver_id, text ,text_time, file) values(?, ?, ?, ?,null);";
+				LocalDateTime dateTime = LocalDateTime.parse(a[2]);
+				Timestamp time = Timestamp.valueOf(dateTime);
+				try(Connection conn = MySqlConnectionProvider.getConnection();
+						PreparedStatement stmt = conn.prepareStatement(sql)){
+					stmt.setString(1, a[0]);
+					stmt.setString(2, a[1]);
+					stmt.setString(3, a[3]);
+					stmt.setTimestamp(4, time);
+					System.out.println(stmt.executeUpdate());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
 
 //				session.sendMessageToAll(fromClient+"이건전체메세지");
 				session.sendPrivateMessage(a[1], a[2], a[3]);
