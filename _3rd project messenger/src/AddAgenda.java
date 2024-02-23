@@ -86,8 +86,6 @@ public class AddAgenda extends JFrame {
 				saveAgenda();
 				saveResit();
 				dispose();
-				voteMainPage.panel.revalidate();
-				voteMainPage.panel.repaint();
 			}
 		});
 	}

@@ -24,7 +24,7 @@ public class VoteMainPage extends JFrame {
 	private JLabel lbl2;
 	private JLabel lbl3;
 	public JPanel panel;
-	private JLabel lbl1;
+	public JLabel lbl1;
 	private JLabel lbl4;
 	private JButton btnNewButton_1;
 	private JButton btnNewButton;
@@ -104,7 +104,8 @@ public class VoteMainPage extends JFrame {
 			lbl2.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					
+					GoVotePage govote = new GoVotePage(VoteMainPage.this);
+					govote.setVisible(true);
 				}
 			});
 			lbl3.addMouseListener(new MouseAdapter() {
