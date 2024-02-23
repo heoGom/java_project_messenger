@@ -4,6 +4,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -31,36 +33,45 @@ import java.awt.Graphics2D;
 
 public class MyPage extends JFrame {
 	User user;
+	MainPage mainPage;
 	private File selectedImageFile;
 	private JLabel nick;
 	public JLabel picture;
 	public JLabel currentPhoto;
+	private ImageIcon currentSelectedIcon;
+	private MyPageDAO dao;
+	private Image image;
+	private ImageIcon scaledIcon;
+	public ImageIcon scaledIcon2;
 
-	public MyPage(User user) {
-		MainPage mainpage = new MainPage(user);
+	public MyPage(User user, MainPage mainPage) {
 		this.user = user;
-		getContentPane().setLayout(null);
-
-		setTitle("마이 프로필");
+		this.mainPage = mainPage;
+		
+		JDialog dialog = new JDialog();
+		dialog.setTitle("마이 프로필");
+		dialog.setModal(true);
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
 		JLabel myImage = new JLabel("현재 사진");
 		myImage.setBounds(333, 24, 60, 24);
-		getContentPane().add(myImage);
+		panel.add(myImage);
 		picture = new JLabel(user.getImage());
 		picture.setBounds(285, 60, 150, 150);
-		getContentPane().add(picture);
+		panel.add(picture);
 
 		JLabel userNick = new JLabel("내 별명");
 		userNick.setBounds(88, 29, 60, 15);
-		getContentPane().add(userNick);
+		panel.add(userNick);
 		nick = new JLabel(user.getNick());
 		nick.setFont(new Font("굴림", Font.BOLD, 16));
 		nick.setBounds(65, 94, 100, 30);
-		getContentPane().add(nick);
+		panel.add(nick);
 
 		JButton btnNickCh = new JButton("닉네임 변경");
 		btnNickCh.setFont(new Font("굴림", Font.BOLD, 11));
 		btnNickCh.setBounds(20, 220, 120, 30);
-		getContentPane().add(btnNickCh);
+		panel.add(btnNickCh);
 		btnNickCh.setBackground(Color.white);
 		btnNickCh.setBorderPainted(false);
 		btnNickCh.addActionListener(new ActionListener() {
@@ -112,9 +123,9 @@ public class MyPage extends JFrame {
 										JOptionPane.ERROR_MESSAGE);
 							} else {
 								user.setNick(changetx.getText());
-								mainpage.nick_lbl.setText(changetx.getText());
+								mainPage.nick_lbl.setText(changetx.getText());
 								nick.setText(changetx.getText());
-								MyPageDAO dao = new MyPageDAO();
+								dao = new MyPageDAO();
 								dao.changeNick(changetx.getText(), user.id);
 								JOptionPane.showMessageDialog(null, "닉네임이 변경되었습니다.", "알림",
 										JOptionPane.INFORMATION_MESSAGE);
@@ -137,7 +148,7 @@ public class MyPage extends JFrame {
 		JButton btnPwCh = new JButton("비밀번호 변경");
 		btnPwCh.setFont(new Font("굴림", Font.BOLD, 11));
 		btnPwCh.setBounds(160, 220, 120, 30);
-		getContentPane().add(btnPwCh);
+		panel.add(btnPwCh);
 		btnPwCh.setBackground(Color.white);
 		btnPwCh.setBorderPainted(false);
 		btnPwCh.addActionListener(new ActionListener() {
@@ -185,7 +196,7 @@ public class MyPage extends JFrame {
 							if (password1.equals(password2)) {
 								JOptionPane.showMessageDialog(null, "비밀번호가 변경되었습니다.", "알림",
 										JOptionPane.INFORMATION_MESSAGE);
-								MyPageDAO dao = new MyPageDAO();
+								dao = new MyPageDAO();
 								dao.changePW(password2, user.id);
 								user.setPw(password2);
 								dialog.dispose();
@@ -210,7 +221,7 @@ public class MyPage extends JFrame {
 		JButton btnImageCh = new JButton("프로필사진 변경");
 		btnImageCh.setFont(new Font("굴림", Font.BOLD, 11));
 		btnImageCh.setBounds(300, 220, 125, 30);
-		getContentPane().add(btnImageCh);
+		panel.add(btnImageCh);
 		btnImageCh.setBackground(Color.white);
 		btnImageCh.setBorderPainted(false);
 
@@ -248,11 +259,11 @@ public class MyPage extends JFrame {
 					currentPhoto.setText("사진이 없습니다.");
 				} else {
 					ImageIcon icon = user.getImage();
-					Image scaledImage = icon.getImage().getScaledInstance(
-							currentPhoto.getWidth(), currentPhoto.getHeight(), Image.SCALE_SMOOTH);
+					Image scaledImage = icon.getImage().getScaledInstance(currentPhoto.getWidth(),
+							currentPhoto.getHeight(), Image.SCALE_SMOOTH);
 					ImageIcon scaledIcon = new ImageIcon(scaledImage);
 					currentPhoto.setIcon(scaledIcon);
-							
+
 				}
 				btnfindPhoto.addActionListener(new ActionListener() {
 					@Override
@@ -268,44 +279,41 @@ public class MyPage extends JFrame {
 							for (File file : selectedFiles) {
 								System.out.println("Selected File: " + file.getAbsolutePath());
 								label.setText("바뀐 사진");
-								currentPhoto.setIcon(new ImageIcon(file.getAbsolutePath()));
+								// 이미지 파일을 ImageIcon으로 읽어옵니다.
+								ImageIcon selectedIcon = new ImageIcon(file.getAbsolutePath());
+								// JLabel에 이미지를 설정합니다.
+								currentPhoto.setIcon(selectedIcon);
+								// 사용자가 선택한 이미지를 현재 선택된 아이콘으로 설정합니다.
+								currentSelectedIcon = selectedIcon;
 							}
+							Image scaledImage = currentSelectedIcon.getImage().getScaledInstance(
+									currentPhoto.getWidth(), currentPhoto.getHeight(), Image.SCALE_SMOOTH);
+							ImageIcon scaledIcon = new ImageIcon(scaledImage);
+							currentPhoto.setIcon(scaledIcon);
 						}
-						ImageIcon icon = (ImageIcon) currentPhoto.getIcon();
-						Image scaledImage = icon.getImage().getScaledInstance(
-								currentPhoto.getWidth(), currentPhoto.getHeight(), Image.SCALE_SMOOTH);
-						ImageIcon scaledIcon = new ImageIcon(scaledImage);
-						currentPhoto.setIcon(scaledIcon);
 					}
 				});
 
 				btnOK.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// 이미지 아이콘을 가져옵니다.
-						ImageIcon icon = (ImageIcon) currentPhoto.getIcon();
-						Image image = icon.getImage();
-						BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-						Graphics2D g2d = bufferedImage.createGraphics();
-						g2d.drawImage(image, 0, 0, null);
-						g2d.dispose();
-						icon = new ImageIcon(bufferedImage);
-						// 사용자 ID를 가져옵니다.
-						String userId = user.getId();
-						MyPageDAO dao = new MyPageDAO();
-						if (icon.getImage() != null) {
-							user.setImage(icon);
-							Image scaledImage = icon.getImage().getScaledInstance(mainpage.picture_lbl.getWidth(),
-									mainpage.picture_lbl.getHeight(), Image.SCALE_SMOOTH);
-							ImageIcon scaledIcon = new ImageIcon(scaledImage);
-							picture.setIcon(currentPhoto.getIcon());
-							mainpage.picture_lbl.setIcon(scaledIcon);
-							dao.changeImage(icon.getImage(), userId);
-							JOptionPane.showMessageDialog(null, "이미지가 성공적으로 저장되었습니다.", "성공",
-									JOptionPane.INFORMATION_MESSAGE);
-							dialog.dispose();
+						if (!(currentSelectedIcon != null)) {
+							if (currentSelectedIcon.equals(user.getImage())) {
+								image = currentSelectedIcon.getImage();
+								String userId = user.getId();
+								scaledIcon = ImageScaler.getScaledImageIcon(image, 50, 50);
+								mainPage.picture_lbl.setIcon(scaledIcon);
+								scaledIcon2 = ImageScaler.getScaledImageIcon(image, 150, 150);
+								user.setImage(scaledIcon2);
+								picture.setIcon(scaledIcon2);
+								dao = new MyPageDAO();
+								dao.changeImage(image, userId);
+								JOptionPane.showMessageDialog(null, "이미지 변경이 완료되었습니다.", "성공",
+										JOptionPane.INFORMATION_MESSAGE);
+								dialog.dispose();
+							}
 						} else {
-							dao.changeImage(null, userId);
+							JOptionPane.showMessageDialog(null, "이미지를 선택해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
 						}
 					}
 				});
@@ -315,12 +323,12 @@ public class MyPage extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						currentPhoto.setIcon(null);
 						currentPhoto.setText("기본사진");
-						MyPageDAO dao = new MyPageDAO();
+						dao = new MyPageDAO();
 						dao.deleteImage(user.id);
 						JOptionPane.showMessageDialog(null, "이미지가 성공적으로 삭제되었습니다.", "성공",
 								JOptionPane.INFORMATION_MESSAGE);
 						user.setImage(null);
-						mainpage.picture_lbl.setIcon(currentPhoto.getIcon());
+						mainPage.picture_lbl.setIcon(currentPhoto.getIcon());
 						picture.setIcon(currentPhoto.getIcon());
 						dialog.dispose();
 					}
@@ -330,16 +338,22 @@ public class MyPage extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						label.setText("현재 사진");
-						currentPhoto.setIcon(user.image);
+						ImageIcon icon = user.getImage();
+						Image scaledImage = icon.getImage().getScaledInstance(currentPhoto.getWidth(),
+								currentPhoto.getHeight(), Image.SCALE_SMOOTH);
+						ImageIcon scaledIcon = new ImageIcon(scaledImage);
+						currentPhoto.setIcon(scaledIcon);
 					}
 				});
 				dialog.setVisible(true);
 			}
-		});
 
-		showGUI();
-		setResizable(false);
-		setLocationRelativeTo(null);
+		});
+		dialog.add(panel, BorderLayout.CENTER);
+		dialog.setSize(469, 300);
+		dialog.setVisible(true);
+		dialog.setResizable(false);
+		dialog.setLocationRelativeTo(null);
 	}
 
 	private void showGUI() {

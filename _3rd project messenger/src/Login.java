@@ -39,7 +39,6 @@ public class Login extends JFrame {
 		showGUI();
 
 	}
-
 	private void allListener() {
 		loginbtn.addActionListener(new ActionListener() {
 			@Override
@@ -96,6 +95,13 @@ public class Login extends JFrame {
 					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 					System.out.println(user.nick);
+					if (user.getImage() != null) {
+						ImageIcon icon = user.getImage();
+						Image scaledImage = icon.getImage().getScaledInstance(mainPage.picture_lbl.getWidth(),
+								mainPage.picture_lbl.getHeight(), Image.SCALE_SMOOTH);
+						ImageIcon scaledIcon = new ImageIcon(scaledImage);
+						mainPage.picture_lbl.setIcon(scaledIcon);
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
 					loginbtn.setEnabled(false);

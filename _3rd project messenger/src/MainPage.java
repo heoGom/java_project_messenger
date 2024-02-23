@@ -53,7 +53,6 @@ public class MainPage extends JFrame {
 	}
 
 	private void listenerAll() {
-
 		chatRoomListbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -111,7 +110,6 @@ public class MainPage extends JFrame {
 		myprofilebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
 				JPanel panel = new JPanel();
 				JLabel label = new JLabel("비밀번호를 입력해주세요.");
 				JPasswordField pwField = new JPasswordField(20);
@@ -123,23 +121,15 @@ public class MainPage extends JFrame {
 							JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 					if (optionSelect == 0) {
 						if (user.getPw().equals(pwField.getText())) {
-							MainPage mainPage = new MainPage(user);
-							MyPage myPage = new MyPage(user);
-							if (user.getImage() != null) { // 사진이 등록이 되어있을때 
+							MyPage myPage = new MyPage(user, MainPage.this);
+							if (user.getImage() != null) { // 사진이 등록이 되어있을때
 								ImageIcon icon = user.getImage();
-								Image scaledImage = icon.getImage().getScaledInstance(myPage.picture.getWidth(),
+								Image scaledImage2 = icon.getImage().getScaledInstance(myPage.picture.getWidth(),
 										myPage.picture.getHeight(), Image.SCALE_SMOOTH);
-								ImageIcon scaledIcon = new ImageIcon(scaledImage);
-								myPage.picture.setIcon(scaledIcon);
-								ImageIcon icon2 = user.getImage();
-								Image scaledImage2 = icon2.getImage().getScaledInstance(mainPage.picture_lbl.getWidth()
-										, mainPage.picture_lbl.getHeight(), Image.SCALE_SMOOTH);
-								ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
-								mainPage.picture_lbl.setIcon(scaledIcon2);
-								mainPage.dispose();
+								ImageIcon scalecIcon2 = new ImageIcon(scaledImage2);
+								myPage.picture.setIcon(scalecIcon2);
 								myPage.setVisible(true);
 							} else { // 사진이 등록 되어있지않을때
-								mainPage.dispose();
 								myPage.setVisible(true);
 							}
 							break;
@@ -148,9 +138,11 @@ public class MainPage extends JFrame {
 						}
 					}
 					if (optionSelect == 1) {
+						setVisible(true);
 						break;
 					}
 					if (optionSelect == JOptionPane.CLOSED_OPTION) {
+						setVisible(true);
 						break;
 					}
 				}
