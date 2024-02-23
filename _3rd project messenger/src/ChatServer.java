@@ -15,164 +15,191 @@ import java.util.List;
 import java.util.UUID;
 
 class ClientsList {
-   private List<ClientPerThread> list = new ArrayList<>();
+	private List<ClientPerThread> list = new ArrayList<>();
 
-   public void addClient(ClientPerThread CT) {
-      synchronized (list) {
-         list.add(CT);
-      }
-   }
+	public void addClient(ClientPerThread CT) {
+		synchronized (list) {
+			list.add(CT);
+		}
+	}
 
-   public boolean removeClient(ClientPerThread CT) {
-      synchronized (list) {
-         return list.remove(CT);
-      }
-   }
+	public boolean removeClient(ClientPerThread CT) {
+		synchronized (list) {
+			return list.remove(CT);
+		}
+	}
 
-   public void sendMessageToAll(String message) {
-      synchronized (list) {
-         for (ClientPerThread ct : list) {
-            ct.getPw().println(message);
-            ct.getPw().flush();
-         }
-      }
-   }
+	public void sendMessageToAll(String sender_id ,String time, String message) {
+		synchronized (list) {
+			for (ClientPerThread ct : list) {
+				if(ct.getTId().equals(sender_id)) {
+					
+				} else {
+				ct.getPw().println(sender_id);
+				ct.getPw().println(message);
+				ct.getPw().println(time);
+				ct.getPw().flush();
+				}
+			}
+		}
+	}
 
-   public void sendPrivateMessage(String receiver_id, String time, String message) {
-      synchronized (list) {
-         for (ClientPerThread ct : list) {
-            if (ct.getTId().equals(receiver_id)) {
-               ct.getPw().println(message);
-               ct.getPw().println(time);
-               ct.getPw().flush();
+	public void sendPrivateMessage(String receiver_id, String time, String message) {
+		synchronized (list) {
+			for (ClientPerThread ct : list) {
+				if (ct.getTId().equals(receiver_id)) {
+					ct.getPw().println(message);
+					ct.getPw().println(time);
+					ct.getPw().flush();
 
-            }
-         }
-      }
+				}
+			}
+		}
 
-   }
+	}
 }
 
 class ClientPerThread extends Thread {
-   private ClientsList session;
-   private Socket socket;
-   private boolean go = true;
-   private String tid;
-   private PrintWriter pw;
-   private BufferedReader br;
-   
-   public ClientPerThread(Socket socket, ClientsList session) {
-      this.socket = socket;
-      this.session = session;
-   }
+	private ClientsList session;
+	private Socket socket;
+	private boolean go = true;
+	private String tid;
+	private PrintWriter pw;
+	private BufferedReader br;
 
+	public ClientPerThread(Socket socket, ClientsList session) {
+		this.socket = socket;
+		this.session = session;
+	}
 
-   @Override
-   public void run() {
-      pw = null;
-      br = null;
-      try {
-         pw = new PrintWriter(socket.getOutputStream());
-         br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	@Override
+	public void run() {
+		pw = null;
+		br = null;
+		try {
+			pw = new PrintWriter(socket.getOutputStream());
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-         tid = br.readLine();
-         System.out.println("아이디를 입력함");
-         session.addClient(this);
+			tid = br.readLine();
+			session.addClient(this);
 
-         while (go && !isInterrupted()) {
-            String fromClient = br.readLine();
-            //유저아이디//받는사람아이디//시간// 내용순으로 들어오고 배열로 자름
-            String[] a = splitString(fromClient);
-            String sql = "insert into private_chatlist (sender_id, receiver_id, text ,text_time, file) values(?, ?, ?, ?,null);";
-            LocalDateTime dateTime = LocalDateTime.parse(a[2]);
-            Timestamp time = Timestamp.valueOf(dateTime);
-            try(Connection conn = MySqlConnectionProvider.getConnection();
-                  PreparedStatement stmt = conn.prepareStatement(sql)){
-               stmt.setString(1, a[0]);
-               stmt.setString(2, a[1]);
-               stmt.setString(3, a[3]);
-               stmt.setTimestamp(4, time);
-               System.out.println(stmt.executeUpdate());
-            } catch (SQLException e) {
-               e.printStackTrace();
-            }
-            
+			while (go && !isInterrupted()) {
+				String fromClient = br.readLine();
+				// 유저아이디//받는사람아이디//시간// 내용순으로 들어오고 배열로 자름
+				String[] a = splitString(fromClient);
+				String sql = "insert into private_chatlist (sender_id, receiver_id, text ,text_time, file) values(?, ?, ?, ?,null);";
+				String sqlp = "insert into public_chatlist (sender_id, text, text_time,file) values(?,?,?,null);";
+				LocalDateTime dateTime = LocalDateTime.parse(a[2]);
+				Timestamp time = Timestamp.valueOf(dateTime);
+				if (a[1].equals("AllChat")) {
+					try (Connection conn = MySqlConnectionProvider.getConnection();
+							PreparedStatement stmt = conn.prepareStatement(sqlp)) {
+						stmt.setString(1, a[0]);
+						stmt.setString(2, a[3]);
+						stmt.setTimestamp(3, time);
+						stmt.executeUpdate();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+
+				} else {
+					try (Connection conn = MySqlConnectionProvider.getConnection();
+							PreparedStatement stmt = conn.prepareStatement(sql)) {
+						stmt.setString(1, a[0]);
+						stmt.setString(2, a[1]);
+						stmt.setString(3, a[3]);
+						stmt.setTimestamp(4, time);
+						stmt.executeUpdate();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
 
 //            session.sendMessageToAll(fromClient+"이건전체메세지");
-            session.sendPrivateMessage(a[1], a[2], a[3]);
-            if (fromClient.equals("Bye Bye")) {
-               throw new InterruptedException("종료");
-            }
-         }
-      } catch (IOException e) {
-         e.printStackTrace();
-      } catch (InterruptedException e) {
+				if (a[1].equals("AllChat")) {
+					session.sendMessageToAll(a[0], a[2], a[3]);
+					if (fromClient.equals("Bye Bye")) {
+						throw new InterruptedException("종료");
+					}
 
-      } finally {
-         if (socket != null) {
-            try {
-               socket.close();
-            } catch (IOException e) {
-               e.printStackTrace();
-            }
-         }
-         session.removeClient(this);
-      }
-   }
+				} else {
+					session.sendPrivateMessage(a[1], a[2], a[3]);
+					if (fromClient.equals("Bye Bye")) {
+						throw new InterruptedException("종료");
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 
-   private String[] splitString(String input) {
-      int firstIndex = input.indexOf('/');
-      int secondIndex = input.indexOf('/', firstIndex + 1);
-      int thirdIndex = input.indexOf('/', secondIndex+1);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			session.removeClient(this);
+		}
+	}
 
-      if (firstIndex != -1 && secondIndex != -1&&thirdIndex !=-1) {
-         return new String[] { input.substring(0, firstIndex), input.substring(firstIndex + 1, secondIndex),
-               input.substring(secondIndex + 1,thirdIndex),input.substring(thirdIndex+1) };
-      } else {
-         return new String[] { input };
-      }
-   }
+	private String[] splitString(String input) {
+		int firstIndex = input.indexOf('/');
+		int secondIndex = input.indexOf('/', firstIndex + 1);
+		int thirdIndex = input.indexOf('/', secondIndex + 1);
 
-   public PrintWriter getPw() {
-      return pw;
-   }
+		if (firstIndex != -1 && secondIndex != -1 && thirdIndex != -1) {
+			return new String[] { input.substring(0, firstIndex), input.substring(firstIndex + 1, secondIndex),
+					input.substring(secondIndex + 1, thirdIndex), input.substring(thirdIndex + 1) };
+		} else {
+			return new String[] { input };
+		}
+	}
 
-   public void setPw(PrintWriter pw) {
-      this.pw = pw;
-   }
+	public PrintWriter getPw() {
+		return pw;
+	}
 
-   public BufferedReader getBr() {
-      return br;
-   }
+	public void setPw(PrintWriter pw) {
+		this.pw = pw;
+	}
 
-   public void setBr(BufferedReader br) {
-      this.br = br;
-   }
+	public BufferedReader getBr() {
+		return br;
+	}
 
-   public String getTId() {
-      return tid;
-   }
+	public void setBr(BufferedReader br) {
+		this.br = br;
+	}
 
-   public void setId(String id) {
-      this.tid = id;
-   }
+	public String getTId() {
+		return tid;
+	}
+
+	public void setId(String id) {
+		this.tid = id;
+	}
 
 }
 
 public class ChatServer {
-   public static void main(String[] args) {
-      try (ServerSocket server = new ServerSocket(12345);) {
-         ClientsList session = new ClientsList();
-         while (true) {
-            System.out.println("클라이언트 접속 대기중");
-            Socket socket = server.accept();
+	public static void main(String[] args) {
+		try (ServerSocket server = new ServerSocket(12345);) {
+			ClientsList session = new ClientsList();
+			while (true) {
+				System.out.println("클라이언트 접속 대기중");
+				Socket socket = server.accept();
 
-            Thread thread = new ClientPerThread(socket, session);
-            thread.start();
-            System.out.println("클라이언트 접속 완료");
-         }
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
+				Thread thread = new ClientPerThread(socket, session);
+				thread.start();
+				System.out.println("클라이언트 접속 완료");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
