@@ -105,7 +105,11 @@ public class UserList extends JFrame {
 			pnl.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					new PrivateChatRoom(user, u);
+					if(!ChatRoomListPage.openingList.contains(u)){
+						new PrivateChatClient(user, u);
+						ChatRoomListPage.openingList.add(u);
+						
+					}
 				}
 			});
 
