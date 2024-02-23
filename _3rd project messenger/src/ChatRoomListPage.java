@@ -99,7 +99,6 @@ public class ChatRoomListPage extends JFrame {
 			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 			label.addMouseListener(new MouseAdapter() {
-
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if(!openingList.contains(list.get(INDEX))){
@@ -107,9 +106,7 @@ public class ChatRoomListPage extends JFrame {
 						openingList.add(list.get(INDEX));
 						
 					}
-					
 				}
-
 			});
 
 			panel_1.add(label);

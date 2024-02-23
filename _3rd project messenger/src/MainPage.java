@@ -56,24 +56,22 @@ public class MainPage extends JFrame {
 	private void listenerAll() {
 		chatRoomListbtn.addActionListener(new ActionListener() {
 			private ChatRoomListPage chatRoomListPage;
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        // chatRoomListPage가 null이거나 숨겨져 있는 경우에만 새로운 창을 생성하고 보여줍니다.
-		        if (chatRoomListPage == null || !chatRoomListPage.isVisible()) {
-		            chatRoomListPage = new ChatRoomListPage(user);
-		            chatRoomListPage.setVisible(true);
-		        } else {
-		            // chatRoomListPage가 이미 열려 있는 경우 해당 페이지를 활성화합니다.
-		            chatRoomListPage.toFront();
-		        }
-		        int mainPageX = getX();
-		        int mainPageY = getY();
-		        chatRoomListPage.setLocation(mainPageX - chatRoomListPage.getWidth(), mainPageY);
-		    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// chatRoomListPage가 null이거나 숨겨져 있는 경우에만 새로운 창을 생성하고 보여줍니다.
+				if (chatRoomListPage == null || !chatRoomListPage.isVisible()) {
+					chatRoomListPage = new ChatRoomListPage(user);
+					chatRoomListPage.setVisible(true);
+				} else {
+					// chatRoomListPage가 이미 열려 있는 경우 해당 페이지를 활성화합니다.
+					chatRoomListPage.toFront();
+				}
+				int mainPageX = getX();
+				int mainPageY = getY();
+				chatRoomListPage.setLocation(mainPageX - chatRoomListPage.getWidth(), mainPageY);
+//				ImageIcon icon = 
+			}
 		});
-
-
-
 
 		userListbtn.addActionListener(new ActionListener() {
 			private UserList userList;
@@ -91,18 +89,27 @@ public class MainPage extends JFrame {
 				int mainPageY = getY();
 				userList.setLocation(mainPageX - userList.getWidth(), mainPageY);
 				userList.readStatus();
+				ImageIcon icon = user.getImage();
+				Image scaledImage = icon.getImage().getScaledInstance(userList.lblNewLabel.getWidth(),
+						userList.lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon scalecIcon = new ImageIcon(scaledImage);
+				userList.lblNewLabel.setIcon(scalecIcon);
 			}
 		});
 
 		votebtn.addActionListener(new ActionListener() {
+			private VoteMainPage voteMainPage;
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				VoteMainPage voteMainPage = new VoteMainPage(user);
+				if (voteMainPage == null || !voteMainPage.isVisible()) {
+					voteMainPage = new VoteMainPage(user);
+					voteMainPage.setVisible(true);
+				} else {
+					voteMainPage.toFront();
+				}
 				int mainPageX = getX();
 				int mainPageY = getY();
 				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth(), mainPageY);
-				voteMainPage.setVisible(true);
 			}
 		});
 
@@ -118,7 +125,7 @@ public class MainPage extends JFrame {
 		chatRoomListbtn = new JButton("채팅방 목록");
 		chatRoomListbtn.setBounds(143, 183, 113, 23);
 		getContentPane().add(chatRoomListbtn);
-		
+
 		votebtn = new JButton("투표 하기");
 		votebtn.setBounds(143, 270, 113, 23);
 		getContentPane().add(votebtn);

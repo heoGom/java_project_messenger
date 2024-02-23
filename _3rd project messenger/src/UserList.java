@@ -34,6 +34,8 @@ public class UserList extends JFrame {
 
 	private JLabel lblNewLabel_2;
 
+	public JLabel lblNewLabel;
+
 	public UserList(User user) {
 		this.user = user;
 		this.membershipDAO = new MembershipDAO();
@@ -52,9 +54,8 @@ public class UserList extends JFrame {
 
 	private void extracted() {
 		getContentPane().setLayout(null);
-
-		JLabel lblNewLabel = new JLabel("내사진");
-		lblNewLabel.setBounds(12, 10, 57, 15);
+		lblNewLabel = new JLabel();
+		lblNewLabel.setBounds(12, 10, 50, 50);
 		getContentPane().add(lblNewLabel);
 
 		JLabel lblNick = new JLabel(user.getNick());
@@ -81,11 +82,11 @@ public class UserList extends JFrame {
 		resetbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				dispose();
 				mainPage = new MainPage(user);
 				mainPage.dispose();
 				mainPage.userListbtn.doClick();
+				lblNewLabel.setIcon(user.getImage());
 			}
 		});
 	}
