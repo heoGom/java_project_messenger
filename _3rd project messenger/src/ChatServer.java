@@ -4,94 +4,175 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-class SharedSessionWithSynchedBlock {
-	private List<PrintWriter> list = new ArrayList<>();
+class ClientsList {
+   private List<ClientPerThread> list = new ArrayList<>();
 
-	public void addClient(PrintWriter pw) {
-		synchronized (list) {
-			list.add(pw);
-		}
-	}
+   public void addClient(ClientPerThread CT) {
+      synchronized (list) {
+         list.add(CT);
+      }
+   }
 
-	public boolean removeClient(PrintWriter pw) {
-		synchronized (list) {
-			return list.remove(pw);
-		}
-	}
+   public boolean removeClient(ClientPerThread CT) {
+      synchronized (list) {
+         return list.remove(CT);
+      }
+   }
 
-	public void sendMessageToAll(String message) {
-		synchronized (list) {
-			for (PrintWriter pw : list) {
-				pw.println(message);
-				pw.flush();
-			}
-		}
-	}
+   public void sendMessageToAll(String message) {
+      synchronized (list) {
+         for (ClientPerThread ct : list) {
+            ct.getPw().println(message);
+            ct.getPw().flush();
+         }
+      }
+   }
+
+   public void sendPrivateMessage(String receiver_id, String time, String message) {
+      synchronized (list) {
+         for (ClientPerThread ct : list) {
+            if (ct.getTId().equals(receiver_id)) {
+               ct.getPw().println(message);
+               ct.getPw().println(time);
+               ct.getPw().flush();
+
+            }
+         }
+      }
+
+   }
 }
 
 class ClientPerThread extends Thread {
-	private SharedSessionWithSynchedBlock session;
-	private Socket socket;
-	private boolean go = true;
+   private ClientsList session;
+   private Socket socket;
+   private boolean go = true;
+   private String tid;
+   private PrintWriter pw;
+   private BufferedReader br;
+   
+   public ClientPerThread(Socket socket, ClientsList session) {
+      this.socket = socket;
+      this.session = session;
+   }
 
-	public ClientPerThread(Socket socket, SharedSessionWithSynchedBlock session) {
-		this.socket = socket;
-		this.session = session;
-	}
 
-	@Override
-	public void run() {
-		PrintWriter pw = null;
-		BufferedReader br = null;
-		try {
-			pw = new PrintWriter(socket.getOutputStream());
-			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+   @Override
+   public void run() {
+      pw = null;
+      br = null;
+      try {
+         pw = new PrintWriter(socket.getOutputStream());
+         br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-			session.addClient(pw);
+         tid = br.readLine();
+         System.out.println("아이디를 입력함");
+         session.addClient(this);
 
-			while (go && !isInterrupted()) {
-				String fromClient = br.readLine();
-				session.sendMessageToAll(fromClient);
-				if (fromClient.equals("Bye Bye")) {
-					throw new InterruptedException("종료");
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+         while (go && !isInterrupted()) {
+            String fromClient = br.readLine();
+            //유저아이디//받는사람아이디//시간// 내용순으로 들어오고 배열로 자름
+            String[] a = splitString(fromClient);
+            String sql = "insert into private_chatlist (sender_id, receiver_id, text ,text_time, file) values(?, ?, ?, ?,null);";
+            LocalDateTime dateTime = LocalDateTime.parse(a[2]);
+            Timestamp time = Timestamp.valueOf(dateTime);
+            try(Connection conn = MySqlConnectionProvider.getConnection();
+                  PreparedStatement stmt = conn.prepareStatement(sql)){
+               stmt.setString(1, a[0]);
+               stmt.setString(2, a[1]);
+               stmt.setString(3, a[3]);
+               stmt.setTimestamp(4, time);
+               System.out.println(stmt.executeUpdate());
+            } catch (SQLException e) {
+               e.printStackTrace();
+            }
+            
 
-		} finally {
-			if (socket != null) {
-				try {
-					socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			session.removeClient(pw);
-		}
-	}
+//            session.sendMessageToAll(fromClient+"이건전체메세지");
+            session.sendPrivateMessage(a[1], a[2], a[3]);
+            if (fromClient.equals("Bye Bye")) {
+               throw new InterruptedException("종료");
+            }
+         }
+      } catch (IOException e) {
+         e.printStackTrace();
+      } catch (InterruptedException e) {
+
+      } finally {
+         if (socket != null) {
+            try {
+               socket.close();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+         }
+         session.removeClient(this);
+      }
+   }
+
+   private String[] splitString(String input) {
+      int firstIndex = input.indexOf('/');
+      int secondIndex = input.indexOf('/', firstIndex + 1);
+      int thirdIndex = input.indexOf('/', secondIndex+1);
+
+      if (firstIndex != -1 && secondIndex != -1&&thirdIndex !=-1) {
+         return new String[] { input.substring(0, firstIndex), input.substring(firstIndex + 1, secondIndex),
+               input.substring(secondIndex + 1,thirdIndex),input.substring(thirdIndex+1) };
+      } else {
+         return new String[] { input };
+      }
+   }
+
+   public PrintWriter getPw() {
+      return pw;
+   }
+
+   public void setPw(PrintWriter pw) {
+      this.pw = pw;
+   }
+
+   public BufferedReader getBr() {
+      return br;
+   }
+
+   public void setBr(BufferedReader br) {
+      this.br = br;
+   }
+
+   public String getTId() {
+      return tid;
+   }
+
+   public void setId(String id) {
+      this.tid = id;
+   }
+
 }
 
 public class ChatServer {
-	public static void main(String[] args) {
-		try (ServerSocket server = new ServerSocket(12345);) {
-			SharedSessionWithSynchedBlock session = new SharedSessionWithSynchedBlock();
+   public static void main(String[] args) {
+      try (ServerSocket server = new ServerSocket(12345);) {
+         ClientsList session = new ClientsList();
+         while (true) {
+            System.out.println("클라이언트 접속 대기중");
+            Socket socket = server.accept();
 
-			while (true) {
-				System.out.println("클라이언트 접속 대기중");
-				Socket socket = server.accept();
-
-				Thread thread = new ClientPerThread(socket, session);
-				thread.start();
-				System.out.println("클라이언트 접속 완료");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+            Thread thread = new ClientPerThread(socket, session);
+            thread.start();
+            System.out.println("클라이언트 접속 완료");
+         }
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
 }
