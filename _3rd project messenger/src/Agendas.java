@@ -11,6 +11,8 @@ public class Agendas {
 	private int regist_time;
 	private int final_time;
 	private int progress_or_not;
+	private String nickname;
+	private int no;
 
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
 	public static List<Agendas> pastAgendaList = new ArrayList<>();
@@ -18,13 +20,36 @@ public class Agendas {
 	public Agendas() {
 	}
 
-	public Agendas(String id, String agenda, int regist_time, int final_time, int progress_or_not) {
+	
+	public Agendas(String id, String agenda, int regist_time, int final_time, int progress_or_not, String nickname,
+			int no) {
 		super();
 		this.id = id;
 		this.agenda = agenda;
 		this.regist_time = regist_time;
 		this.final_time = final_time;
 		this.progress_or_not = progress_or_not;
+		this.nickname = nickname;
+		this.no = no;
+	}
+
+
+	public int getNo() {
+		return no;
+	}
+
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getId() {
@@ -68,7 +93,7 @@ public class Agendas {
 	}
 
 	public void readAgendas() {
-		String sql = "select * from jae.agendas;";
+		String sql = "SELECT agendas.*, jae.user.nickname FROM agendas JOIN jae.user ON agendas.id = jae.user.id;";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				ResultSet rs = stmt.executeQuery()) {
@@ -76,18 +101,25 @@ public class Agendas {
 				String agenda = rs.getString("agenda");
 				String id = rs.getString("id");
 				int progress = rs.getInt("progress_or_not");
-
+				String nickname = rs.getString("nickname");
+				int no = rs.getInt("no");
+				
 				Agendas agendas = new Agendas();
 				if (progress == 1) {
 					agendas.setId(id);
 					agendas.setAgenda(agenda);
 					agendas.setProgress_or_not(progress);
-
+					agendas.setNickname(nickname);
+					agendas.setNo(no);
+					
 					agendaList.add(agendas);
 				} else {
 					agendas.setId(id);
 					agendas.setAgenda(agenda);
 					agendas.setProgress_or_not(progress);
+					agendas.setNickname(nickname);
+					agendas.setNo(no);
+					
 					pastAgendaList.add(agendas);
 				}
 			}

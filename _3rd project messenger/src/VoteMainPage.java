@@ -28,9 +28,9 @@ public class VoteMainPage extends JFrame {
 	private JLabel lbl4;
 	private JButton btnNewButton_1;
 	private JButton btnNewButton;
-	
-	public VoteMainPage() {
-		
+	User user;
+	public VoteMainPage(User user) {
+		this.user = user;
 		extracted();
 		createPanel();
 		lisetnerAll();
@@ -74,7 +74,7 @@ public class VoteMainPage extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AddAgenda aa = new AddAgenda();
+				AddAgenda aa = new AddAgenda(user);
 				aa.setVisible(true);
 			}
 		});
@@ -91,7 +91,7 @@ public class VoteMainPage extends JFrame {
 			lbl1 = new JLabel(a.getAgenda());
 			lbl2 = new JLabel("투표하기");
 			lbl3 = new JLabel("현황보기");
-			lbl4 = new JLabel(a.getId());
+			lbl4 = new JLabel(a.getNickname());
 			
 			lbl2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));

@@ -26,7 +26,7 @@ public class PastAgendas extends JFrame {
 		for(Agendas a : agendas.pastAgendaList) {
 			JPanel pnl = new JPanel();
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			JLabel lbl1 = new JLabel(a.getId());
+			JLabel lbl1 = new JLabel(a.getNickname());
 			JLabel lbl2 = new JLabel(a.getAgenda());
 			JLabel lbl3 = new JLabel("결과 보기");
 			lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));

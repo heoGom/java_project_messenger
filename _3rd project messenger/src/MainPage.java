@@ -78,7 +78,7 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				VoteMainPage voteMainPage = new VoteMainPage();
+				VoteMainPage voteMainPage = new VoteMainPage(user);
 				int mainPageX = getX();
 				int mainPageY = getY();
 				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth(), mainPageY);
