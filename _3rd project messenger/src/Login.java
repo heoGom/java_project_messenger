@@ -29,7 +29,6 @@ public class Login extends JFrame {
 	Boolean isRight;
 	Boolean isRightPw;
 	User user;
-	private List<User> list;
 
 	public Login() {
 		extracted();
@@ -52,7 +51,6 @@ public class Login extends JFrame {
 					membershipDAO.changeStatus(textField.getText());
 					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
-					System.out.println(user.nick);
 					if (user.getImage() != null) {
 						ImageIcon icon = user.getImage();
 						Image scaledImage = icon.getImage().getScaledInstance(mainPage.picture_lbl.getWidth(),
@@ -94,7 +92,6 @@ public class Login extends JFrame {
 					membershipDAO.changeStatus(textField.getText());
 					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
-					System.out.println(user.nick);
 					if (user.getImage() != null) {
 						ImageIcon icon = user.getImage();
 						Image scaledImage = icon.getImage().getScaledInstance(mainPage.picture_lbl.getWidth(),

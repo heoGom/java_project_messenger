@@ -60,7 +60,7 @@ public class PublicChatClient {
 			pr.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                	ChatRoomListPage.openingPublic=false;
+                	MainPage.openingPublic=false;
                 }
             });
 

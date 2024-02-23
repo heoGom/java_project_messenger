@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -21,6 +22,9 @@ public class MainPage extends JFrame {
 	public JLabel picture_lbl;
 	User user;
 	Agendas agendas;
+	static List<User> openingList;
+	static boolean openingPublic;
+	
 
 	public JButton userListbtn;
 	private JButton chatRoomListbtn;
@@ -38,6 +42,8 @@ public class MainPage extends JFrame {
 		changelbl();
 		listenerAll();
 		showGUI();
+		openingList = new ArrayList<>();
+		openingPublic = false;
 
 	}
 
@@ -98,6 +104,13 @@ public class MainPage extends JFrame {
 				voteMainPage.setVisible(true);
 			}
 		});
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            	System.out.println("프로그램 종료");
+            	System.exit(0);
+            }
+        });
 
 	}
 
@@ -187,5 +200,6 @@ public class MainPage extends JFrame {
 			}
 		});
 	}
+	
 
 }

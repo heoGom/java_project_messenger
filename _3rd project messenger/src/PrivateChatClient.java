@@ -29,7 +29,6 @@ public class PrivateChatClient {
 			PrintWriter pw = new PrintWriter(socket.getOutputStream());
 			pw.println(user.getId());
 			pw.flush();
-			System.out.println("클라이언트에서 아이디를 송출합니다");
 
 			ReadThread a = new ReadThread(pr, socket);
 
@@ -59,7 +58,7 @@ public class PrivateChatClient {
 			 pr.addWindowListener(new java.awt.event.WindowAdapter() {
 	                @Override
 	                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-	                	ChatRoomListPage.openingList.remove(another);
+	                	MainPage.openingList.remove(another);
 	                }
 	            });
 			

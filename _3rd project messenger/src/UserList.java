@@ -40,7 +40,6 @@ public class UserList extends JFrame {
 		extracted();
 		createPanel();
 		showGUI();
-		System.out.println(user.getNick());
 
 	}
 
@@ -105,9 +104,9 @@ public class UserList extends JFrame {
 			pnl.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(!ChatRoomListPage.openingList.contains(u)){
+					if(!MainPage.openingList.contains(u)){
 						new PrivateChatClient(user, u);
-						ChatRoomListPage.openingList.add(u);
+						MainPage.openingList.add(u);
 						
 					}
 				}
