@@ -44,7 +44,6 @@ public class ChatRoomListPage extends JFrame {
 	}
 
 	private void extracted() {
-
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(10, 50));
 		panel.setMinimumSize(new Dimension(10, 50));
