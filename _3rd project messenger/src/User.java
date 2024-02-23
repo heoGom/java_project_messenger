@@ -90,7 +90,7 @@ public class User {
 	                String nick = rs.getString("nickname");
 	                byte[] imageBytes = rs.getBytes("profilePhoto");
 	                ImageIcon image = (imageBytes != null) ? new ImageIcon(imageBytes) : null;
-
+	                
 	                User user = new User();
 	                user.setId(id);
 	                user.setPw(pw);
@@ -110,7 +110,6 @@ public class User {
 	}
 
 	public void readAllUser2() {
-
 	      String sql = "select * from jae.user;";
 	      try (Connection conn = MySqlConnectionProvider.getConnection();
 	            Statement stmt = conn.createStatement();

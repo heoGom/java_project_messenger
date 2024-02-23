@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,11 +28,12 @@ public class MainPage extends JFrame {
 	private JButton minigame;
 	private JButton myprofilebtn;
 	private JButton logoutbtn;
-	
+
 	MembershipDAO mdao = new MembershipDAO();
 
 	public MainPage(User user) {
 		this.user = user;
+		setTitle("임시로 메뉴로 할게요");
 		extracted();
 		changelbl();
 		listenerAll();
@@ -51,7 +54,6 @@ public class MainPage extends JFrame {
 	}
 
 	private void listenerAll() {
-
 		chatRoomListbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -125,18 +127,28 @@ public class MainPage extends JFrame {
 							JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 					if (optionSelect == 0) {
 						if (user.getPw().equals(pwField.getText())) {
-							dispose();
-							MyPage myPage = new MyPage(user);
-							myPage.setVisible(true);
+							MyPage myPage = new MyPage(user, MainPage.this);
+							if (user.getImage() != null) { // 사진이 등록이 되어있을때
+								ImageIcon icon = user.getImage();
+								Image scaledImage2 = icon.getImage().getScaledInstance(myPage.picture.getWidth(),
+										myPage.picture.getHeight(), Image.SCALE_SMOOTH);
+								ImageIcon scalecIcon2 = new ImageIcon(scaledImage2);
+								myPage.picture.setIcon(scalecIcon2);
+								myPage.setVisible(true);
+							} else { // 사진이 등록 되어있지않을때
+								myPage.setVisible(true);
+							}
 							break;
 						} else {
 							JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.", "경고", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 					if (optionSelect == 1) {
+						setVisible(true);
 						break;
 					}
 					if (optionSelect == JOptionPane.CLOSED_OPTION) {
+						setVisible(true);
 						break;
 					}
 				}

@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Blob;
@@ -38,14 +39,13 @@ public class Login extends JFrame {
 		showGUI();
 
 	}
-
 	private void allListener() {
 		loginbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				isRight = membershipDAO.CheckId(textField.getText());
-				isRightPw = membershipDAO.CheckPW(textField.getText(),textField_1.getText());
+				isRightPw = membershipDAO.CheckPW(textField.getText(), textField_1.getText());
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
@@ -53,6 +53,13 @@ public class Login extends JFrame {
 					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 					System.out.println(user.nick);
+					if (user.getImage() != null) {
+						ImageIcon icon = user.getImage();
+						Image scaledImage = icon.getImage().getScaledInstance(mainPage.picture_lbl.getWidth(),
+								mainPage.picture_lbl.getHeight(), Image.SCALE_SMOOTH);
+						ImageIcon scaledIcon = new ImageIcon(scaledImage);
+						mainPage.picture_lbl.setIcon(scaledIcon);
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
 					loginbtn.setEnabled(false);
@@ -80,7 +87,7 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				isRight = membershipDAO.CheckId(textField.getText());
-				isRightPw = membershipDAO.CheckPW(textField.getText(),textField_1.getText());
+				isRightPw = membershipDAO.CheckPW(textField.getText(), textField_1.getText());
 				if (!isRight && !isRightPw) {
 					dispose();
 					user = readDB();
@@ -88,6 +95,13 @@ public class Login extends JFrame {
 					MainPage mainPage = new MainPage(user);
 					mainPage.setVisible(true);
 					System.out.println(user.nick);
+					if (user.getImage() != null) {
+						ImageIcon icon = user.getImage();
+						Image scaledImage = icon.getImage().getScaledInstance(mainPage.picture_lbl.getWidth(),
+								mainPage.picture_lbl.getHeight(), Image.SCALE_SMOOTH);
+						ImageIcon scaledIcon = new ImageIcon(scaledImage);
+						mainPage.picture_lbl.setIcon(scaledIcon);
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "정보가없습니다");
 					loginbtn.setEnabled(false);
@@ -96,7 +110,6 @@ public class Login extends JFrame {
 			}
 		});
 	}
-	
 
 	public User readDB() {
 		String sql = "select id,password,nickname,profilePhoto from jae.user where id = ?";
@@ -105,7 +118,7 @@ public class Login extends JFrame {
 		try (Connection conn = MySqlConnectionProvider.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, textField.getText());
-			
+
 			try (ResultSet rs = stmt.executeQuery();) {
 				if (rs.next()) {
 					String id = rs.getString("id");
@@ -142,8 +155,8 @@ public class Login extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		
-		 textField.requestFocusInWindow();
+
+		textField.requestFocusInWindow();
 	}
 
 	private void extracted() {
