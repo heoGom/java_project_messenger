@@ -29,7 +29,8 @@ public class VoteMainPage extends JFrame {
 	private JButton btnNewButton_1;
 	private JButton btnNewButton;
 	User user;
-	public VoteMainPage(User user) {
+	GoVotePage goVotePage;
+	public VoteMainPage(User user ) {
 		this.user = user;
 		extracted();
 		createPanel();
@@ -85,27 +86,28 @@ public class VoteMainPage extends JFrame {
 		agendas.agendaList = new ArrayList<Agendas>();
 		agendas.readAgendas();
 		
-		for(Agendas a : agendas.agendaList) {
+		for(int i =0; i<agendas.agendaList.size();i++) {
 			pnl = new JPanel();
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			lbl1 = new JLabel(a.getAgenda());
+			lbl1 = new JLabel(agendas.agendaList.get(i).getAgenda());
 			lbl2 = new JLabel("투표하기");
 			lbl3 = new JLabel("현황보기");
-			lbl4 = new JLabel(a.getNickname());
-			
+			lbl4 = new JLabel(agendas.agendaList.get(i).getNickname());
+			int n = agendas.agendaList.get(i).getNo();
 			lbl2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			
-			pnl.add(lbl4);
 			pnl.add(lbl1);
 			pnl.add(lbl2);
 			pnl.add(lbl3);
+			pnl.add(lbl4);
 			panel.add(pnl);
 			lbl2.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					GoVotePage govote = new GoVotePage(VoteMainPage.this);
-					govote.setVisible(true);
+					goVotePage = new GoVotePage(VoteMainPage.this, user);
+					goVotePage.createPanel(n);
+					goVotePage.setVisible(true);
 				}
 			});
 			lbl3.addMouseListener(new MouseAdapter() {

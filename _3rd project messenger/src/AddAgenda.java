@@ -33,7 +33,6 @@ public class AddAgenda extends JFrame {
 	private String[] comboBoxLists;
 	private JLabel lblNewLabel_3;
 	private Agendas ad;
-	private List<Agendas> adlist = new ArrayList<Agendas>();
 	private int generatedNo;
 	private VoteMainPage voteMainPage;
 	

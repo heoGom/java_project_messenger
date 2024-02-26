@@ -99,10 +99,57 @@ public class Agendas {
 		this.progress_or_not = progress_or_not;
 	}
 
-	public void readItem() {
+	public void readItem(Integer num) {
+		String sql = "select * from jae.my_view where no = ?;";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, num);
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					Integer no = rs.getInt("no");
+					String item = rs.getString("item");
+					String agenda = rs.getString("agenda");
+					
+					Agendas agitem = new Agendas();
 
+					agitem.setNo(no);
+					agitem.setItem(item);
+					agitem.setAgenda(agenda);
+
+					itemList.add(agitem);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
+
+	public void readItem2() {
+		String sql = "select * from jae.my_view ;";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					Integer no = rs.getInt("no");
+					String item = rs.getString("item");
+					String agenda = rs.getString("agenda");
+					
+					Agendas agitem = new Agendas();
+
+					agitem.setNo(no);
+					agitem.setItem(item);
+					agitem.setAgenda(agenda);
+
+					itemList.add(agitem);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void readAgendas() {
 		String sql = "SELECT agendas.*, jae.user.nickname FROM agendas JOIN jae.user ON agendas.id = jae.user.id;";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
