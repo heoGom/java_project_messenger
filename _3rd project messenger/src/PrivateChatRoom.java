@@ -63,14 +63,14 @@ public class PrivateChatRoom extends JFrame {
 		another_Pt_Lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
 		another_Pt_Lbl.setBounds(12, 9, 35, 35);
 		panel.add(another_Pt_Lbl);
-//		if (!(another_Pt_Lbl == null)) {
-//			ImageIcon icon = another.getImage();
-//			Image scaledImage = icon.getImage().getScaledInstance(another_Pt_Lbl.getWidth(), another_Pt_Lbl.getHeight(),
-//					Image.SCALE_SMOOTH);
-//			ImageIcon scalecIcon = new ImageIcon(scaledImage);
-//			another_Pt_Lbl.setIcon(scalecIcon);
-//		}
-
+		if (another.getImage() != null) {
+			ImageIcon icon = another.getImage();
+			Image scaledImage = icon.getImage().getScaledInstance(another_Pt_Lbl.getWidth(), another_Pt_Lbl.getHeight(),
+					Image.SCALE_SMOOTH);
+			ImageIcon scalecIcon = new ImageIcon(scaledImage);
+			another_Pt_Lbl.setIcon(scalecIcon);
+		}
+		
 		JLabel another_NN_Lbl = new JLabel(another.getNick());
 		another_NN_Lbl.setBounds(63, 20, 64, 15);
 		panel.add(another_NN_Lbl);

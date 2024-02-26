@@ -22,6 +22,7 @@ public class MainPage extends JFrame {
 	public JLabel picture_lbl;
 	User user;
 	Agendas agendas;
+	
 	static List<User> openingList;
 	static boolean openingPublic;
 	
@@ -29,7 +30,7 @@ public class MainPage extends JFrame {
 	public JButton userListbtn;
 	private JButton chatRoomListbtn;
 	private JButton votebtn;
-	private JButton minigame;
+	private JButton minigamebtn;
 	private JButton myprofilebtn;
 	private JButton logoutbtn;
 
@@ -118,6 +119,20 @@ public class MainPage extends JFrame {
 				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth(), mainPageY);
 			}
 		});
+		
+		minigamebtn.addActionListener(new ActionListener() {
+			private MiniGame minigame;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (minigame == null || !minigame.isVisible()) {
+					minigame = new MiniGame();
+					minigame.setVisible(true);
+				} else {
+					minigame.toFront();
+				}
+			}
+		});
+		
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -125,7 +140,6 @@ public class MainPage extends JFrame {
             	System.exit(0);
             }
         });
-
 	}
 
 	private void extracted() {
@@ -143,9 +157,9 @@ public class MainPage extends JFrame {
 		votebtn.setBounds(143, 270, 113, 23);
 		getContentPane().add(votebtn);
 
-		minigame = new JButton("미니 게임");
-		minigame.setBounds(143, 345, 113, 23);
-		getContentPane().add(minigame);
+		minigamebtn = new JButton("미니 게임");
+		minigamebtn.setBounds(143, 345, 113, 23);
+		getContentPane().add(minigamebtn);
 
 		myprofilebtn = new JButton("마이프로필");
 		myprofilebtn.setBounds(326, 10, 97, 23);
