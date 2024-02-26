@@ -14,6 +14,7 @@ public class User {
 	String pw = null;
 	String nick = null;
 	ImageIcon image = null;
+	int highScore = 0;
 	static List<User> list = new ArrayList<>();
 	int status;
 	
@@ -21,12 +22,13 @@ public class User {
 	public User() {
 	}
 
-	public User(String id, String pw, String nick, ImageIcon image) {
+	public User(String id, String pw, String nick, ImageIcon image, int highScore) {
 		super();
 		this.id = id;
 		this.pw = pw;
 		this.nick = nick;
 		this.image = image;
+		this.highScore = highScore;
 	}
 
 	
@@ -71,9 +73,18 @@ public class User {
 		this.image = image;
 	}
 
+	public int getHighScore() {
+		return highScore;
+	}
+
+	public void setHighScore(int highScore) {
+		this.highScore = highScore;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", pw=" + pw + ", nick=" + nick + ", image=" + image + "]";
+		return "User [id=" + id + ", pw=" + pw + ", nick=" + nick + ", image=" + image + ", highScore=" + highScore
+				+ ", status=" + status + "]";
 	}
 
 	public void readAllUser(String nickname) {
@@ -90,12 +101,14 @@ public class User {
 	                String nick = rs.getString("nickname");
 	                byte[] imageBytes = rs.getBytes("profilePhoto");
 	                ImageIcon image = (imageBytes != null) ? new ImageIcon(imageBytes) : null;
+	                int highScore = rs.getInt("highscore");
 	                
 	                User user = new User();
 	                user.setId(id);
 	                user.setPw(pw);
 	                user.setNick(nick);
 	                user.setImage(image);
+	                user.setHighScore(highScore);
 
 	                list.add(user);
 	            }
@@ -118,12 +131,14 @@ public class User {
 	            String nick = rs.getString("nickname");
 	            byte[] imageBytes = rs.getBytes("profilePhoto");
 	            ImageIcon image = (imageBytes != null) ? new ImageIcon(imageBytes) : null;
+	            int highScore = rs.getInt("highscore");
 
 	            User user = new User();
 	            user.setId(id);
 	            user.setPw(pw);
 	            user.setNick(nick);
 	            user.setImage(image);
+	            user.setHighScore(highScore);
 
 	            list.add(user);
 	         }
