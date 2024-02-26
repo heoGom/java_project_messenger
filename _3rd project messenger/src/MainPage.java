@@ -199,10 +199,13 @@ public class MainPage extends JFrame {
 										myPage.picture.getHeight(), Image.SCALE_SMOOTH);
 								ImageIcon scalecIcon2 = new ImageIcon(scaledImage2);
 								myPage.picture.setIcon(scalecIcon2);
-								myPage.score.setText(user.getHighScore() + " 초");
+								int Score = user.getHighScore();
+								System.out.println(Score);
+//								myPage.score.setText(Score + " 초");	
 								myPage.showGUI();
 							} else { // 사진이 등록 되어있지않을때
-								myPage.score.setText(user.getHighScore() + " 초");
+								int Score = user.getHighScore(); 
+								myPage.score.setText(Score + " 초");
 								myPage.showGUI();
 							}
 							break;

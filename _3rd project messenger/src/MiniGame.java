@@ -69,9 +69,9 @@ public class MiniGame extends JFrame {
             if (angle == -90 || angle == 90) {
                System.out.println(timeElapsed + "초");
                gameOver();
-               user.setHighScore(timeElapsed);
                gs = new GameScore(user, MiniGame.this);
                gs.gameScoreDAO(user.id, timeElapsed);
+               user.setHighScore(timeElapsed);
             }
          }
       });
