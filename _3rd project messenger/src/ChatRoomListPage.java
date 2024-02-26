@@ -24,12 +24,14 @@ public class ChatRoomListPage extends JFrame {
 
 	User user;
 	List<User> list;
-	
+	static List<User> openingList;
+	static boolean openingPublic;
 
 	public ChatRoomListPage(User user) {
 		this.user = user;
 		list = privateChatUserList(user);
-		
+		openingList = new ArrayList<>();
+		openingPublic = false;
 		showGUI();
 		extracted();
 
@@ -73,9 +75,9 @@ public class ChatRoomListPage extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(!MainPage.openingPublic) {
+				if(!openingPublic) {
 				new PublicChatClient(user);
-				MainPage.openingPublic = true;
+				openingPublic = true;
 				}
 				
 			}
@@ -99,11 +101,11 @@ public class ChatRoomListPage extends JFrame {
 			label.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(!MainPage.openingList.contains(list.get(INDEX))){
+					if(!openingList.contains(list.get(INDEX))){
 						new PrivateChatClient(user, list.get(INDEX));
-						MainPage.openingList.add(list.get(INDEX));
-						
+						openingList.add(list.get(INDEX));
 					}
+					
 				}
 			});
 
