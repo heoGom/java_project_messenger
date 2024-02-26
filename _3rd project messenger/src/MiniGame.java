@@ -20,6 +20,9 @@ public class MiniGame extends JFrame {
 			g2d.rotate(Math.toRadians(angle), 235, 300);
 			g2d.setColor(Color.RED);
 			g2d.fillRect(225, 200, 20, 100);
+			if (angle == -90) {
+				timer.stop();
+			}
 			
 			
 		}

@@ -130,9 +130,6 @@ public class User {
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }
-	      for (User user : list) {
-	         System.out.println(user);
-	      }
 	   }
 
 	@Override

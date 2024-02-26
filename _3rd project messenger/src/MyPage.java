@@ -141,7 +141,6 @@ public class MyPage {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						dialog.dispose();
-						System.out.println("뿅뿅");
 					}
 				});
 				dialog.setVisible(true); // 모달이 적용되면 setVisible이 아래흐름으로 안흘러감.
