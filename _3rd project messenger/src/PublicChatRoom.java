@@ -51,17 +51,13 @@ public class PublicChatRoom extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setPreferredSize(new Dimension(10, 55));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
 
-		JLabel another_Pt_Lbl = new JLabel("\uC0AC\uC9C4");
-		another_Pt_Lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
-		another_Pt_Lbl.setBounds(12, 9, 35, 35);
-		panel.add(another_Pt_Lbl);
-
 		JLabel another_NN_Lbl = new JLabel("단체방");
-		another_NN_Lbl.setBounds(63, 20, 64, 15);
+		another_NN_Lbl.setBounds(20, 20, 64, 15);
 		panel.add(another_NN_Lbl);
 
 		JPanel panel_1 = new JPanel();
@@ -81,6 +77,7 @@ public class PublicChatRoom extends JFrame {
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		panel_2.addContainerListener(new ContainerAdapter() {
 			@Override
@@ -100,7 +97,7 @@ public class PublicChatRoom extends JFrame {
 		if (TDList != null) {
 			for (PublicTextDate sen : TDList) {
 
-				addChat(sen.getText(), user.getId().equals(sen.getSender_id()), sen.getTime());
+				addChat(sen.getText(),sen.getSender_id(), user.getId().equals(sen.getSender_id()), sen.getTime());
 			}
 //	         scrollDown();
 		}
@@ -137,7 +134,7 @@ public class PublicChatRoom extends JFrame {
 
 	}
 
-	public void addChatPr(String sender_id, String message, Timestamp time) {
+	public void addChat(String message, String sender_id, boolean sentByMe, Timestamp time) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 		String time1 = sdf.format(time);
 
@@ -150,61 +147,7 @@ public class PublicChatRoom extends JFrame {
 			startIndex = endIndex;
 			// 새로운 패널을 생성하여 라벨들을 추가
 			JPanel messagePanel = new JPanel();
-			messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
-			// messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-
-			// 메시지를 담은 JLabel 생성
-			
-			
-			JLabel subMessageLabel = new JLabel(subMessage);
-			
-			// setBlackBorder(subMessageLabel);
-
-			// 패널에 라벨 추가
-			// 시간을 담은 JLabel 생성
-			JLabel timeLabel = new JLabel("[" + time1 + "]");
-			// setBlackBorder(timeLabel);
-
-			// 메시지를 오른쪽에 보내는 경우
-			// 메시지를 왼쪽에서 받는 경우
-			messagePanel.add(subMessageLabel);
-			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
-			if(once) {
-				JLabel senderIdLbl = new JLabel(sender_id);
-				messagePanel.add(senderIdLbl);
-				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
-			}
-			once = false;
-			if (startIndex >= message.length()) {
-				messagePanel.add(timeLabel);
-			}
-			messagePanel.add(Box.createHorizontalGlue());
-
-			// 현재 텍스트에 추가
-			panel_2.add(messagePanel);
-			panel_2.revalidate();
-			panel_2.repaint();
-			messagePanel.scrollRectToVisible(messagePanel.getBounds());
-//	         scrollDown();
-			sendTextArea.requestFocusInWindow();
-			// 다음 부분 처리를 위해 시작 인덱스 갱신
-
-		}
-
-	}
-
-	public void addChat(String message, boolean sentByMe, Timestamp time) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-		String time1 = sdf.format(time);
-
-		// 문자열을 10자씩 나누어 처리
-		int startIndex = 0;
-		while (startIndex < message.length()) {
-			int endIndex = Math.min(startIndex + 10, message.length());
-			String subMessage = message.substring(startIndex, endIndex);
-			startIndex = endIndex;
-			// 새로운 패널을 생성하여 라벨들을 추가
-			JPanel messagePanel = new JPanel();
+			messagePanel.setBackground(Color.WHITE);
 			messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
 			// messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -228,6 +171,12 @@ public class PublicChatRoom extends JFrame {
 			} else { // 메시지를 왼쪽에서 받는 경우
 				messagePanel.add(subMessageLabel);
 				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+				if(once) {
+					JLabel senderIdLbl = new JLabel(sender_id);
+					messagePanel.add(senderIdLbl);
+					messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+				}
+				once = false;
 				if (startIndex >= message.length()) {
 					messagePanel.add(timeLabel);
 				}

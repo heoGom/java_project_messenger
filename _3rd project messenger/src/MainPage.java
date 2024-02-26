@@ -1,21 +1,18 @@
-import javax.swing.JFrame;
-
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import java.awt.Color;
 
 public class MainPage extends JFrame {
 	public JLabel nick_lbl;
@@ -36,6 +33,7 @@ public class MainPage extends JFrame {
 	MembershipDAO mdao = new MembershipDAO();
 
 	public MainPage(User user) {
+		getContentPane().setBackground(Color.WHITE);
 		this.user = user;
 		setTitle("");
 		extracted();
@@ -95,11 +93,13 @@ public class MainPage extends JFrame {
 				int mainPageY = getY();
 				userList.setLocation(mainPageX - userList.getWidth(), mainPageY);
 				userList.readStatus();
+				if(user.getImage()!= null) {
 				ImageIcon icon = user.getImage();
 				Image scaledImage = icon.getImage().getScaledInstance(userList.lblNewLabel.getWidth(),
 						userList.lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon scalecIcon = new ImageIcon(scaledImage);
 				userList.lblNewLabel.setIcon(scalecIcon);
+				}
 			}
 		});
 
@@ -122,6 +122,7 @@ public class MainPage extends JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
             	System.out.println("프로그램 종료");
+            	mdao.resetStatus(user.id);
             	System.exit(0);
             }
         });
@@ -193,7 +194,7 @@ public class MainPage extends JFrame {
 			}
 		});
 
-		picture_lbl = new JLabel("사진들어갈");
+		picture_lbl = new JLabel();
 		picture_lbl.setBounds(12, 14, 50, 50);
 		getContentPane().add(picture_lbl);
 
@@ -207,7 +208,11 @@ public class MainPage extends JFrame {
 		logoutbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				for (Window window : Window.getWindows()) {
+		            if (window.isDisplayable()) {
+		                window.dispose(); // 창 닫기
+		            }
+		        }
 				Login login = new Login();
 				login.setVisible(true);
 				mdao.resetStatus(user.id);

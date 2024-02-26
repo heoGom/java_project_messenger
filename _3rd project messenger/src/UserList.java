@@ -48,7 +48,7 @@ public class UserList extends JFrame {
 	private void showGUI() {
 		setSize(441, 553);
 		setVisible(true);
-		
+
 	}
 
 	private void extracted() {
@@ -67,7 +67,7 @@ public class UserList extends JFrame {
 		lblNewLabel_2.setText("가입자 수:" + countUser());
 
 		panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 1));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -94,6 +94,9 @@ public class UserList extends JFrame {
 		for (User u : user.list) {
 
 			pnl = new JPanel();
+			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
+			pnl.setPreferredSize(preferredSize);
+			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			lbl = new JLabel(u.nick);
 			lbl2 = new JLabel("test");
@@ -105,10 +108,10 @@ public class UserList extends JFrame {
 			pnl.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(!MainPage.openingList.contains(u)){
+					if (!MainPage.openingList.contains(u)) {
 						new PrivateChatClient(user, u);
 						MainPage.openingList.add(u);
-						
+
 					}
 				}
 			});

@@ -55,21 +55,21 @@ public class PrivateChatRoom extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setPreferredSize(new Dimension(10, 55));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
 
-		another_Pt_Lbl = new JLabel(" ");
-		another_Pt_Lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
+		another_Pt_Lbl = new JLabel();
 		another_Pt_Lbl.setBounds(12, 9, 35, 35);
 		panel.add(another_Pt_Lbl);
-//		if (!(another_Pt_Lbl == null)) {
-//			ImageIcon icon = another.getImage();
-//			Image scaledImage = icon.getImage().getScaledInstance(another_Pt_Lbl.getWidth(), another_Pt_Lbl.getHeight(),
-//					Image.SCALE_SMOOTH);
-//			ImageIcon scalecIcon = new ImageIcon(scaledImage);
-//			another_Pt_Lbl.setIcon(scalecIcon);
-//		}
+		if (another.getImage() != null) {
+			ImageIcon icon = another.getImage();
+			Image scaledImage = icon.getImage().getScaledInstance(another_Pt_Lbl.getWidth(), another_Pt_Lbl.getHeight(),
+					Image.SCALE_SMOOTH);
+			ImageIcon scalecIcon = new ImageIcon(scaledImage);
+			another_Pt_Lbl.setIcon(scalecIcon);
+		}
 
 		JLabel another_NN_Lbl = new JLabel(another.getNick());
 		another_NN_Lbl.setBounds(63, 20, 64, 15);
@@ -92,6 +92,7 @@ public class PrivateChatRoom extends JFrame {
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		panel_2.addContainerListener(new ContainerAdapter() {
 			@Override
@@ -166,6 +167,7 @@ public class PrivateChatRoom extends JFrame {
 			startIndex = endIndex;
 			// 새로운 패널을 생성하여 라벨들을 추가
 			JPanel messagePanel = new JPanel();
+			messagePanel.setBackground(Color.WHITE);
 			messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
 			// messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 

@@ -19,7 +19,7 @@ public class PublicChatClient {
 
 	public PublicChatClient(User user) {
 
-		LocalDateTime currentTime = LocalDateTime.now();
+		
 
 		Socket socket = null;
 		PrintWriter in = null;
@@ -39,11 +39,12 @@ public class PublicChatClient {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					LocalDateTime currentTime = LocalDateTime.now();
 					pw.println(
 							user.getId() + "/" + "AllChat" + "/" + currentTime + "/" + pr.sendTextArea.getText());
 					pw.flush();
 					Timestamp time = Timestamp.valueOf(currentTime);
-					pr.addChat(pr.sendTextArea.getText(), true, time);
+					pr.addChat(pr.sendTextArea.getText(),user.id, true, time);
 					pr.sendTextArea.setText("");
 
 				}
@@ -101,7 +102,8 @@ class PublicReadThread extends Thread {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						pr.addChatPr(sender_id, message, time);
+//						pr.addChatPr(sender_id, message, time);
+						pr.addChat(message, sender_id, false, time);
 					}
 				});
 

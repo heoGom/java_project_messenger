@@ -18,7 +18,7 @@ public class PrivateChatClient {
 
 	public PrivateChatClient(User user, User another) {
 
-		LocalDateTime currentTime = LocalDateTime.now();
+		
 
 		Socket socket = null;
 		PrintWriter in = null;
@@ -37,6 +37,7 @@ public class PrivateChatClient {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					LocalDateTime currentTime = LocalDateTime.now();
 					pw.println(
 							user.getId() + "/" + another.getId() + "/" + currentTime + "/" + pr.sendTextArea.getText());
 					pw.flush();
