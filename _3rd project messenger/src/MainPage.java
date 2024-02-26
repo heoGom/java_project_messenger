@@ -19,6 +19,7 @@ public class MainPage extends JFrame {
 	public JLabel picture_lbl;
 	User user;
 	Agendas agendas;
+	GoVotePage goVotePage;
 	
 	static List<User> openingList;
 	static boolean openingPublic;

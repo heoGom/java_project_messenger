@@ -14,6 +14,7 @@ public class Agendas {
 	private String nickname;
 	private int no;
 	private String item;
+	User user;
 
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
 	public static List<Agendas> pastAgendaList = new ArrayList<>();
@@ -126,22 +127,21 @@ public class Agendas {
 
 
 	public void readItem2() {
-		String sql = "select * from jae.my_view ;";
+		String sql = "select * from jae.regist_item;";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
-					Integer no = rs.getInt("no");
+					Integer no = rs.getInt("agenda_num");
 					String item = rs.getString("item");
-					String agenda = rs.getString("agenda");
+					String agenda_name = rs.getString("agenda_name");
 					
 					Agendas agitem = new Agendas();
 
 					agitem.setNo(no);
 					agitem.setItem(item);
-					agitem.setAgenda(agenda);
-
+					agitem.setAgenda(agenda_name);
 					itemList.add(agitem);
 				}
 			}
