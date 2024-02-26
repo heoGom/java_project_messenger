@@ -14,11 +14,13 @@ public class Agendas {
 	private String nickname;
 	private int no;
 	private String item;
-	
+
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
 	public static List<Agendas> pastAgendaList = new ArrayList<>();
 	public static List<Agendas> itemList = new ArrayList<>();
-	public Agendas() {}
+
+	public Agendas() {
+	}
 
 	public Agendas(String id, String agenda, int regist_time, int final_time, int progress_or_not, String nickname,
 			int no, String item) {
@@ -41,16 +43,13 @@ public class Agendas {
 		this.item = item;
 	}
 
-
 	public int getNo() {
 		return no;
 	}
 
-
 	public void setNo(int no) {
 		this.no = no;
 	}
-
 
 	public String getNickname() {
 		return nickname;
@@ -99,10 +98,58 @@ public class Agendas {
 	public void setProgress_or_not(int progress_or_not) {
 		this.progress_or_not = progress_or_not;
 	}
-	public void readItem() {
-		
+
+	public void readItem(Integer num) {
+		String sql = "select * from jae.my_view where no = ?;";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, num);
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					Integer no = rs.getInt("no");
+					String item = rs.getString("item");
+					String agenda = rs.getString("agenda");
+					
+					Agendas agitem = new Agendas();
+
+					agitem.setNo(no);
+					agitem.setItem(item);
+					agitem.setAgenda(agenda);
+
+					itemList.add(agitem);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
+
+	public void readItem2() {
+		String sql = "select * from jae.my_view ;";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					Integer no = rs.getInt("no");
+					String item = rs.getString("item");
+					String agenda = rs.getString("agenda");
+					
+					Agendas agitem = new Agendas();
+
+					agitem.setNo(no);
+					agitem.setItem(item);
+					agitem.setAgenda(agenda);
+
+					itemList.add(agitem);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void readAgendas() {
 		String sql = "SELECT agendas.*, jae.user.nickname FROM agendas JOIN jae.user ON agendas.id = jae.user.id;";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
@@ -114,7 +161,7 @@ public class Agendas {
 				int progress = rs.getInt("progress_or_not");
 				String nickname = rs.getString("nickname");
 				int no = rs.getInt("no");
-				
+
 				Agendas agendas = new Agendas();
 				if (progress == 1) {
 					agendas.setId(id);
@@ -122,7 +169,7 @@ public class Agendas {
 					agendas.setProgress_or_not(progress);
 					agendas.setNickname(nickname);
 					agendas.setNo(no);
-					
+
 					agendaList.add(agendas);
 				} else {
 					agendas.setId(id);
@@ -130,7 +177,7 @@ public class Agendas {
 					agendas.setProgress_or_not(progress);
 					agendas.setNickname(nickname);
 					agendas.setNo(no);
-					
+
 					pastAgendaList.add(agendas);
 				}
 			}
