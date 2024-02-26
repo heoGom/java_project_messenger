@@ -125,10 +125,10 @@ public class Login extends JFrame {
 						blob = rs.getBlob("profilePhoto");
 						image = blobToImageIcon(blob);
 
-						return new User(id, pw, nick, image);
+						return new User(id, pw, nick, image, 0);
 					} else {
 						image = null;
-						return new User(id, pw, nick, image);
+						return new User(id, pw, nick, image, 0);
 					}
 				}
 			}

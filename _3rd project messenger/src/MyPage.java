@@ -46,6 +46,8 @@ public class MyPage {
 	public ImageIcon scaledIcon;
 	public ImageIcon scaledIcon2;
 	private JDialog mainDL;
+	private JLabel userScore;
+	public JLabel score;
 
 	public MyPage(User user, MainPage mainPage) {
 		this.user = user;
@@ -64,12 +66,21 @@ public class MyPage {
 		panel.add(picture);
 
 		JLabel userNick = new JLabel("내 별명");
-		userNick.setBounds(88, 29, 60, 15);
+		userNick.setBounds(58, 29, 60, 15);
 		panel.add(userNick);
 		nick = new JLabel(user.getNick());
 		nick.setFont(new Font("굴림", Font.BOLD, 16));
-		nick.setBounds(65, 94, 100, 30);
+		nick.setBounds(58, 95, 91, 30);
 		panel.add(nick);
+		
+		userScore = new JLabel("내 점수");
+		userScore.setFont(new Font("굴림", Font.BOLD, 12));
+		userScore.setBounds(189, 29, 60, 15);
+		panel.add(userScore);
+		score = new JLabel(user.getHighScore() + "초");
+		score.setFont(new Font("굴림", Font.PLAIN, 16));
+		score.setBounds(175, 103, 75, 15);
+		panel.add(score);
 
 		JButton btnNickCh = new JButton("닉네임 변경");
 		btnNickCh.setFont(new Font("굴림", Font.BOLD, 11));
@@ -181,7 +192,7 @@ public class MyPage {
 				pwfield2.setBounds(150, 120, 200, 20);
 				btnChange.setBounds(40, 200, 100, 30);
 				btnCancle.setBounds(240, 200, 100, 30);
-				dialog.getContentPane().add(panel, BorderLayout.CENTER);
+//				dialog.getContentPane().add(panel, BorderLayout.CENTER);
 				dialog.setLocationRelativeTo(null);
 
 				btnChange.addActionListener(new ActionListener() {
@@ -360,5 +371,4 @@ public class MyPage {
 	public void showGUI() {
 		mainDL.setVisible(true);
 	}
-
 }	
