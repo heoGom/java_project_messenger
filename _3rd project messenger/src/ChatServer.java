@@ -29,16 +29,16 @@ class ClientsList {
 		}
 	}
 
-	public void sendMessageToAll(String sender_id ,String time, String message) {
+	public void sendMessageToAll(String sender_id, String time, String message) {
 		synchronized (list) {
 			for (ClientPerThread ct : list) {
-				if(ct.getTId().equals(sender_id)) {
-					
+				if (ct.getTId().equals(sender_id)) {
+
 				} else {
-				ct.getPw().println(sender_id);
-				ct.getPw().println(message);
-				ct.getPw().println(time);
-				ct.getPw().flush();
+					ct.getPw().println(sender_id);
+					ct.getPw().println(message);
+					ct.getPw().println(time);
+					ct.getPw().flush();
 				}
 			}
 		}
@@ -85,49 +85,58 @@ class ClientPerThread extends Thread {
 
 			while (go && !isInterrupted()) {
 				String fromClient = br.readLine();
-				// 유저아이디//받는사람아이디//시간// 내용순으로 들어오고 배열로 자름
-				String[] a = splitString(fromClient);
-				String sql = "insert into private_chatlist (sender_id, receiver_id, text ,text_time, file) values(?, ?, ?, ?,null);";
-				String sqlp = "insert into public_chatlist (sender_id, text, text_time,file) values(?,?,?,null);";
-				LocalDateTime dateTime = LocalDateTime.parse(a[2]);
-				Timestamp time = Timestamp.valueOf(dateTime);
-				if (a[1].equals("AllChat")) {
-					try (Connection conn = MySqlConnectionProvider.getConnection();
-							PreparedStatement stmt = conn.prepareStatement(sqlp)) {
-						stmt.setString(1, a[0]);
-						stmt.setString(2, a[3]);
-						stmt.setTimestamp(3, time);
-						stmt.executeUpdate();
-
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-
+				if (fromClient.equals("Bye Bye")) {
+					System.out.println(tid + "연결종료");
+					throw new InterruptedException("종료");
 				} else {
-					try (Connection conn = MySqlConnectionProvider.getConnection();
-							PreparedStatement stmt = conn.prepareStatement(sql)) {
-						stmt.setString(1, a[0]);
-						stmt.setString(2, a[1]);
-						stmt.setString(3, a[3]);
-						stmt.setTimestamp(4, time);
-						stmt.executeUpdate();
+					// 개인 메세지의 경우
+					// 유저아이디//받는사람아이디//시간// 내용순으로 들어오고 배열로 자름
+					// 단체 메세지의 경우
+					// 유저아이디// ALLChat//시간//내용
+					String[] a = splitString(fromClient);
+					String sql = "insert into private_chatlist (sender_id, receiver_id, text ,text_time, file) values(?, ?, ?, ?,null);";
+					String sqlp = "insert into public_chatlist (sender_id, text, text_time,file) values(?,?,?,null);";
+					LocalDateTime dateTime = LocalDateTime.parse(a[2]);
+					Timestamp time = Timestamp.valueOf(dateTime);
+					if (a[1].equals("AllChat")) {
+						try (Connection conn = MySqlConnectionProvider.getConnection();
+								PreparedStatement stmt = conn.prepareStatement(sqlp)) {
+							stmt.setString(1, a[0]);
+							stmt.setString(2, a[3]);
+							stmt.setTimestamp(3, time);
+							stmt.executeUpdate();
 
-					} catch (SQLException e) {
-						e.printStackTrace();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+
+					} else {
+						try (Connection conn = MySqlConnectionProvider.getConnection();
+								PreparedStatement stmt = conn.prepareStatement(sql)) {
+							stmt.setString(1, a[0]);
+							stmt.setString(2, a[1]);
+							stmt.setString(3, a[3]);
+							stmt.setTimestamp(4, time);
+							stmt.executeUpdate();
+
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+
 					}
-				}
 
 //            session.sendMessageToAll(fromClient+"이건전체메세지");
-				if (a[1].equals("AllChat")) {
-					session.sendMessageToAll(a[0], a[2], a[3]);
-					if (fromClient.equals("Bye Bye")) {
-						throw new InterruptedException("종료");
-					}
+					if (a[1].equals("AllChat")) {
+						session.sendMessageToAll(a[0], a[2], a[3]);
+						if (fromClient.equals("Bye Bye")) {
+							throw new InterruptedException("종료");
+						}
 
-				} else {
-					session.sendPrivateMessage(a[1], a[2], a[3]);
-					if (fromClient.equals("Bye Bye")) {
-						throw new InterruptedException("종료");
+					} else {
+						session.sendPrivateMessage(a[1], a[2], a[3]);
+						if (fromClient.equals("Bye Bye")) {
+							throw new InterruptedException("종료");
+						}
 					}
 				}
 			}

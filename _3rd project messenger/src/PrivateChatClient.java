@@ -18,10 +18,7 @@ public class PrivateChatClient {
 
 	public PrivateChatClient(User user, User another) {
 
-		
-
 		Socket socket = null;
-		PrintWriter in = null;
 		pr = new PrivateChatRoom(user, another);
 		try {
 			socket = new Socket("192.168.0.100", 12345);
@@ -59,7 +56,11 @@ public class PrivateChatClient {
 			 pr.addWindowListener(new java.awt.event.WindowAdapter() {
 	                @Override
 	                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+	                	a.interrupt();
 	                	MainPage.openingList.remove(another);
+	                	System.out.println("갠톡창닫히나?");
+	                	pw.println("Bye Bye");
+	                	pw.flush();
 	                }
 	            });
 			
@@ -93,9 +94,11 @@ class ReadThread extends Thread {
 	public void run() {
 		try {
 			while (go && !isInterrupted()) {
-
 				String message = br.readLine();
 				String rawtime = br.readLine();
+				if (message == null || rawtime == null) {
+					return;
+				}
 				LocalDateTime dateTime = LocalDateTime.parse(rawtime);
 				Timestamp time = Timestamp.valueOf(dateTime);
 				SwingUtilities.invokeLater(new Runnable() {

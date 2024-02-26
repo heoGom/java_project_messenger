@@ -61,7 +61,10 @@ public class PublicChatClient {
 			pr.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                	a.interrupt();
                 	MainPage.openingPublic=false;
+                	pw.println("Bye Bye");
+                	pw.flush();
                 }
             });
 
@@ -69,7 +72,6 @@ public class PublicChatClient {
 			System.out.println("[서버 접속끊김]");
 		}
 	}
-
 }
 
 class PublicReadThread extends Thread {
@@ -97,6 +99,9 @@ class PublicReadThread extends Thread {
 				String sender_id = br.readLine();
 				String message = br.readLine();
 				String rawtime = br.readLine();
+				if (sender_id == null||message == null || rawtime == null) {
+					return;
+				}
 				LocalDateTime dateTime = LocalDateTime.parse(rawtime);
 				Timestamp time = Timestamp.valueOf(dateTime);
 				SwingUtilities.invokeLater(new Runnable() {

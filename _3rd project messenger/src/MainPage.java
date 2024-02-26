@@ -1,7 +1,9 @@
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import java.awt.Color;
 
 public class MainPage extends JFrame {
 	public JLabel nick_lbl;
@@ -21,9 +22,9 @@ public class MainPage extends JFrame {
 	Agendas agendas;
 	GoVotePage goVotePage;
 	
+
 	static List<User> openingList;
 	static boolean openingPublic;
-	
 
 	public JButton userListbtn;
 	private JButton chatRoomListbtn;
@@ -62,6 +63,7 @@ public class MainPage extends JFrame {
 	private void listenerAll() {
 		chatRoomListbtn.addActionListener(new ActionListener() {
 			private ChatRoomListPage chatRoomListPage;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// chatRoomListPage가 null이거나 숨겨져 있는 경우에만 새로운 창을 생성하고 보여줍니다.
@@ -81,6 +83,7 @@ public class MainPage extends JFrame {
 
 		userListbtn.addActionListener(new ActionListener() {
 			private UserList userList;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				User.list.clear();
@@ -95,18 +98,19 @@ public class MainPage extends JFrame {
 				int mainPageY = getY();
 				userList.setLocation(mainPageX - userList.getWidth(), mainPageY);
 				userList.readStatus();
-				if(user.getImage()!= null) {
-				ImageIcon icon = user.getImage();
-				Image scaledImage = icon.getImage().getScaledInstance(userList.lblNewLabel.getWidth(),
-						userList.lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
-				ImageIcon scalecIcon = new ImageIcon(scaledImage);
-				userList.lblNewLabel.setIcon(scalecIcon);
+				if (user.getImage() != null) {
+					ImageIcon icon = user.getImage();
+					Image scaledImage = icon.getImage().getScaledInstance(userList.lblNewLabel.getWidth(),
+							userList.lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+					ImageIcon scalecIcon = new ImageIcon(scaledImage);
+					userList.lblNewLabel.setIcon(scalecIcon);
 				}
 			}
 		});
 
 		votebtn.addActionListener(new ActionListener() {
 			private VoteMainPage voteMainPage;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (voteMainPage == null || !voteMainPage.isVisible()) {
@@ -120,9 +124,10 @@ public class MainPage extends JFrame {
 				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth(), mainPageY);
 			}
 		});
-		
+
 		minigamebtn.addActionListener(new ActionListener() {
 			private MiniGame minigame;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (minigame == null || !minigame.isVisible()) {
@@ -133,34 +138,40 @@ public class MainPage extends JFrame {
 				}
 			}
 		});
-		
+
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-            	System.out.println("프로그램 종료");
-            	mdao.resetStatus(user.id);
-            	System.exit(0);
-            }
-        });
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				for (Window window : Window.getWindows()) {
+					if (window != MainPage.this && window.isDisplayable()) {
+						window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+						window.dispose(); // 창 닫기
+					}
+				}
+				mdao.resetStatus(user.id);
+				System.out.println("프로그램 종료");
+				System.exit(0);
+			}
+		});
 	}
 
 	private void extracted() {
 		getContentPane().setLayout(null);
 
 		userListbtn = new JButton("가입자 목록");
-		userListbtn.setBounds(143, 103, 113, 23);
+		userListbtn.setBounds(160, 103, 113, 23);
 		getContentPane().add(userListbtn);
 
 		chatRoomListbtn = new JButton("채팅방 목록");
-		chatRoomListbtn.setBounds(143, 183, 113, 23);
+		chatRoomListbtn.setBounds(160, 183, 113, 23);
 		getContentPane().add(chatRoomListbtn);
 
 		votebtn = new JButton("투표 하기");
-		votebtn.setBounds(143, 270, 113, 23);
+		votebtn.setBounds(160, 270, 113, 23);
 		getContentPane().add(votebtn);
 
 		minigamebtn = new JButton("미니 게임");
-		minigamebtn.setBounds(143, 345, 113, 23);
+		minigamebtn.setBounds(160, 345, 113, 23);
 		getContentPane().add(minigamebtn);
 
 		myprofilebtn = new JButton("마이프로필");
@@ -218,22 +229,21 @@ public class MainPage extends JFrame {
 		getContentPane().add(nick_lbl);
 
 		logoutbtn = new JButton("로그아웃");
-		logoutbtn.setBounds(27, 469, 256, 23);
+		logoutbtn.setBounds(320, 469, 97, 23);
 		getContentPane().add(logoutbtn);
 		logoutbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Window window : Window.getWindows()) {
-		            if (window.isDisplayable()) {
-		                window.dispose(); // 창 닫기
-		            }
-		        }
+					if (window.isDisplayable()) {
+						window.dispose(); // 창 닫기
+					}
+				}
 				Login login = new Login();
 				login.setVisible(true);
 				mdao.resetStatus(user.id);
 			}
 		});
 	}
-	
 
 }
