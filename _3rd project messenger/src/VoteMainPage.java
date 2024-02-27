@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class VoteMainPage extends JFrame {
 	User user;
 	GoVotePage goVotePage;
 	VoteStatus voteStatus;
+	Agendas agendas;
 	private List<Votes> voteId;
 
 	private int selectedAgendaNo;
@@ -44,6 +47,8 @@ public class VoteMainPage extends JFrame {
 		createPanel();
 		lisetnerAll();
 		showGUI();
+		updateProgress_or_Not();
+		updatePanel();
 		voteId = new ArrayList<>();
 		System.out.println(selectedAgendaNo);
 
@@ -117,7 +122,7 @@ public class VoteMainPage extends JFrame {
 		agendas.readAgendas();
 		agendas.itemList = new ArrayList<Agendas>();
 		agendas.readItem2();
-		
+
 		for (int i = 0; i < agendas.agendaList.size(); i++) {
 			pnl = new JPanel();
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -144,8 +149,8 @@ public class VoteMainPage extends JFrame {
 					System.out.println(voteId.toString());
 					boolean hasVoted = false;
 					for (int i = 0; i < voteId.size(); i++) {
-						  System.out.println("비교 중: " + voteId.get(i).getAgend_num() + " 와 " +currentAgendaNo);
-						    System.out.println("ID: " + voteId.get(i).getId() + " 와 " + user.getId());
+						System.out.println("비교 중: " + voteId.get(i).getAgend_num() + " 와 " + currentAgendaNo);
+						System.out.println("ID: " + voteId.get(i).getId() + " 와 " + user.getId());
 						if (voteId.get(i).getAgend_num() == currentAgendaNo
 								&& voteId.get(i).getId().contains(user.getId())) {
 							// 이미 투표한 경우
@@ -158,7 +163,7 @@ public class VoteMainPage extends JFrame {
 							break; // 중복 투표가 확인되면 루프 탈출
 						}
 					}
-					
+
 					if (!hasVoted) {
 						selectedAgendaNo = currentAgendaNo;
 						goVotePage = new GoVotePage(VoteMainPage.this, user);
@@ -175,14 +180,35 @@ public class VoteMainPage extends JFrame {
 			});
 		}
 	}
+
 	public void updatePanel() {
-	    panel.removeAll(); // 패널의 모든 컴포넌트를 제거
-	    createPanel(); // 패널을 다시 생성
-	    panel.revalidate();
-	    panel.repaint();
+		panel.removeAll(); // 패널의 모든 컴포넌트를 제거
+		createPanel(); // 패널을 다시 생성
+		panel.revalidate();
+		panel.repaint();
 	}
 
 	public int getSelectedAgendaNo() {
 		return selectedAgendaNo;
 	}
+
+	private void updateProgress_or_Not() {
+		agendas = new Agendas();
+		String sql = "update jae.agendas set progress_or_not =0 where agenda = ?";
+		LocalDateTime currentTime = LocalDateTime.now();
+		Timestamp stamp = Timestamp.valueOf(currentTime);
+		agendas.readAgendas();
+		for (int i = 0; i < agendas.agendaList.size(); i++) {
+			if (agendas.agendaList.get(i).getLt().before(stamp)) {
+				try (Connection conn = MySqlConnectionProvider.getConnection();
+						PreparedStatement stmt = conn.prepareStatement(sql)) {
+					stmt.setString(1, agendas.agendaList.get(i).getAgenda());
+					stmt.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 }

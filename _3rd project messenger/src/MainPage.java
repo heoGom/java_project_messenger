@@ -114,7 +114,6 @@ public class MainPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (voteMainPage == null || !voteMainPage.isVisible()) {
 					voteMainPage = new VoteMainPage(user);
-					voteMainPage.setVisible(true);
 				} else {
 					voteMainPage.toFront();
 				}

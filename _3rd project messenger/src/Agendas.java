@@ -2,24 +2,48 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Agendas {
 	private String id;
 	private String agenda;
-	private int regist_time;
-	private int final_time;
+
 	private int progress_or_not;
 	private String nickname;
 	private int no;
 	private String item;
 	private int count;
 	User user;
+	private Timestamp ft;
+	private Timestamp lt;
 
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
 	public static List<Agendas> pastAgendaList = new ArrayList<>();
 	public static List<Agendas> itemList = new ArrayList<>();
+
+	
+	
+	public Timestamp getFt() {
+		return ft;
+	}
+
+
+	public void setFt(Timestamp ft) {
+		this.ft = ft;
+	}
+
+
+	public Timestamp getLt() {
+		return lt;
+	}
+
+
+	public void setLt(Timestamp lt) {
+		this.lt = lt;
+	}
+
 
 	public Agendas() {
 	}
@@ -36,13 +60,11 @@ public class Agendas {
 		int result = 1;
 		result = prime * result + ((agenda == null) ? 0 : agenda.hashCode());
 		result = prime * result + count;
-		result = prime * result + final_time;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((item == null) ? 0 : item.hashCode());
 		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
 		result = prime * result + no;
 		result = prime * result + progress_or_not;
-		result = prime * result + regist_time;
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -64,8 +86,6 @@ public class Agendas {
 			return false;
 		if (count != other.count)
 			return false;
-		if (final_time != other.final_time)
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -84,8 +104,6 @@ public class Agendas {
 		if (no != other.no)
 			return false;
 		if (progress_or_not != other.progress_or_not)
-			return false;
-		if (regist_time != other.regist_time)
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -106,8 +124,6 @@ public class Agendas {
 		super();
 		this.id = id;
 		this.agenda = agenda;
-		this.regist_time = regist_time;
-		this.final_time = final_time;
 		this.progress_or_not = progress_or_not;
 		this.nickname = nickname;
 		this.no = no;
@@ -122,8 +138,6 @@ public class Agendas {
 		super();
 		this.id = id;
 		this.agenda = agenda;
-		this.regist_time = regist_time;
-		this.final_time = final_time;
 		this.progress_or_not = progress_or_not;
 		this.nickname = nickname;
 		this.no = no;
@@ -170,21 +184,6 @@ public class Agendas {
 		this.agenda = agenda;
 	}
 
-	public int getRegist_time() {
-		return regist_time;
-	}
-
-	public void setRegist_time(int regist_time) {
-		this.regist_time = regist_time;
-	}
-
-	public int getFinal_time() {
-		return final_time;
-	}
-
-	public void setFinal_time(int final_time) {
-		this.final_time = final_time;
-	}
 
 	public int getProgress_or_not() {
 		return progress_or_not;
@@ -245,6 +244,8 @@ public class Agendas {
 		}
 	}
 	
+	
+	
 	public void readAgendas() {
 		String sql = "SELECT agendas.*, jae.user.nickname FROM agendas JOIN jae.user ON agendas.id = jae.user.id;";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
@@ -256,7 +257,9 @@ public class Agendas {
 				int progress = rs.getInt("progress_or_not");
 				String nickname = rs.getString("nickname");
 				int no = rs.getInt("no");
-
+				Timestamp ft =rs.getTimestamp("regist_time");
+				Timestamp lt = rs.getTimestamp("final_time");
+			
 				Agendas agendas = new Agendas();
 				if (progress == 1) {
 					agendas.setId(id);
@@ -264,6 +267,8 @@ public class Agendas {
 					agendas.setProgress_or_not(progress);
 					agendas.setNickname(nickname);
 					agendas.setNo(no);
+					agendas.setFt(ft);
+					agendas.setLt(lt);
 
 					agendaList.add(agendas);
 				} else {

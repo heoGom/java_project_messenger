@@ -111,7 +111,7 @@ public class AddAgenda extends JFrame {
 				stmt.setTimestamp(4, stamp2);
 			} else if (comboBox.getSelectedIndex() == 2) {
 				stmt.setTimestamp(4, stamp3);
-			} else if (comboBox.getSelectedIndex() == 0) {
+			} else if (comboBox.getSelectedIndex() == 0||resultagenda.equals(null)) {
 				JOptionPane.showMessageDialog(null, "필수입력정보 누락");
 				btnNewButton_2.setEnabled(false);
 				btnNewButton_2.setEnabled(true);
