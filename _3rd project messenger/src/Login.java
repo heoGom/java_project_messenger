@@ -173,7 +173,7 @@ public class Login extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("424호는써라");
+		JLabel lblNewLabel = new JLabel("424호는 써라");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 16));
 		lblNewLabel.setBounds(158, 123, 102, 39);
@@ -202,6 +202,7 @@ public class Login extends JFrame {
 		getContentPane().add(lblNewLabel_2);
 
 		loginbtn = new JButton("로그인");
+		loginbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		loginbtn.setBackground(Color.PINK);
 		loginbtn.setBorder(new LineBorder(Color.BLACK));
 		loginbtn.setBounds(316, 270, 97, 23);
