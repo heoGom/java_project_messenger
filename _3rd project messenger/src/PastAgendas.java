@@ -2,9 +2,11 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -30,6 +32,9 @@ public class PastAgendas extends JFrame {
 		agendas.readAgendas();
 		for(Agendas a : agendas.pastAgendaList) {
 			JPanel pnl = new JPanel();
+			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
+			pnl.setPreferredSize(preferredSize);
+			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			JLabel lbl1 = new JLabel(a.getNickname());
 			JLabel lbl2 = new JLabel(a.getAgenda());
@@ -59,6 +64,7 @@ public class PastAgendas extends JFrame {
 		panel = new JPanel();
 		panel.setBounds(12, 87, 379, 405);
 		getContentPane().add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		JLabel lblNewLabel = new JLabel("종료된 안건들");
 		lblNewLabel.setBounds(12, 62, 110, 15);
