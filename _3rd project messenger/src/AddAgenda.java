@@ -3,6 +3,8 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -34,8 +36,8 @@ public class AddAgenda extends JFrame {
 	private Agendas ad;
 	private int generatedNo;
 	private VoteMainPage voteMainPage;
-	
-	public AddAgenda(User user,VoteMainPage voteMainPage) {
+
+	public AddAgenda(User user, VoteMainPage voteMainPage) {
 		this.user = user;
 		this.voteMainPage = voteMainPage;
 		extracted();
@@ -68,6 +70,7 @@ public class AddAgenda extends JFrame {
 						System.out.println("적재완료");
 						int newIndex = agList.size() - 1;
 						JLabel lbl = new JLabel(newIndex + 1 + "." + agList.get(newIndex));
+						lbl.setLayout(new GridLayout(0, 1));
 						panel.add(lbl);
 						panel.revalidate();
 						panel.repaint();
@@ -82,13 +85,42 @@ public class AddAgenda extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveAgenda();
-				saveResit();
-				dispose();
-				voteMainPage.updatePanel();
+				checkvalidate();
 			
+				
 			}
 		});
+	}
+
+	private void checkvalidate() {
+		boolean containsLabel = false;
+		Component[] components = panel.getComponents();
+		for (Component component : components) {
+		    if (component instanceof JLabel) {
+		        containsLabel = true;
+		        break;
+		    }
+		}
+		
+		if (resultagenda.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "투표주제를 설정해주세요");
+			btnNewButton_2.setEnabled(false);
+			btnNewButton_2.setEnabled(true);
+
+		} else if(!containsLabel) {
+			JOptionPane.showMessageDialog(null, "투표항목을 1개이상 등록해주세요");
+			btnNewButton_2.setEnabled(false);
+			btnNewButton_2.setEnabled(true);
+		} else if (comboBox.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(null, "마감시간을 설정해주세요");
+			btnNewButton_2.setEnabled(false);
+			btnNewButton_2.setEnabled(true);
+		}else {
+			saveAgenda();
+			saveResit();
+			dispose();
+			voteMainPage.updatePanel();
+		}
 	}
 
 	public void saveAgenda() {
@@ -103,7 +135,7 @@ public class AddAgenda extends JFrame {
 		Timestamp stamp3 = Timestamp.valueOf(ltPlusTwoHour);
 
 		try (Connection conn = MySqlConnectionProvider.getConnection();
-				 PreparedStatement stmt = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS)) {
+				PreparedStatement stmt = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS)) {
 			stmt.setString(1, user.getId());
 			stmt.setString(2, resultagenda.getText());
 			stmt.setTimestamp(3, stamp);
@@ -111,19 +143,14 @@ public class AddAgenda extends JFrame {
 				stmt.setTimestamp(4, stamp2);
 			} else if (comboBox.getSelectedIndex() == 2) {
 				stmt.setTimestamp(4, stamp3);
-			} else if (comboBox.getSelectedIndex() == 0||resultagenda.equals(null)) {
-				JOptionPane.showMessageDialog(null, "필수입력정보 누락");
-				btnNewButton_2.setEnabled(false);
-				btnNewButton_2.setEnabled(true);
 			}
 			stmt.executeUpdate();
-			
-			
+
 			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-	            while (generatedKeys.next()) {
-	                generatedNo = generatedKeys.getInt(1);
-	                
-	            }
+				while (generatedKeys.next()) {
+					generatedNo = generatedKeys.getInt(1);
+
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,64 +162,19 @@ public class AddAgenda extends JFrame {
 		for (int i = 0; i < agList.size(); i++) {
 			try (Connection conn = MySqlConnectionProvider.getConnection();
 					PreparedStatement stmt = conn.prepareStatement(sql2)) {
-				stmt.setInt(1,generatedNo);
+				stmt.setInt(1, generatedNo);
 				stmt.setString(2, user.getId());
 				stmt.setString(3, agList.get(i));
 				stmt.setString(4, resultagenda.getText());
-				
+
 				stmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		
 
 	}
 
-//	public void readagenda() {
-//		String sql = "SELECT * FROM jae.agendas where no = ?;";
-//		try (Connection conn = MySqlConnectionProvider.getConnection();
-//				PreparedStatement stmt = conn.prepareStatement(sql)){
-//			stmt.setString(1, "");
-//			try(ResultSet rs = stmt.executeQuery()){
-//				if(rs.next()) {
-//					
-//				}
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//			
-//		}
-			
-//		for(int i =0;i <agList.size();i++) {
-//		try (Connection conn = MySqlConnectionProvider.getConnection()) {
-//		    conn.setAutoCommit(false);
-//
-//		    try (PreparedStatement stmt = conn.prepareStatement(sql1);
-//		         PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
-//
-//		        stmt.setString(1, user.getId());
-//		        stmt.setString(2, resultagenda.getText());
-//		        stmt.setTimestamp(3, stamp);
-//
-//		        stmt2.setInt(1, agenda.getNo());
-//		        stmt2.setString(2, user.getId());
-//		        stmt2.setString(3, agList.get(i));
-//		        stmt2.setString(4, resultagenda.getText());
-//
-//		        stmt.executeUpdate();
-//		        stmt2.executeUpdate();
-//
-//		        conn.commit();
-//		    } catch (SQLException e) {
-//		        conn.rollback();
-//		        e.printStackTrace();
-//		    }
-//		} catch (SQLException e) {
-//		    e.printStackTrace();
-//		}
-//		}
 
 	private void extracted() {
 		getContentPane().setLayout(null);
@@ -211,24 +193,24 @@ public class AddAgenda extends JFrame {
 		getContentPane().add(resitagendabtn);
 
 		panel = new JPanel();
-		panel.setBounds(12, 139, 412, 113);
+		panel.setBounds(12, 139, 113, 113);
 		getContentPane().add(panel);
 
 		resultagenda = new JLabel("");
-		resultagenda.setBounds(136, 123, 224, 15);
+		resultagenda.setBounds(12, 120, 224, 15);
 		getContentPane().add(resultagenda);
 
 		JLabel lblNewLabel_2 = new JLabel("주제 항목 등록");
-		lblNewLabel_2.setBounds(12, 281, 97, 15);
+		lblNewLabel_2.setBounds(137, 148, 97, 15);
 		getContentPane().add(lblNewLabel_2);
 
 		itemtf = new JTextField();
-		itemtf.setBounds(114, 278, 163, 21);
+		itemtf.setBounds(134, 185, 107, 21);
 		getContentPane().add(itemtf);
 		itemtf.setColumns(10);
 
 		btn2 = new JButton("확인");
-		btn2.setBounds(289, 277, 97, 23);
+		btn2.setBounds(263, 184, 97, 23);
 		getContentPane().add(btn2);
 
 		btnNewButton_2 = new JButton("완료");

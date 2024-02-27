@@ -1,4 +1,7 @@
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -8,9 +11,11 @@ import javax.swing.JLabel;
 
 public class PastAgendas extends JFrame {
 	private JPanel panel;
+	private VoteMainPage voteMainPage;
 
 
-	public PastAgendas() {
+	public PastAgendas(VoteMainPage voteMainPage) {
+		this.voteMainPage = voteMainPage;
 		extracted();
 		showGUI();
 		createPanel();
@@ -35,6 +40,14 @@ public class PastAgendas extends JFrame {
 			pnl.add(lbl3);
 			
 			panel.add(pnl);
+			
+			lbl3.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					VoteStatus voteStatus = new VoteStatus(voteMainPage);
+					
+				}
+			});
 		}
 	}
 

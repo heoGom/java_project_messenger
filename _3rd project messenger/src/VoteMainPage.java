@@ -43,10 +43,10 @@ public class VoteMainPage extends JFrame {
 
 	public VoteMainPage(User user) {
 		this.user = user;
+		showGUI();
 		extracted();
 		createPanel();
 		lisetnerAll();
-		showGUI();
 		updateProgress_or_Not();
 		updatePanel();
 		voteId = new ArrayList<>();
@@ -103,7 +103,7 @@ public class VoteMainPage extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PastAgendas pa = new PastAgendas();
+				PastAgendas pa = new PastAgendas(VoteMainPage.this);
 				pa.setVisible(true);
 			}
 		});
