@@ -112,7 +112,7 @@ public class Login extends JFrame {
 	}
 
 	public User readDB() {
-		String sql = "select id,password,nickname,profilePhoto from jae.user where id = ?";
+		String sql = "select id,password,nickname,profilePhoto,highscore from jae.user where id = ?";
 		Blob blob;
 		ImageIcon image;
 		try (Connection conn = MySqlConnectionProvider.getConnection();
@@ -124,14 +124,16 @@ public class Login extends JFrame {
 					String id = rs.getString("id");
 					String pw = rs.getString("password");
 					String nick = rs.getString("nickname");
+					int highScore = rs.getInt("highscore");
+					
 					if (rs.getBlob("profilePhoto") != null) {
 						blob = rs.getBlob("profilePhoto");
 						image = blobToImageIcon(blob);
 
-						return new User(id, pw, nick, image, 0);
+						return new User(id, pw, nick, image, highScore);
 					} else {
 						image = null;
-						return new User(id, pw, nick, image, 0);
+						return new User(id, pw, nick, image, highScore);
 					}
 				}
 			}

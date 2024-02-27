@@ -73,7 +73,7 @@ public class MyPage {
 		nick.setBounds(58, 95, 91, 30);
 		panel.add(nick);
 		
-		userScore = new JLabel("내 점수");
+		userScore = new JLabel("내 최고점수");
 		userScore.setFont(new Font("굴림", Font.BOLD, 12));
 		userScore.setBounds(189, 29, 60, 15);
 		panel.add(userScore);

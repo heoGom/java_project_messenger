@@ -157,10 +157,10 @@ public class ChatRoomListPage extends JFrame {
 						blob = rs.getBlob("profilePhoto");
 						image = blobToImageIcon(blob);
 
-						return new User(iid, pw, nick, image,0);
+						return new User(iid, pw, nick, image, 0);
 					} else {
 						image = null;
-						return new User(iid, pw, nick, image,0);
+						return new User(iid, pw, nick, image, 0);
 					}
 				}
 			}
