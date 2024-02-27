@@ -1,4 +1,3 @@
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -91,7 +90,6 @@ public class PublicChatClient {
 							pw.println(selectedFileName);
 							pw.println(base64Encoded);
 							pw.flush();
-							System.out.println("파일을 서버로 보냅니다");
 
 							Timestamp time = Timestamp.valueOf(currentTime);
 							SwingUtilities.invokeLater(new Runnable() {
@@ -160,6 +158,7 @@ class PublicReadThread extends Thread {
 						@Override
 						public void run() {
 							pr.addFile(file_sender_id, time, file_file_name);
+
 						}
 					});
 

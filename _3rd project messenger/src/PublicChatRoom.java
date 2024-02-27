@@ -15,15 +15,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Decoder;
@@ -272,7 +269,7 @@ public class PublicChatRoom extends JFrame {
 			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 			JLabel senderIdLbl = new JLabel(getNickFromId(sender_id));
 			messagePanel.add(senderIdLbl);
-			senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 20));
+			senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 12));
 			senderIdLbl.setForeground(new Color(color[0], color[1], color[2]));
 			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 			messagePanel.add(timeLabel);
@@ -296,12 +293,6 @@ public class PublicChatRoom extends JFrame {
 								+ "AND file_name = ?;";
 						try (Connection conn = MySqlConnectionProvider.getConnection();
 								PreparedStatement stmt = conn.prepareStatement(sql)) {
-//							LocalDateTime localDateTime = time.toLocalDateTime();
-//							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//							String formattedTime = localDateTime.format(formatter);
-
-//							LocalDateTime llocalDateTime = LocalDateTime.parse(formattedTime, formatter);
-//							Timestamp timestamp = Timestamp.valueOf(llocalDateTime);
 							stmt.setTimestamp(1, time);
 							stmt.setString(2, sender_id);
 							stmt.setString(3, file_name);
@@ -311,7 +302,6 @@ public class PublicChatRoom extends JFrame {
 
 							try (ResultSet rs = stmt.executeQuery()) {
 								if (rs.next()) {
-									System.out.println("행 조회");
 									String encoded = rs.getString("file");
 									Decoder decoder = Base64.getDecoder();
 									byte[] decode = decoder.decode(encoded);
@@ -321,13 +311,8 @@ public class PublicChatRoom extends JFrame {
 										// TODO Auto-generated catch block
 										e1.printStackTrace();
 									}
-
-								} else {
-									System.out.println("XXX 행 없음 XXX");
-								}
-
+								} 
 							}
-
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -355,9 +340,12 @@ public class PublicChatRoom extends JFrame {
 	// }
 
 	private void scrollDown() {
-		JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-		verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+	    SwingUtilities.invokeLater(() -> {
+	        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+	        verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+	    });
 	}
+
 
 	public void addBtnListener(ActionListener listener) {
 		sendbtn.addActionListener(listener);
