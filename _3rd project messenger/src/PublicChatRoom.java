@@ -2,6 +2,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerAdapter;
@@ -141,6 +142,8 @@ public class PublicChatRoom extends JFrame {
 		// 문자열을 10자씩 나누어 처리
 		int startIndex = 0;
 		boolean once = true;
+		
+		int[] color = RGBById(sender_id);
 		while (startIndex < message.length()) {
 			int endIndex = Math.min(startIndex + 10, message.length());
 			String subMessage = message.substring(startIndex, endIndex);
@@ -153,6 +156,10 @@ public class PublicChatRoom extends JFrame {
 
 			// 메시지를 담은 JLabel 생성
 			JLabel subMessageLabel = new JLabel(subMessage);
+			subMessageLabel.setFont(new Font("굴림", Font.PLAIN, 20));
+			if(!sender_id.equals(user.id)) {
+			subMessageLabel.setForeground(new Color(color[0],color[1],color[2]));
+			}
 			// setBlackBorder(subMessageLabel);
 
 			// 패널에 라벨 추가
@@ -172,8 +179,10 @@ public class PublicChatRoom extends JFrame {
 				messagePanel.add(subMessageLabel);
 				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 				if(once) {
-					JLabel senderIdLbl = new JLabel(sender_id);
+					JLabel senderIdLbl = new JLabel(getNickFromId(sender_id));
 					messagePanel.add(senderIdLbl);
+					senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 20));
+					senderIdLbl.setForeground(new Color(color[0],color[1],color[2]));
 					messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 				}
 				once = false;
@@ -213,5 +222,31 @@ public class PublicChatRoom extends JFrame {
 	public void addTextAreaListener(KeyListener listener) {
 		sendTextArea.addKeyListener(listener);
 	}
+	private String getNickFromId(String sender_id) {
+		user.readAllUser(user.nick);
+		for(User u : user.list) {
+			if(u.id.equals(sender_id)) {
+				return u.nick;
+			}
+		}
+		return "누구쎄용?";
+	}
+	private int[] RGBById(String sender_id) {
+		int r = Math.abs((sender_id.length()*60)%255);
+		if(r>180) {
+			r-=120;
+		}
+		int g = Math.abs((sender_id.length()*60)%255);
+		if(g>180) {
+			g-=120;
+		}
+		int b = Math.abs((sender_id.length()*70)%255);
+		if(b>180) {
+			b-=120;
+		}
+		int[] a = {r,g,b};
+		return a;
+	}
+	
 
 }

@@ -58,7 +58,6 @@ public class PrivateChatClient {
 	                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 	                	a.interrupt();
 	                	MainPage.openingList.remove(another);
-	                	System.out.println("갠톡창닫히나?");
 	                	pw.println("Bye Bye");
 	                	pw.flush();
 	                }
