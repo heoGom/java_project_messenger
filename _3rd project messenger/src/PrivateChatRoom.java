@@ -108,6 +108,7 @@ public class PrivateChatRoom extends JFrame {
 			}
 		});
 		scrollPane = new JScrollPane(panel_2);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(12); // 스크롤바 속도 조절
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		if (TDList != null) {

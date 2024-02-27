@@ -47,6 +47,8 @@ public class VoteMainPage extends JFrame {
 
 	private int selectedAgendaNo;
 
+	PastAgendas pastAgendas;
+
 	public VoteMainPage(User user) {
 		getContentPane().setBackground(Color.PINK);
 		this.user = user;
@@ -144,63 +146,66 @@ public class VoteMainPage extends JFrame {
 		agendas.readItem2();
 
 		for (int i = 0; i < agendas.agendaList.size(); i++) {
+			if (agendas.agendaList.get(i).getProgress_or_not() == 1) {
 			pnl = new JPanel();
 			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
 			pnl.setPreferredSize(preferredSize);
 			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			lbl1 = new JLabel(agendas.agendaList.get(i).getAgenda());
-			lbl2 = new JLabel("투표하기");
-			lbl3 = new JLabel("현황보기");
-			lbl4 = new JLabel(agendas.agendaList.get(i).getNickname());
+				lbl1 = new JLabel(agendas.agendaList.get(i).getAgenda());
+				lbl2 = new JLabel("투표하기");
+				lbl3 = new JLabel("현황보기");
+				lbl4 = new JLabel(agendas.agendaList.get(i).getNickname());
 
-			int currentAgendaNo = agendas.agendaList.get(i).getNo();
+				int currentAgendaNo = agendas.agendaList.get(i).getNo();
 
-			lbl2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				lbl2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-			pnl.add(lbl1);
-			pnl.add(lbl2);
-			pnl.add(lbl3);
-			pnl.add(lbl4);
-			panel.add(pnl);
-			lbl2.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					Votes votes = new Votes();
-					readVoteId();
-					System.out.println(voteId.toString());
-					boolean hasVoted = false;
-					for (int i = 0; i < voteId.size(); i++) {
-						System.out.println("비교 중: " + voteId.get(i).getAgend_num() + " 와 " + currentAgendaNo);
-						System.out.println("ID: " + voteId.get(i).getId() + " 와 " + user.getId());
-						if (voteId.get(i).getAgend_num() == currentAgendaNo
-								&& voteId.get(i).getId().contains(user.getId())) {
-							// 이미 투표한 경우
-							JOptionPane.showMessageDialog(null, "이미 투표하셨습니다");
-							lbl2.setEnabled(false);
-							lbl2.setEnabled(true);
-							hasVoted = true;
-							panel.revalidate();
-							panel.repaint();
-							break; // 중복 투표가 확인되면 루프 탈출
+				pnl.add(lbl1);
+				pnl.add(lbl2);
+				pnl.add(lbl3);
+				pnl.add(lbl4);
+				panel.add(pnl);
+
+				lbl2.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						Votes votes = new Votes();
+						readVoteId();
+						System.out.println(voteId.toString());
+						boolean hasVoted = false;
+						for (int i = 0; i < voteId.size(); i++) {
+							System.out.println("비교 중: " + voteId.get(i).getAgend_num() + " 와 " + currentAgendaNo);
+							System.out.println("ID: " + voteId.get(i).getId() + " 와 " + user.getId());
+							if (voteId.get(i).getAgend_num() == currentAgendaNo
+									&& voteId.get(i).getId().contains(user.getId())) {
+								// 이미 투표한 경우
+								JOptionPane.showMessageDialog(null, "이미 투표하셨습니다");
+								lbl2.setEnabled(false);
+								lbl2.setEnabled(true);
+								hasVoted = true;
+								panel.revalidate();
+								panel.repaint();
+								break; // 중복 투표가 확인되면 루프 탈출
+							}
+						}
+
+						if (!hasVoted) {
+							selectedAgendaNo = currentAgendaNo;
+							goVotePage = new GoVotePage(VoteMainPage.this, user);
+							goVotePage.createPanel(selectedAgendaNo);
 						}
 					}
-
-					if (!hasVoted) {
+				});
+				lbl3.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
 						selectedAgendaNo = currentAgendaNo;
-						goVotePage = new GoVotePage(VoteMainPage.this, user);
-						goVotePage.createPanel(selectedAgendaNo);
+						voteStatus = new VoteStatus(VoteMainPage.this, pastAgendas);
 					}
-				}
-			});
-			lbl3.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					selectedAgendaNo = currentAgendaNo;
-					voteStatus = new VoteStatus(VoteMainPage.this);
-				}
-			});
+				});
+			}
 		}
 	}
 

@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class VoteStatus extends JFrame {
+public class PastVoteStatus extends JFrame {
 	private JPanel panel;
 	private Agendas agendas;
 	private JLabel lblNewLabel;
@@ -26,14 +26,13 @@ public class VoteStatus extends JFrame {
 	private JLabel lbl2;
 	private Votes votes;
 	private PastAgendas pastAgendas;
-	
-	public VoteStatus(VoteMainPage voteMainPage,PastAgendas pastAgendas) {
-		this.voteMainPage = voteMainPage;
+
+	public PastVoteStatus(PastAgendas pastAgendas) {
 		this.pastAgendas = pastAgendas;
 		showGUI();
 		createPanel();
-		 createStatus();
-		System.out.println(voteMainPage.getSelectedAgendaNo());
+		createStatus();
+		System.out.println(pastAgendas.getSelectedAgendaNo());
 		System.out.println();
 	}
 
@@ -59,19 +58,18 @@ public class VoteStatus extends JFrame {
 		setVisible(true);
 	}
 
-
 	public void countUsers() {
 		String sql = "SELECT vote_item, COUNT(*) AS vote_count FROM jae.votes where agenda_num = ? GROUP BY vote_item;";
 
 		try (Connection conn = MySqlConnectionProvider.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
-			stmt.setInt(1, voteMainPage.getSelectedAgendaNo());
+			stmt.setInt(1, pastAgendas.getSelectedAgendaNo());
 
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					int count = rs.getInt("vote_count");
 					String vote_item = rs.getString("vote_item");
-					countList.add(new Votes(vote_item, count,true));
+					countList.add(new Votes(vote_item, count, true));
 				}
 
 			}
@@ -90,40 +88,32 @@ public class VoteStatus extends JFrame {
 			panel.add(lbl);
 			panel2.add(lbl2);
 		}
-		  for (int j = 0; j < agendas.itemList.size(); j++) {
-		        if (agendas.itemList.get(j).getNo() == voteMainPage.getSelectedAgendaNo()
-		                && !containsItem(agendas.itemList.get(j).getItem())) {
-		            lbl = new JLabel(agendas.itemList.get(j).getItem());
-		            lbl2 = new JLabel("0 명");
-		            panel.add(lbl);
-		            panel2.add(lbl2);
-		        }
-		    }
+		for (int j = 0; j < agendas.itemList.size(); j++) {
+			if (agendas.itemList.get(j).getNo() == pastAgendas.getSelectedAgendaNo()
+					&& !containsItem(agendas.itemList.get(j).getItem())) {
+				lbl = new JLabel(agendas.itemList.get(j).getItem());
+				lbl2 = new JLabel("0 명");
+				panel.add(lbl);
+				panel2.add(lbl2);
+			}
 		}
+	}
 
 	private boolean containsItem(String item) {
-	    for (Votes countItem : countList) {
-	        if (countItem.getVote_item().equals(item)) {
-	            return true; // 아이템이 이미 카운트 리스트에 존재함
-	        }
-	    }
-	    return false; // 아이템이 카운트 리스트에 존재하지 않음
+		for (Votes countItem : countList) {
+			if (countItem.getVote_item().equals(item)) {
+				return true; // 아이템이 이미 카운트 리스트에 존재함
+			}
+		}
+		return false; // 아이템이 카운트 리스트에 존재하지 않음
 	}
-	
+
 	public void createStatus() {
 		for (int j = 0; j < agendas.itemList.size(); j++) {
-			if (agendas.itemList.get(j).getNo() == voteMainPage.getSelectedAgendaNo()) {
+			if (agendas.itemList.get(j).getNo() == pastAgendas.getSelectedAgendaNo()) {
 				lblNewLabel.setText(agendas.itemList.get(j).getAgenda());
 
 			}
 		}
 	}
-
-//	for (int i = 0; i < countList.size(); i++) {
-//		if(countList.get(i).getVote_item().equals(lbl)) {
-//		lbl2 = new JLabel(countList.get(i) + " 명");
-//		}
-//		panel.add(lbl2);
-//	}
-
 }

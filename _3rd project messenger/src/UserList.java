@@ -1,21 +1,23 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class UserList extends JFrame {
 	User user;
@@ -37,6 +39,7 @@ public class UserList extends JFrame {
 	public JLabel lblNewLabel;
 
 	public UserList(User user) {
+		getContentPane().setBackground(Color.PINK);
 		this.user = user;
 		this.membershipDAO = new MembershipDAO();
 		extracted();
@@ -133,8 +136,10 @@ public class UserList extends JFrame {
 					int userStatus = rs.getInt("status");
 					if (userStatus == 0) {
 						lbl2List.get(index).setText("비접속");
+						lbl2List.get(index).setForeground(Color.GRAY);
 					} else {
 						lbl2List.get(index).setText("접속중");
+						lbl2List.get(index).setForeground(new Color(50, 205, 50));
 					}
 
 					index++;

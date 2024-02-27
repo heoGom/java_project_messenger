@@ -112,15 +112,16 @@ public class PublicChatRoom extends JFrame {
 			}
 		});
 		scrollPane = new JScrollPane(panel_2);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(12); // 스크롤바 속도 조절
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		if (TDList != null) {
 			for (PublicTextDate sen : TDList) {
-				if (sen.getText() == null) {
-					addFile(sen.getSender_id(), sen.getTime(), sen.getFile_name());
-				} else {
-
+				if (sen.getText() != null) {
 					addChat(sen.getText(), sen.getSender_id(), user.getId().equals(sen.getSender_id()), sen.getTime());
+				} else {
+					addFile(sen.getSender_id(), sen.getTime(), sen.getFile_name());
+
 				}
 			}
 //	         scrollDown();
@@ -205,7 +206,7 @@ public class PublicChatRoom extends JFrame {
 				if (once) {
 					JLabel senderIdLbl = new JLabel(getNickFromId(sender_id));
 					messagePanel.add(senderIdLbl);
-					senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 20));
+//					senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 20));
 					senderIdLbl.setForeground(new Color(color[0], color[1], color[2]));
 					messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 				}
@@ -269,7 +270,7 @@ public class PublicChatRoom extends JFrame {
 			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 			JLabel senderIdLbl = new JLabel(getNickFromId(sender_id));
 			messagePanel.add(senderIdLbl);
-			senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 12));
+//			senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 12));
 			senderIdLbl.setForeground(new Color(color[0], color[1], color[2]));
 			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 			messagePanel.add(timeLabel);
