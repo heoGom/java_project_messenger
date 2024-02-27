@@ -261,7 +261,7 @@ public class Agendas {
 				Timestamp lt = rs.getTimestamp("final_time");
 			
 				Agendas agendas = new Agendas();
-				if (progress == 1) {
+			
 					agendas.setId(id);
 					agendas.setAgenda(agenda);
 					agendas.setProgress_or_not(progress);
@@ -271,15 +271,7 @@ public class Agendas {
 					agendas.setLt(lt);
 
 					agendaList.add(agendas);
-				} else {
-					agendas.setId(id);
-					agendas.setAgenda(agenda);
-					agendas.setProgress_or_not(progress);
-					agendas.setNickname(nickname);
-					agendas.setNo(no);
-
-					pastAgendaList.add(agendas);
-				}
+				
 			}
 
 		} catch (SQLException e) {
