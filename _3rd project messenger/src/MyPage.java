@@ -32,6 +32,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import javax.swing.border.LineBorder;
 
 public class MyPage {
 	User user;
@@ -57,10 +58,11 @@ public class MyPage {
 		mainDL.setTitle("마이 프로필");
 		mainDL.setModal(true);
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.PINK);
 		panel.setLayout(null);
 		JLabel myImage = new JLabel("현재 사진");
 		myImage.setHorizontalAlignment(SwingConstants.CENTER);
-		myImage.setFont(new Font("굴림", Font.BOLD, 12));
+		myImage.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		myImage.setBounds(327, 24, 75, 24);
 		panel.add(myImage);
 		picture = new JLabel(user.getImage());
@@ -69,31 +71,32 @@ public class MyPage {
 
 		JLabel userNick = new JLabel("내 별명");
 		userNick.setHorizontalAlignment(SwingConstants.CENTER);
-		userNick.setFont(new Font("굴림", Font.BOLD, 12));
+		userNick.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		userNick.setBounds(51, 29, 60, 15);
 		panel.add(userNick);
 		nick = new JLabel(user.getNick());
 		nick.setHorizontalAlignment(SwingConstants.CENTER);
-		nick.setFont(new Font("굴림", Font.BOLD, 16));
+		nick.setFont(new Font("한컴 고딕", Font.BOLD, 16));
 		nick.setBounds(40, 95, 91, 30);
 		panel.add(nick);
 		
 		userScore = new JLabel("내 최고점수");
 		userScore.setHorizontalAlignment(SwingConstants.CENTER);
-		userScore.setFont(new Font("굴림", Font.BOLD, 12));
+		userScore.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		userScore.setBounds(183, 29, 80, 15);
 		panel.add(userScore);
 		score = new JLabel(user.getHighScore() + "초");
 		score.setHorizontalAlignment(SwingConstants.CENTER);
-		score.setFont(new Font("굴림", Font.PLAIN, 16));
+		score.setFont(new Font("한컴 고딕", Font.BOLD, 16));
 		score.setBounds(183, 103, 75, 15);
 		panel.add(score);
 
 		JButton btnNickCh = new JButton("닉네임 변경");
+		btnNickCh.setBorder(new LineBorder(Color.BLACK, 2));
 		btnNickCh.setFont(new Font("굴림", Font.BOLD, 11));
 		btnNickCh.setBounds(20, 220, 120, 30);
 		panel.add(btnNickCh);
-		btnNickCh.setBackground(Color.white);
+		btnNickCh.setBackground(Color.PINK);
 		btnNickCh.setBorderPainted(false);
 		btnNickCh.addActionListener(new ActionListener() {
 			@Override
