@@ -43,6 +43,7 @@ class ClientsList {
 			}
 		}
 	}
+
 	public void sendFileToAll(String sender_id, String time, String file_name) {
 		synchronized (list) {
 			for (ClientPerThread ct : list) {
@@ -97,7 +98,7 @@ class ClientPerThread extends Thread {
 
 			tid = br.readLine();
 			session.addClient(this);
-			System.out.println(tid+"접속");
+			System.out.println(tid + "접속");
 
 			while (go && !isInterrupted()) {
 				String fromClient = br.readLine();
@@ -117,7 +118,6 @@ class ClientPerThread extends Thread {
 								PreparedStatement stmt = conn.prepareStatement(sqlp)) {
 							stmt.setString(1, sender_id);
 							stmt.setTimestamp(2, time);
-							System.out.println("서버파일시간:"+time);
 							stmt.setString(3, file_name);
 							stmt.setString(4, file);
 							stmt.executeUpdate();

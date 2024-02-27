@@ -41,6 +41,7 @@ public class Login extends JFrame {
 		showGUI();
 
 	}
+
 	private void allListener() {
 		loginbtn.addActionListener(new ActionListener() {
 			@Override
@@ -125,7 +126,7 @@ public class Login extends JFrame {
 					String pw = rs.getString("password");
 					String nick = rs.getString("nickname");
 					int highScore = rs.getInt("highscore");
-					
+
 					if (rs.getBlob("profilePhoto") != null) {
 						blob = rs.getBlob("profilePhoto");
 						image = blobToImageIcon(blob);
@@ -137,7 +138,7 @@ public class Login extends JFrame {
 					}
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
