@@ -357,7 +357,8 @@ public class Membership extends JFrame {
 		getContentPane().setLayout(null);
 
 		pictureLabel = new JLabel();
-		pictureLabel.setText("        사진등록하기");
+		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		pictureLabel.setText("사진등록하기");
 		pictureLabel.setBounds(102, 301, 129, 139);
 		getContentPane().add(pictureLabel);
 

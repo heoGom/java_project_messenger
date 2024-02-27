@@ -20,6 +20,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+import java.awt.ComponentOrientation;
+import javax.swing.SwingConstants;
 
 public class Login extends JFrame {
 	private JTextField textField;
@@ -34,6 +36,7 @@ public class Login extends JFrame {
 	User user;
 
 	public Login() {
+		getContentPane().setBackground(Color.PINK);
 		extracted();
 		user = new User();
 		membershipDAO = new MembershipDAO();
@@ -72,7 +75,12 @@ public class Login extends JFrame {
 		membershipbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				membership = new Membership();
+				if (membership == null || !membership.isVisible()) {
+					membership = new Membership();
+					membership.setVisible(true);
+				} else {
+					membership.toFront();
+				}
 				int currentX = getLocation().x;
 				int currentY = getLocation().y;
 
@@ -80,7 +88,7 @@ public class Login extends JFrame {
 				int offsetX = -membership.getWidth(); // 왼쪽으로 이동할 거리 (Membership 창의 너비만큼)
 				membership.setLocation(currentX + offsetX, currentY);
 
-				membership.setVisible(true);
+				
 			}
 		});
 		textField_1.addActionListener(new ActionListener() {
@@ -137,7 +145,7 @@ public class Login extends JFrame {
 					}
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -164,8 +172,10 @@ public class Login extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("메신저 로그인");
-		lblNewLabel.setBounds(169, 123, 89, 39);
+		JLabel lblNewLabel = new JLabel("424호는써라");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 16));
+		lblNewLabel.setBounds(158, 123, 102, 39);
 		getContentPane().add(lblNewLabel);
 
 		textField = new JTextField();
@@ -179,18 +189,27 @@ public class Login extends JFrame {
 		textField_1.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("ID");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(70, 203, 57, 15);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("PW");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		lblNewLabel_2.setBounds(70, 274, 57, 15);
 		getContentPane().add(lblNewLabel_2);
 
 		loginbtn = new JButton("로그인");
+		loginbtn.setBackground(Color.PINK);
+		loginbtn.setBorder(new LineBorder(Color.BLACK));
 		loginbtn.setBounds(316, 270, 97, 23);
 		getContentPane().add(loginbtn);
 
 		membershipbtn = new JButton("회원가입");
+		membershipbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		membershipbtn.setForeground(Color.BLACK);
+		membershipbtn.setBackground(Color.PINK);
 		membershipbtn.setBounds(12, 10, 97, 23);
 		getContentPane().add(membershipbtn);
 	}

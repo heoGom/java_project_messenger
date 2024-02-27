@@ -59,27 +59,34 @@ public class MyPage {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		JLabel myImage = new JLabel("현재 사진");
-		myImage.setBounds(333, 24, 60, 24);
+		myImage.setHorizontalAlignment(SwingConstants.CENTER);
+		myImage.setFont(new Font("굴림", Font.BOLD, 12));
+		myImage.setBounds(327, 24, 75, 24);
 		panel.add(myImage);
 		picture = new JLabel(user.getImage());
-		picture.setBounds(285, 60, 150, 150);
+		picture.setBounds(288, 58, 150, 150);
 		panel.add(picture);
 
 		JLabel userNick = new JLabel("내 별명");
-		userNick.setBounds(58, 29, 60, 15);
+		userNick.setHorizontalAlignment(SwingConstants.CENTER);
+		userNick.setFont(new Font("굴림", Font.BOLD, 12));
+		userNick.setBounds(51, 29, 60, 15);
 		panel.add(userNick);
 		nick = new JLabel(user.getNick());
+		nick.setHorizontalAlignment(SwingConstants.CENTER);
 		nick.setFont(new Font("굴림", Font.BOLD, 16));
-		nick.setBounds(58, 95, 91, 30);
+		nick.setBounds(40, 95, 91, 30);
 		panel.add(nick);
 		
 		userScore = new JLabel("내 최고점수");
+		userScore.setHorizontalAlignment(SwingConstants.CENTER);
 		userScore.setFont(new Font("굴림", Font.BOLD, 12));
-		userScore.setBounds(189, 29, 60, 15);
+		userScore.setBounds(183, 29, 80, 15);
 		panel.add(userScore);
 		score = new JLabel(user.getHighScore() + "초");
+		score.setHorizontalAlignment(SwingConstants.CENTER);
 		score.setFont(new Font("굴림", Font.PLAIN, 16));
-		score.setBounds(175, 103, 75, 15);
+		score.setBounds(183, 103, 75, 15);
 		panel.add(score);
 
 		JButton btnNickCh = new JButton("닉네임 변경");
