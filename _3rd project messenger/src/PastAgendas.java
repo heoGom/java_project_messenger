@@ -54,6 +54,7 @@ public class PastAgendas extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(10); // 스크롤바 속도 조절
 		scrollPane.setBounds(12, 108, 402, 402);
 		getContentPane().add(scrollPane);
 		
