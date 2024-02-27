@@ -31,13 +31,13 @@ public class AddAgenda extends JFrame {
 	private JButton btnNewButton_2;
 	private JComboBox comboBox;
 	private String[] comboBoxLists;
-	private JLabel lblNewLabel_3;
 	private Agendas ad;
 	private int generatedNo;
 	private VoteMainPage voteMainPage;
 	
-	public AddAgenda(User user) {
+	public AddAgenda(User user,VoteMainPage voteMainPage) {
 		this.user = user;
+		this.voteMainPage = voteMainPage;
 		extracted();
 		listenerAll();
 		showGUI();
@@ -85,6 +85,8 @@ public class AddAgenda extends JFrame {
 				saveAgenda();
 				saveResit();
 				dispose();
+				voteMainPage.updatePanel();
+			
 			}
 		});
 	}
@@ -143,10 +145,6 @@ public class AddAgenda extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("확인중");
-		System.out.println(generatedNo);
-		System.out.println(user.getId());
-		System.out.println(agList.get(0));
 		
 
 	}
@@ -221,7 +219,7 @@ public class AddAgenda extends JFrame {
 		getContentPane().add(resultagenda);
 
 		JLabel lblNewLabel_2 = new JLabel("주제 항목 등록");
-		lblNewLabel_2.setBounds(12, 285, 97, 15);
+		lblNewLabel_2.setBounds(12, 281, 97, 15);
 		getContentPane().add(lblNewLabel_2);
 
 		itemtf = new JTextField();
@@ -245,9 +243,5 @@ public class AddAgenda extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("투표마감시간");
 		lblNewLabel_1.setBounds(50, 347, 97, 15);
 		getContentPane().add(lblNewLabel_1);
-
-		lblNewLabel_3 = new JLabel("(선택 사항)");
-		lblNewLabel_3.setBounds(22, 270, 80, 15);
-		getContentPane().add(lblNewLabel_3);
 	}
 }

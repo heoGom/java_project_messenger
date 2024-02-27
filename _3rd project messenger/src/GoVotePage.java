@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -9,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +30,15 @@ public class GoVotePage extends JFrame {
 
 	private List<String> selectedButtonTextList;
 
+
 	public GoVotePage(VoteMainPage voteMainPage, User user) {
 		this.user = user;
 		this.voteMainPage = voteMainPage;
 		extracted();
 		showGUI();
 		selectedButtonTextList = new ArrayList<>();
-		System.out.println(agendas.getNo());
+		System.out.println(user.getId());
+
 	}
 
 	private void showGUI() {
@@ -59,13 +63,15 @@ public class GoVotePage extends JFrame {
 		votebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveResit();
-				System.out.println(selectedButtonTextList.toString());
-				dispose();
+					saveResit();
+					System.out.println(selectedButtonTextList.toString());
+					dispose();
 			}
 		});
 
 	}
+
+
 
 	public void saveResit() {
 		String sql2 = "insert into jae.votes(agenda_num, id ,vote_item )values(?, ?, ?)";

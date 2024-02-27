@@ -14,6 +14,7 @@ public class Agendas {
 	private String nickname;
 	private int no;
 	private String item;
+	private int count;
 	User user;
 
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
@@ -22,6 +23,99 @@ public class Agendas {
 
 	public Agendas() {
 	}
+
+	
+	public int getCount() {
+		return count;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((agenda == null) ? 0 : agenda.hashCode());
+		result = prime * result + count;
+		result = prime * result + final_time;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
+		result = prime * result + no;
+		result = prime * result + progress_or_not;
+		result = prime * result + regist_time;
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Agendas other = (Agendas) obj;
+		if (agenda == null) {
+			if (other.agenda != null)
+				return false;
+		} else if (!agenda.equals(other.agenda))
+			return false;
+		if (count != other.count)
+			return false;
+		if (final_time != other.final_time)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (item == null) {
+			if (other.item != null)
+				return false;
+		} else if (!item.equals(other.item))
+			return false;
+		if (nickname == null) {
+			if (other.nickname != null)
+				return false;
+		} else if (!nickname.equals(other.nickname))
+			return false;
+		if (no != other.no)
+			return false;
+		if (progress_or_not != other.progress_or_not)
+			return false;
+		if (regist_time != other.regist_time)
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	
+	public Agendas(String id, String agenda, int regist_time, int final_time, int progress_or_not, String nickname,
+			int no, String item, int count, User user) {
+		super();
+		this.id = id;
+		this.agenda = agenda;
+		this.regist_time = regist_time;
+		this.final_time = final_time;
+		this.progress_or_not = progress_or_not;
+		this.nickname = nickname;
+		this.no = no;
+		this.item = item;
+		this.count = count;
+		this.user = user;
+	}
+
 
 	public Agendas(String id, String agenda, int regist_time, int final_time, int progress_or_not, String nickname,
 			int no, String item) {
@@ -136,12 +230,13 @@ public class Agendas {
 					Integer no = rs.getInt("agenda_num");
 					String item = rs.getString("item");
 					String agenda_name = rs.getString("agenda_name");
-					
+					String id = rs.getString("id");
 					Agendas agitem = new Agendas();
 
 					agitem.setNo(no);
 					agitem.setItem(item);
 					agitem.setAgenda(agenda_name);
+					agitem.setId(id);
 					itemList.add(agitem);
 				}
 			}
