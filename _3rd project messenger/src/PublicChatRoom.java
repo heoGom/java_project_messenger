@@ -3,11 +3,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,14 +22,17 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Base64.Decoder;
 import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -38,6 +48,7 @@ public class PublicChatRoom extends JFrame {
 	public JTextArea sendTextArea;
 	public JButton sendbtn;
 	private JScrollPane scrollPane;
+	public JButton sendFileBtn;
 
 	public PublicChatRoom(User user) {
 		this.user = user;
@@ -74,6 +85,14 @@ public class PublicChatRoom extends JFrame {
 		sendbtn = new JButton("\uC804   \uC1A1");
 		panel_3.add(sendbtn, BorderLayout.EAST);
 
+		sendFileBtn = new JButton("\uD30C\uC77C \uBCF4\uB0B4\uAE30");
+		sendFileBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		sendFileBtn.setMargin(new Insets(2, 10, 2, 10));
+		panel_3.add(sendFileBtn, BorderLayout.WEST);
+
 		sendTextArea = new JTextArea();
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
@@ -97,8 +116,12 @@ public class PublicChatRoom extends JFrame {
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		if (TDList != null) {
 			for (PublicTextDate sen : TDList) {
+				if (sen.getText() == null) {
+					addFile(sen.getSender_id(), sen.getTime(), sen.getFile_name());
+				} else {
 
-				addChat(sen.getText(),sen.getSender_id(), user.getId().equals(sen.getSender_id()), sen.getTime());
+					addChat(sen.getText(), sen.getSender_id(), user.getId().equals(sen.getSender_id()), sen.getTime());
+				}
 			}
 //	         scrollDown();
 		}
@@ -123,7 +146,8 @@ public class PublicChatRoom extends JFrame {
 					String sender_id = rs.getString("sender_id");
 					String text = rs.getString("text");
 					Timestamp time = rs.getTimestamp("text_time");
-					PublicTextDate a = new PublicTextDate(sender_id, text, time);
+					String file_name = rs.getString("file_name");
+					PublicTextDate a = new PublicTextDate(sender_id, text, time, file_name);
 					td.add(a);
 				}
 				return td;
@@ -142,7 +166,7 @@ public class PublicChatRoom extends JFrame {
 		// 문자열을 10자씩 나누어 처리
 		int startIndex = 0;
 		boolean once = true;
-		
+
 		int[] color = RGBById(sender_id);
 		while (startIndex < message.length()) {
 			int endIndex = Math.min(startIndex + 10, message.length());
@@ -157,8 +181,8 @@ public class PublicChatRoom extends JFrame {
 			// 메시지를 담은 JLabel 생성
 			JLabel subMessageLabel = new JLabel(subMessage);
 			subMessageLabel.setFont(new Font("굴림", Font.PLAIN, 20));
-			if(!sender_id.equals(user.id)) {
-			subMessageLabel.setForeground(new Color(color[0],color[1],color[2]));
+			if (!sender_id.equals(user.id)) {
+				subMessageLabel.setForeground(new Color(color[0], color[1], color[2]));
 			}
 			// setBlackBorder(subMessageLabel);
 
@@ -178,11 +202,11 @@ public class PublicChatRoom extends JFrame {
 			} else { // 메시지를 왼쪽에서 받는 경우
 				messagePanel.add(subMessageLabel);
 				messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
-				if(once) {
+				if (once) {
 					JLabel senderIdLbl = new JLabel(getNickFromId(sender_id));
 					messagePanel.add(senderIdLbl);
 					senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 20));
-					senderIdLbl.setForeground(new Color(color[0],color[1],color[2]));
+					senderIdLbl.setForeground(new Color(color[0], color[1], color[2]));
 					messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
 				}
 				once = false;
@@ -206,6 +230,111 @@ public class PublicChatRoom extends JFrame {
 
 	}
 
+	public void addFile(String sender_id, Timestamp time, String file_name) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+		String time1 = sdf.format(time);
+
+		// 문자열을 10자씩 나누어 처리
+
+		int[] color = RGBById(sender_id);
+		// 새로운 패널을 생성하여 라벨들을 추가
+		JPanel messagePanel = new JPanel();
+		messagePanel.setBackground(Color.WHITE);
+		messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.X_AXIS));
+		// messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+		// 메시지를 담은 JLabel 생성
+		JLabel fileLabel = new JLabel(file_name);
+		fileLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+
+		fileLabel.setFont(new Font("굴림", Font.PLAIN, 20));
+		if (!sender_id.equals(user.id)) {
+			fileLabel.setForeground(new Color(color[0], color[1], color[2]));
+		}
+		// setBlackBorder(subMessageLabel);
+
+		// 패널에 라벨 추가
+		// 시간을 담은 JLabel 생성
+		JLabel timeLabel = new JLabel("[" + time1 + "]");
+		// setBlackBorder(timeLabel);
+
+		// 메시지를 오른쪽에 보내는 경우
+		if (sender_id.equals(user.id)) {
+			messagePanel.add(Box.createHorizontalGlue());
+			messagePanel.add(timeLabel);
+			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+			messagePanel.add(fileLabel);
+		} else { // 메시지를 왼쪽에서 받는 경우
+			messagePanel.add(fileLabel);
+			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+			JLabel senderIdLbl = new JLabel(getNickFromId(sender_id));
+			messagePanel.add(senderIdLbl);
+			senderIdLbl.setFont(new Font("굴림", Font.PLAIN, 20));
+			senderIdLbl.setForeground(new Color(color[0], color[1], color[2]));
+			messagePanel.add(Box.createRigidArea(new Dimension(5, 0))); // 간격 조절
+			messagePanel.add(timeLabel);
+			messagePanel.add(Box.createHorizontalGlue());
+		}
+		fileLabel.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int result = JOptionPane.showConfirmDialog(PublicChatRoom.this, "다운받으시겠습니까?");
+				if (result == JOptionPane.YES_OPTION) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					int chooserResult = fileChooser.showSaveDialog(null);
+					if (chooserResult == JFileChooser.APPROVE_OPTION) {
+						// 사용자가 저장 경로를 선택한 경우
+						String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+
+						System.out.println("다운로드 시작. 저장 경로: " + selectedFilePath);
+						String sql = "SELECT * FROM public_chatlist WHERE " + "text_time = ? " + "AND sender_id = ? "
+								+ "AND file_name = ?;";
+						try (Connection conn = MySqlConnectionProvider.getConnection();
+								PreparedStatement stmt = conn.prepareStatement(sql)) {
+							stmt.setTimestamp(1, time);
+							stmt.setString(2, sender_id);
+							stmt.setString(3, file_name);
+
+							try (ResultSet rs = stmt.executeQuery()) {
+								if (rs.next()) {
+									String encoded = rs.getString("file");
+									Decoder decoder = Base64.getDecoder();
+									byte[] decode = decoder.decode(encoded);
+									try {
+										Files.write(Paths.get(selectedFilePath + File.separator + file_name), decode);
+									} catch (IOException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+
+								}
+
+							}
+
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						// 사용자가 "아니오"를 선택한 경우 또는 다이얼로그를 닫은 경우
+						System.out.println("다운로드 취소");
+						// 여기에 취소 또는 다른 처리 코드를 추가
+					}
+				}
+			}
+		});
+
+		// 현재 텍스트에 추가
+		panel_2.add(messagePanel);
+		panel_2.revalidate();
+		panel_2.repaint();
+//	         scrollDown();
+		sendTextArea.requestFocusInWindow();
+		// 다음 부분 처리를 위해 시작 인덱스 갱신
+
+	}
+
 	// private void setBlackBorder(JLabel label) {
 	// label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	// }
@@ -222,31 +351,32 @@ public class PublicChatRoom extends JFrame {
 	public void addTextAreaListener(KeyListener listener) {
 		sendTextArea.addKeyListener(listener);
 	}
+
 	private String getNickFromId(String sender_id) {
 		user.readAllUser(user.nick);
-		for(User u : user.list) {
-			if(u.id.equals(sender_id)) {
+		for (User u : user.list) {
+			if (u.id.equals(sender_id)) {
 				return u.nick;
 			}
 		}
 		return "누구쎄용?";
 	}
+
 	private int[] RGBById(String sender_id) {
-		int r = Math.abs((sender_id.length()*60)%255);
-		if(r>180) {
-			r-=120;
+		int r = Math.abs((sender_id.length() * 60) % 255);
+		if (r > 180) {
+			r -= 120;
 		}
-		int g = Math.abs((sender_id.length()*60)%255);
-		if(g>180) {
-			g-=120;
+		int g = Math.abs((sender_id.length() * 60) % 255);
+		if (g > 180) {
+			g -= 120;
 		}
-		int b = Math.abs((sender_id.length()*70)%255);
-		if(b>180) {
-			b-=120;
+		int b = Math.abs((sender_id.length() * 70) % 255);
+		if (b > 180) {
+			b -= 120;
 		}
-		int[] a = {r,g,b};
+		int[] a = { r, g, b };
 		return a;
 	}
-	
 
 }

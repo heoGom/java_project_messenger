@@ -34,6 +34,7 @@ public class PrivateChatClient {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					if(!pr.sendTextArea.getText().equals("")) {
 					LocalDateTime currentTime = LocalDateTime.now();
 					pw.println(
 							user.getId() + "/" + another.getId() + "/" + currentTime + "/" + pr.sendTextArea.getText());
@@ -41,7 +42,7 @@ public class PrivateChatClient {
 					Timestamp time = Timestamp.valueOf(currentTime);
 					pr.addChat(pr.sendTextArea.getText(), true, time);
 					pr.sendTextArea.setText("");
-					
+					}
 				}
 			});
 			pr.sendTextArea.addKeyListener(new KeyAdapter() {
