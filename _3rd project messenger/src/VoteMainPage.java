@@ -26,6 +26,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class VoteMainPage extends JFrame {
 	private JPanel pnl;
@@ -45,6 +48,7 @@ public class VoteMainPage extends JFrame {
 	private int selectedAgendaNo;
 
 	public VoteMainPage(User user) {
+		getContentPane().setBackground(Color.PINK);
 		this.user = user;
 		showGUI();
 		extracted();
@@ -66,6 +70,9 @@ public class VoteMainPage extends JFrame {
 		getContentPane().setLayout(null);
 
 		btnNewButton = new JButton("안건 등록");
+		btnNewButton.setBackground(Color.PINK);
+		btnNewButton.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		btnNewButton.setBorder(new LineBorder(Color.BLACK));
 		btnNewButton.setBounds(370, 10, 97, 23);
 		getContentPane().add(btnNewButton);
 
@@ -80,10 +87,15 @@ public class VoteMainPage extends JFrame {
 		getContentPane().add(scrollPane);
 
 		JLabel lblNewLabel = new JLabel("투표 안건 목록");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		lblNewLabel.setBounds(185, 59, 105, 15);
 		getContentPane().add(lblNewLabel);
 
 		btnNewButton_1 = new JButton("종료된 안건 보기");
+		btnNewButton_1.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		btnNewButton_1.setBorder(new LineBorder(Color.BLACK));
+		btnNewButton_1.setBackground(Color.PINK);
 		btnNewButton_1.setBounds(12, 10, 158, 23);
 		getContentPane().add(btnNewButton_1);
 	}

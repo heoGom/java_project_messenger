@@ -56,7 +56,7 @@ public class PrivateChatRoom extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(Color.PINK);
 		panel.setPreferredSize(new Dimension(10, 55));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
@@ -73,6 +73,7 @@ public class PrivateChatRoom extends JFrame {
 		}
 
 		JLabel another_NN_Lbl = new JLabel(another.getNick());
+		another_NN_Lbl.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 		another_NN_Lbl.setBounds(63, 20, 64, 15);
 		panel.add(another_NN_Lbl);
 
@@ -93,7 +94,7 @@ public class PrivateChatRoom extends JFrame {
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.WHITE);
+		panel_2.setBackground(Color.PINK);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		panel_2.addContainerListener(new ContainerAdapter() {
 			@Override

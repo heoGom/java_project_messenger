@@ -209,6 +209,7 @@ public class Login extends JFrame {
 		getContentPane().add(loginbtn);
 
 		membershipbtn = new JButton("회원가입");
+		membershipbtn.setBorder(new LineBorder(Color.BLACK));
 		membershipbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		membershipbtn.setForeground(Color.BLACK);
 		membershipbtn.setBackground(Color.PINK);
