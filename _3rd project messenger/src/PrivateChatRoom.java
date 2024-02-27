@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
@@ -161,6 +162,7 @@ public class PrivateChatRoom extends JFrame {
 
 		// 문자열을 10자씩 나누어 처리
 		int startIndex = 0;
+		int[] color = RGBById(another.id);
 		while (startIndex < message.length()) {
 			int endIndex = Math.min(startIndex + 10, message.length());
 			String subMessage = message.substring(startIndex, endIndex);
@@ -173,7 +175,10 @@ public class PrivateChatRoom extends JFrame {
 
 			// 메시지를 담은 JLabel 생성
 			JLabel subMessageLabel = new JLabel(subMessage);
-			// setBlackBorder(subMessageLabel);
+			subMessageLabel.setFont(new Font("굴림", Font.PLAIN, 20));
+			if (!sentByMe) {
+				subMessageLabel.setForeground(new Color(color[0], color[1], color[2]));
+			}
 
 			// 패널에 라벨 추가
 			// 시간을 담은 JLabel 생성
@@ -227,6 +232,23 @@ public class PrivateChatRoom extends JFrame {
 
 	public void addTextAreaListener(KeyListener listener) {
 		sendTextArea.addKeyListener(listener);
+	}
+
+	private int[] RGBById(String sender_id) {
+		int r = Math.abs((sender_id.length() * 60) % 255);
+		if (r > 180) {
+			r -= 120;
+		}
+		int g = Math.abs((sender_id.length() * 60) % 255);
+		if (g > 180) {
+			g -= 120;
+		}
+		int b = Math.abs((sender_id.length() * 70) % 255);
+		if (b > 180) {
+			b -= 120;
+		}
+		int[] a = { r, g, b };
+		return a;
 	}
 
 }
