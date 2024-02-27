@@ -77,7 +77,6 @@ public class MainPage extends JFrame {
 				int mainPageX = getX();
 				int mainPageY = getY();
 				chatRoomListPage.setLocation(mainPageX - chatRoomListPage.getWidth(), mainPageY);
-//				ImageIcon icon = 
 			}
 		});
 
@@ -175,7 +174,7 @@ public class MainPage extends JFrame {
 		getContentPane().add(minigamebtn);
 
 		myprofilebtn = new JButton("마이프로필");
-		myprofilebtn.setBounds(326, 10, 97, 23);
+		myprofilebtn.setBounds(326, 10, 110, 23);
 		getContentPane().add(myprofilebtn);
 
 		myprofilebtn.addActionListener(new ActionListener() {

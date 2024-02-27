@@ -104,7 +104,6 @@ public class PrivateChatRoom extends JFrame {
 						scrollDown();
 					}
 				});
-
 			}
 		});
 		scrollPane = new JScrollPane(panel_2);
