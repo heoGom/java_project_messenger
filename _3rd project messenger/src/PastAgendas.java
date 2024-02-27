@@ -14,7 +14,8 @@ import javax.swing.JLabel;
 public class PastAgendas extends JFrame {
 	private JPanel panel;
 	private VoteMainPage voteMainPage;
-
+	private VoteStatus voteStatus;
+	private int selectedAgendaNo;
 
 	public PastAgendas(VoteMainPage voteMainPage) {
 		this.voteMainPage = voteMainPage;
@@ -30,16 +31,19 @@ public class PastAgendas extends JFrame {
 		Agendas agendas = new Agendas();
 		agendas.pastAgendaList = new ArrayList<Agendas>();
 		agendas.readAgendas();
-		for(Agendas a : agendas.pastAgendaList) {
+		for(int i = 0; i < agendas.pastAgendaList.size(); i++) {
 			JPanel pnl = new JPanel();
 			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
 			pnl.setPreferredSize(preferredSize);
 			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			JLabel lbl1 = new JLabel(a.getNickname());
-			JLabel lbl2 = new JLabel(a.getAgenda());
+			JLabel lbl1 = new JLabel(agendas.pastAgendaList.get(i).getNickname());
+			JLabel lbl2 = new JLabel(agendas.pastAgendaList.get(i).getAgenda());
 			JLabel lbl3 = new JLabel("결과 보기");
 			lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			
+			int currentAgendaNo = agendas.pastAgendaList.get(i).getNo();
+			System.out.println(agendas.pastAgendaList.get(i).getNo());
 			pnl.add(lbl1);
 			pnl.add(lbl2);
 			pnl.add(lbl3);
@@ -49,8 +53,8 @@ public class PastAgendas extends JFrame {
 			lbl3.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					voteMainPage.getSelectedAgendaNo();
-					VoteStatus voteStatus = new VoteStatus(voteMainPage);
+					selectedAgendaNo = currentAgendaNo;
+					voteStatus = new VoteStatus(voteMainPage);
 					
 				}
 			});
