@@ -23,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -69,9 +70,13 @@ public class VoteMainPage extends JFrame {
 		getContentPane().add(btnNewButton);
 
 		panel = new JPanel();
-		panel.setBounds(12, 84, 455, 426);
+		panel.setBounds(12, 84, 400, 426);
 		getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(12, 84, 450, 426);
+		getContentPane().add(scrollPane);
 
 		JLabel lblNewLabel = new JLabel("투표 안건 목록");
 		lblNewLabel.setBounds(185, 59, 105, 15);

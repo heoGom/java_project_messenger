@@ -6,6 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
 public class PastAgendas extends JFrame {
@@ -51,6 +52,11 @@ public class PastAgendas extends JFrame {
 		panel.setBounds(12, 87, 379, 405);
 		getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(12, 108, 402, 402);
+		getContentPane().add(scrollPane);
+		
 		
 		JLabel lblNewLabel = new JLabel("종료된 안건들");
 		lblNewLabel.setBounds(12, 62, 110, 15);
