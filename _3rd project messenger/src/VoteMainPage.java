@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -69,7 +71,7 @@ public class VoteMainPage extends JFrame {
 		panel = new JPanel();
 		panel.setBounds(12, 84, 455, 426);
 		getContentPane().add(panel);
-		panel.setLayout(new GridLayout(0, 1));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		JLabel lblNewLabel = new JLabel("투표 안건 목록");
 		lblNewLabel.setBounds(185, 59, 105, 15);
@@ -125,6 +127,9 @@ public class VoteMainPage extends JFrame {
 
 		for (int i = 0; i < agendas.agendaList.size(); i++) {
 			pnl = new JPanel();
+			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
+			pnl.setPreferredSize(preferredSize);
+			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			lbl1 = new JLabel(agendas.agendaList.get(i).getAgenda());
 			lbl2 = new JLabel("투표하기");
