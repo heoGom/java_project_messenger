@@ -44,6 +44,7 @@ public class PastAgendas extends JFrame {
 			lbl3.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					voteMainPage.getSelectedAgendaNo();
 					VoteStatus voteStatus = new VoteStatus(voteMainPage);
 					
 				}
