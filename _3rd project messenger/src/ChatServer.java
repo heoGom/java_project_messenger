@@ -101,28 +101,30 @@ class ClientPerThread extends Thread {
 
 			while (go && !isInterrupted()) {
 				String fromClient = br.readLine();
-				System.out.println(fromClient);
 				if (fromClient.equals("Bye Bye")) {
 					System.out.println(tid + "연결종료");
 					throw new InterruptedException("종료");
 				} else {
 					if (fromClient.equals("파일 전송")) {
 						String sender_id = br.readLine();
-						String time = br.readLine();
+						String rawtime = br.readLine();
 						String file_name = br.readLine();
 						String file = br.readLine();
+						LocalDateTime dateTime = LocalDateTime.parse(rawtime);
+						Timestamp time = Timestamp.valueOf(dateTime);
 						String sqlp = "insert into public_chatlist (sender_id, text, text_time,file_name,file) values(?,null,?,?,?);";
 						try (Connection conn = MySqlConnectionProvider.getConnection();
 								PreparedStatement stmt = conn.prepareStatement(sqlp)) {
 							stmt.setString(1, sender_id);
-							stmt.setString(2, time);
+							stmt.setTimestamp(2, time);
+							System.out.println("서버파일시간:"+time);
 							stmt.setString(3, file_name);
 							stmt.setString(4, file);
 							stmt.executeUpdate();
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-						session.sendFileToAll(sender_id, time, file_name);
+						session.sendFileToAll(sender_id, rawtime, file_name);
 
 					} else {
 						// 개인 메세지의 경우
