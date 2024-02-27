@@ -15,12 +15,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Decoder;
@@ -293,12 +296,22 @@ public class PublicChatRoom extends JFrame {
 								+ "AND file_name = ?;";
 						try (Connection conn = MySqlConnectionProvider.getConnection();
 								PreparedStatement stmt = conn.prepareStatement(sql)) {
+//							LocalDateTime localDateTime = time.toLocalDateTime();
+//							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//							String formattedTime = localDateTime.format(formatter);
+
+//							LocalDateTime llocalDateTime = LocalDateTime.parse(formattedTime, formatter);
+//							Timestamp timestamp = Timestamp.valueOf(llocalDateTime);
 							stmt.setTimestamp(1, time);
 							stmt.setString(2, sender_id);
 							stmt.setString(3, file_name);
+							System.out.println("time : " + time);
+							System.out.println("sender_id : " + sender_id);
+							System.out.println("file_name : " + file_name);
 
 							try (ResultSet rs = stmt.executeQuery()) {
 								if (rs.next()) {
+									System.out.println("행 조회");
 									String encoded = rs.getString("file");
 									Decoder decoder = Base64.getDecoder();
 									byte[] decode = decoder.decode(encoded);
@@ -309,6 +322,8 @@ public class PublicChatRoom extends JFrame {
 										e1.printStackTrace();
 									}
 
+								} else {
+									System.out.println("XXX 행 없음 XXX");
 								}
 
 							}
