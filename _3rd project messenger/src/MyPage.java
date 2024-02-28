@@ -282,7 +282,7 @@ public class MyPage {
 				JButton btnfindPhoto = new JButton("사진 찾기");
 				JButton btnOK = new JButton("적용");
 				JButton btnReturn = new JButton("되돌리기");
-				JButton btnDelete = new JButton("기본 사진으로 설정");
+				JButton btnDelete = new JButton("프로필 사진 삭제");
 				panel.add(btnfindPhoto);
 				panel.add(btnOK);
 				panel.add(btnReturn);

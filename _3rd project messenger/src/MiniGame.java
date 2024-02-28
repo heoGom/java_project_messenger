@@ -93,8 +93,13 @@
 					angle = Math.max(Math.min(angle, 90), -90); // 최대 90도, 최소 -90도까지 허용
 					repaint();
 					if (angle <= -90 || angle >= 90) {
-						gameOver();
+						gameOver();	
 					}
+					int currentDelay = timer2.getDelay();
+			        if (currentDelay > 100) { // 최소 딜레이 값을 지정하여 무한히 빠르게 가지 않도록 설정
+			            timer2.setDelay(currentDelay - 1); // 감소할 딜레이 값 지정
+			        }
+			        System.out.println("현재속도 : "+currentDelay);
 				}
 			});
 			timer2.setInitialDelay(0); // 초기 딜레이를 0으로 설정하여 타이머를 바로 시작

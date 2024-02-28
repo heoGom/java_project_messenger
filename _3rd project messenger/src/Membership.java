@@ -428,7 +428,7 @@ public class Membership extends JFrame {
 	}
 
 	private boolean isValidIdPattern(String input) {
-		String pattern = "^[a-zA-Z0-9]{2,10}$";
+		String pattern = "^[a-zA-Z0-9]{2,20}$";
 		Pattern regex = Pattern.compile(pattern);
 		Matcher matcher = regex.matcher(input);
 		return matcher.matches();

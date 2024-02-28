@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -72,7 +75,7 @@ public class UserList extends JFrame {
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(12, 108, 402, 402);
 		getContentPane().add(scrollPane);
@@ -100,13 +103,39 @@ public class UserList extends JFrame {
 			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
 			pnl.setPreferredSize(preferredSize);
 			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
-			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			pnl.setLayout(new BoxLayout(pnl, BoxLayout.X_AXIS));
+			JLabel imageLbl = new JLabel();
+			imageLbl.setMaximumSize(new Dimension(40,40));
+			imageLbl.setBounds(12, 12, 40, 40);
 			lbl = new JLabel(u.nick);
 			lbl2 = new JLabel("test");
 			lbl2List.add(lbl2);
+			JLabel emptyLbl = new JLabel();
+			emptyLbl.setMaximumSize(new Dimension(10, Integer.MAX_VALUE));
+			JLabel emptyLbl2 = new JLabel();
+			emptyLbl2.setMaximumSize(new Dimension(20, Integer.MAX_VALUE));
+			JLabel emptyLbl3 = new JLabel();
+			emptyLbl3.setMaximumSize(new Dimension(20, Integer.MAX_VALUE));
+			
+			pnl.add(emptyLbl);
+			pnl.add(imageLbl);
+			setImageLbl(u,imageLbl);
+			pnl.add(emptyLbl2);
 			pnl.add(lbl);
+			pnl.add(emptyLbl3);
 			pnl.add(lbl2);
 			panel.add(pnl);
+			
+			imageLbl.addMouseListener(new MouseAdapter() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if(u.image!=null) {
+						new showProfileImage(u);
+					}
+				}
+				
+			});
 
 			pnl.addMouseListener(new MouseAdapter() {
 				@Override
@@ -120,6 +149,16 @@ public class UserList extends JFrame {
 			});
 
 		}
+	}
+
+	private void setImageLbl(User u,JLabel imageLbl) {
+		if (u.getImage() != null) {
+			ImageIcon icon = u.getImage();
+			Image scaledImage = icon.getImage().getScaledInstance(imageLbl.getWidth(),
+					imageLbl.getHeight(), Image.SCALE_SMOOTH);
+			ImageIcon scaledIcon = new ImageIcon(scaledImage);
+			imageLbl.setIcon(scaledIcon);
+		}		
 	}
 
 	public void readStatus() {
@@ -165,5 +204,6 @@ public class UserList extends JFrame {
 		}
 		return 0;
 	}
+	
 
 }

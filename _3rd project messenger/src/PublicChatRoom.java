@@ -94,6 +94,7 @@ public class PublicChatRoom extends JFrame {
 		panel_3.add(sendFileBtn, BorderLayout.WEST);
 
 		sendTextArea = new JTextArea();
+		sendTextArea.setLineWrap(true);
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
