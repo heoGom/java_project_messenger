@@ -267,7 +267,7 @@ public class MainPage extends JFrame {
 				panel.add(pwField);
 				panel.add(btnOK);
 				panel.add(btnCancle);
-				dialog.add(panel);
+				dialog.getContentPane().add(panel);
 				dialog.setVisible(true);
 			}
 		});

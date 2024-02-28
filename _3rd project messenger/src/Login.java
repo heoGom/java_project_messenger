@@ -173,7 +173,7 @@ public class Login extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("424호는 써라");
+		JLabel lblNewLabel = new JLabel("사내 메신저");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 16));
 		lblNewLabel.setBounds(158, 123, 102, 39);

@@ -79,21 +79,6 @@ public class UserList extends JFrame {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(12, 108, 402, 402);
 		getContentPane().add(scrollPane);
-
-		JButton resetbtn = new JButton("새로고침");
-		resetbtn.setBounds(317, 75, 97, 23);
-		getContentPane().add(resetbtn);
-
-		resetbtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				mainPage = new MainPage(user);
-				mainPage.dispose();
-				mainPage.userListbtn.doClick();
-				lblNewLabel.setIcon(user.getImage());
-			}
-		});
 	}
 
 	public void createPanel() {
