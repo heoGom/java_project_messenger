@@ -70,7 +70,7 @@ public class MyPage {
 		picture = new JLabel(user.getImage());
 		picture.setBounds(288, 58, 150, 150);
 		panel.add(picture);
-
+		
 		JLabel userNick = new JLabel("내 별명");
 		userNick.setHorizontalAlignment(SwingConstants.CENTER);
 		userNick.setFont(new Font("한컴 고딕", Font.BOLD, 14));

@@ -75,21 +75,21 @@ public class Ranking {
 	    panel.add(lbl_3rdImage);
 	    panel.add(lbl_4thImage);
 	    panel.add(lbl_5thImage);
-	    lbl1st.setBounds(50, 40, 100, 30);
-	    lbl2nd.setBounds(50, 85, 100, 30);
-	    lbl3rd.setBounds(50, 130, 100, 30);
-	    lbl4th.setBounds(50, 175, 100, 30);
-	    lbl5th.setBounds(50, 220, 100, 30);
-	    lbl_1stImage.setBounds(100, 40, 30, 30);
-	    lbl_2ndImage.setBounds(100, 85, 30, 30);
-	    lbl_3rdImage.setBounds(100, 130, 30, 30);
-	    lbl_4thImage.setBounds(100, 175, 30, 30);
-	    lbl_5thImage.setBounds(100, 220, 30, 30);
-	    lbl_1st.setBounds(150, 40, 100, 30);
-	    lbl_2nd.setBounds(150, 85, 100, 30);
-	    lbl_3rd.setBounds(150, 130, 100, 30);
-	    lbl_4th.setBounds(150, 175, 100, 30);
-	    lbl_5th.setBounds(150, 220, 100, 30);
+	    lbl1st.setBounds(20, 40, 100, 30);
+	    lbl2nd.setBounds(20, 85, 100, 30);
+	    lbl3rd.setBounds(20, 130, 100, 30);
+	    lbl4th.setBounds(20, 175, 100, 30);
+	    lbl5th.setBounds(20, 220, 100, 30);
+	    lbl_1stImage.setBounds(60, 40, 30, 30);
+	    lbl_2ndImage.setBounds(60, 85, 30, 30);
+	    lbl_3rdImage.setBounds(60, 130, 30, 30);
+	    lbl_4thImage.setBounds(60, 175, 30, 30);
+	    lbl_5thImage.setBounds(60, 220, 30, 30);
+	    lbl_1st.setBounds(100, 40, 150, 30);
+	    lbl_2nd.setBounds(100, 85, 150, 30);
+	    lbl_3rd.setBounds(100, 130, 150, 30);
+	    lbl_4th.setBounds(100, 175, 150, 30);
+	    lbl_5th.setBounds(100, 220, 150, 30);
 
 	    getRankingInfo();
 	    dialog.setResizable(false);
@@ -146,7 +146,7 @@ public class Ranking {
 	            break;
 	    }
 	    if (label != null && imageLabel != null) {
-	        label.setText(nickname + " - " + highscore);
+	        label.setText(nickname + " - " + highscore + "초");
 	        if (profilePhoto != null) {
 	            Image scaledImage = profilePhoto.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	            ImageIcon scaledIcon = new ImageIcon(scaledImage);

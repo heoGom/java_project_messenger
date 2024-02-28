@@ -281,7 +281,7 @@ public class PublicChatRoom extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int result = JOptionPane.showConfirmDialog(PublicChatRoom.this, "다운받으시겠습니까?");
+				int result = JOptionPane.showConfirmDialog(PublicChatRoom.this, "다운받으시겠습니까?", "파일다운", JOptionPane.INFORMATION_MESSAGE);
 				if (result == JOptionPane.YES_OPTION) {
 					JFileChooser fileChooser = new JFileChooser();
 					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
