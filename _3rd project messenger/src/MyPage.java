@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
 
@@ -49,6 +50,7 @@ public class MyPage {
 	private JDialog mainDL;
 	private JLabel userScore;
 	public JLabel score;
+	CustomizedOptionPane customizedOptionPane;
 
 	public MyPage(User user, MainPage mainPage) {
 		this.user = user;
@@ -92,12 +94,11 @@ public class MyPage {
 		panel.add(score);
 
 		JButton btnNickCh = new JButton("닉네임 변경");
-		btnNickCh.setBorder(new LineBorder(Color.BLACK, 2));
-		btnNickCh.setFont(new Font("굴림", Font.BOLD, 11));
+		btnNickCh.setBorder(new LineBorder(new Color(0, 0, 0)));
+		btnNickCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 		btnNickCh.setBounds(20, 220, 120, 30);
 		panel.add(btnNickCh);
 		btnNickCh.setBackground(Color.PINK);
-		btnNickCh.setBorderPainted(false);
 		btnNickCh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,11 +108,16 @@ public class MyPage {
 				dialog.setSize(400, 300);
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
+				panel.setBackground(Color.pink);
 				panel.setLayout(null);
 				JLabel label = new JLabel("현재 닉네임");
+				label.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 				JLabel currentNick = new JLabel(user.getNick());
+				currentNick.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 				JLabel changeNick = new JLabel("변경할 닉네임을 입력해주세요.");
+				changeNick.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 				JTextField changetx = new JTextField(20);
+				changetx.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 				label.setBounds(100, 30, 200, 50);
 				currentNick.setBounds(200, 30, 200, 50);
 				changeNick.setBounds(103, 100, 200, 20);
@@ -122,8 +128,10 @@ public class MyPage {
 				panel.add(label);
 				JButton btnApply = new JButton("적용");
 				btnApply.setBounds(40, 200, 100, 30);
+				btnApply.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 				panel.add(btnApply);
 				JButton btnCancle = new JButton("취소");
+				btnCancle.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 				btnCancle.setBounds(240, 200, 100, 30);
 				panel.add(btnCancle);
 				dialog.getContentPane().add(panel, BorderLayout.CENTER);
@@ -133,6 +141,7 @@ public class MyPage {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (changetx.getText().isEmpty()) {
+//							new CustomizedOptionPane();
 							JOptionPane.showMessageDialog(null, "닉네임을 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
 						} else {
 							boolean Check = false;
@@ -143,6 +152,7 @@ public class MyPage {
 								}
 							}
 							if (Check) {
+//								new CustomizedOptionPane();
 								JOptionPane.showMessageDialog(null, "이미 사용중인 닉네임 입니다.", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
@@ -151,6 +161,7 @@ public class MyPage {
 								nick.setText(changetx.getText());
 								dao = new MyPageDAO();
 								dao.changeNick(changetx.getText(), user.id);
+								new CustomizedOptionPane();
 								JOptionPane.showMessageDialog(null, "닉네임이 변경되었습니다.", "알림",
 										JOptionPane.INFORMATION_MESSAGE);
 								dialog.dispose();
@@ -169,11 +180,11 @@ public class MyPage {
 		});
 
 		JButton btnPwCh = new JButton("비밀번호 변경");
-		btnPwCh.setFont(new Font("굴림", Font.BOLD, 11));
+		btnPwCh.setBorder(new LineBorder(Color.BLACK));
+		btnPwCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 		btnPwCh.setBounds(160, 220, 120, 30);
 		panel.add(btnPwCh);
-		btnPwCh.setBackground(Color.white);
-		btnPwCh.setBorderPainted(false);
+		btnPwCh.setBackground(Color.PINK);
 		btnPwCh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -183,12 +194,17 @@ public class MyPage {
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
 				panel.setLayout(null);
+				panel.setBackground(Color.pink);
 				JLabel label = new JLabel("새 비밀번호를 입력");
+				label.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 				JPasswordField pwfield = new JPasswordField(20);
 				JLabel label2 = new JLabel("새 비밀번호 재확인");
+				label2.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 				JPasswordField pwfield2 = new JPasswordField(20);
 				JButton btnChange = new JButton("변경");
+				btnChange.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 				JButton btnCancle = new JButton("취소");
+				btnCancle.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 				panel.add(label);
 				panel.add(pwfield);
 				panel.add(label2);
@@ -210,6 +226,7 @@ public class MyPage {
 					public void actionPerformed(ActionEvent e) {
 						String password1 = new String(pwfield.getPassword());
 						String password2 = new String(pwfield2.getPassword());
+						new CustomizedOptionPane();
 						if (password1.isEmpty() || password2.isEmpty()) {
 							JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
 						} else if (user.getPw().equals(password2)) {
@@ -242,11 +259,11 @@ public class MyPage {
 		});
 
 		JButton btnImageCh = new JButton("프로필사진 변경");
-		btnImageCh.setFont(new Font("굴림", Font.BOLD, 11));
+		btnImageCh.setBorder(new LineBorder(Color.BLACK));
+		btnImageCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 		btnImageCh.setBounds(300, 220, 125, 30);
 		panel.add(btnImageCh);
-		btnImageCh.setBackground(Color.white);
-		btnImageCh.setBorderPainted(false);
+		btnImageCh.setBackground(Color.PINK);
 
 		btnImageCh.addActionListener(new ActionListener() {
 			@Override

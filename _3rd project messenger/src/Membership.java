@@ -29,13 +29,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class Membership extends JFrame {
 	private JTextField id_tf;
 	private JPasswordField password_pf;
 	private JPasswordField password_pf2;
 	private JTextField textField_3;
-	private JButton picturebtn;
 	private JButton confirmbtn;
 	private JFrame frame;
 	JLabel pictureLabel;
@@ -53,6 +53,7 @@ public class Membership extends JFrame {
 	File filePath;
 
 	public Membership() {
+		getContentPane().setBackground(Color.PINK);
 		extracted();
 		frame = this;
 		membershipdao = new MembershipDAO();
@@ -62,27 +63,6 @@ public class Membership extends JFrame {
 	}
 
 	private void listenerAll() {
-		
-		picturebtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				fileChooser.setMultiSelectionEnabled(true);
-
-				int result = fileChooser.showOpenDialog(frame);
-
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File[] selectedFiles = fileChooser.getSelectedFiles();
-					for (File file : selectedFiles) {
-						System.out.println("Selected File: " + file.getAbsolutePath());
-						displayImage(file.getAbsolutePath());
-						pictureLabel.setText("");
-						filePath = file.getAbsoluteFile();
-					}
-				}
-			}
-		});
 		pictureLabel.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -357,6 +337,7 @@ public class Membership extends JFrame {
 		getContentPane().setLayout(null);
 
 		pictureLabel = new JLabel();
+		pictureLabel.setFont(new Font("한컴 고딕", Font.BOLD, 20));
 		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pictureLabel.setText("사진등록하기");
 		pictureLabel.setBounds(102, 301, 129, 139);
@@ -382,37 +363,43 @@ public class Membership extends JFrame {
 		getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 
-		picturebtn = new JButton("\uC0AC\uC9C4 \uB4F1\uB85D");
-		picturebtn.setVisible(false);
-		picturebtn.setBounds(273, 330, 97, 23);
-		getContentPane().add(picturebtn);
-
 		confirmbtn = new JButton("확인");
-		confirmbtn.setBounds(291, 411, 97, 23);
+		confirmbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		confirmbtn.setBounds(273, 411, 97, 23);
 		getContentPane().add(confirmbtn);
 
 		JLabel lblNewLabel = new JLabel("ID");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		lblNewLabel.setBounds(41, 58, 57, 15);
 		getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("PW");
+		lblNewLabel_1.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(41, 114, 57, 15);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("PW확인");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		lblNewLabel_2.setBounds(41, 168, 57, 15);
 		getContentPane().add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("닉네임");
+		lblNewLabel_3.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(41, 224, 57, 15);
 		getContentPane().add(lblNewLabel_3);
 
 		id_lbl = new JLabel("2~10자 내외,특수문자불가");
+		id_lbl.setFont(new Font("한컴 고딕", Font.BOLD, 12));
 		id_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		id_lbl.setBounds(102, 86, 169, 15);
 		getContentPane().add(id_lbl);
 
 		password_lbl = new JLabel("20자리 이하");
+		password_lbl.setFont(new Font("한컴 고딕", Font.BOLD, 12));
 		password_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		password_lbl.setBounds(128, 142, 116, 15);
 		getContentPane().add(password_lbl);
@@ -423,15 +410,18 @@ public class Membership extends JFrame {
 		getContentPane().add(password_lbl2);
 
 		nick_lbl = new JLabel("\uD55C,\uC601, \uC22B\uC790, \uD2B9\uC218\uBB38\uC790 20\uC790 \uC774\uD558");
+		nick_lbl.setFont(new Font("한컴 고딕", Font.BOLD, 12));
 		nick_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		nick_lbl.setBounds(94, 252, 185, 15);
 		getContentPane().add(nick_lbl);
 
 		idDupbtn = new JButton("중복 확인");
+		idDupbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		idDupbtn.setBounds(273, 54, 97, 23);
 		getContentPane().add(idDupbtn);
 
 		nickDupbtn = new JButton("중복 확인");
+		nickDupbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		nickDupbtn.setBounds(273, 220, 97, 23);
 		getContentPane().add(nickDupbtn);
 

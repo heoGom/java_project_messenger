@@ -14,6 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 public class MainPage extends JFrame {
 	public JLabel nick_lbl;
@@ -21,7 +25,6 @@ public class MainPage extends JFrame {
 	User user;
 	Agendas agendas;
 	GoVotePage goVotePage;
-	
 
 	static List<User> openingList;
 	static boolean openingPublic;
@@ -36,7 +39,7 @@ public class MainPage extends JFrame {
 	MembershipDAO mdao = new MembershipDAO();
 
 	public MainPage(User user) {
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(Color.PINK);
 		this.user = user;
 		setTitle("");
 		extracted();
@@ -157,22 +160,37 @@ public class MainPage extends JFrame {
 		getContentPane().setLayout(null);
 
 		userListbtn = new JButton("가입자 목록");
+		userListbtn.setBackground(Color.PINK);
+		userListbtn.setBorder(new LineBorder(Color.BLACK));
+		userListbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		userListbtn.setBounds(160, 103, 113, 23);
 		getContentPane().add(userListbtn);
 
 		chatRoomListbtn = new JButton("채팅방 목록");
+		chatRoomListbtn.setBackground(Color.PINK);
+		chatRoomListbtn.setBorder(new LineBorder(Color.BLACK));
+		chatRoomListbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		chatRoomListbtn.setBounds(160, 183, 113, 23);
 		getContentPane().add(chatRoomListbtn);
 
 		votebtn = new JButton("투표 하기");
+		votebtn.setBackground(Color.PINK);
+		votebtn.setBorder(new LineBorder(Color.BLACK));
+		votebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		votebtn.setBounds(160, 270, 113, 23);
 		getContentPane().add(votebtn);
 
 		minigamebtn = new JButton("미니 게임");
+		minigamebtn.setBorder(new LineBorder(Color.BLACK));
+		minigamebtn.setBackground(Color.PINK);
+		minigamebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		minigamebtn.setBounds(160, 345, 113, 23);
 		getContentPane().add(minigamebtn);
 
 		myprofilebtn = new JButton("마이프로필");
+		myprofilebtn.setBorder(new LineBorder(Color.BLACK));
+		myprofilebtn.setBackground(Color.PINK);
+		myprofilebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		myprofilebtn.setBounds(326, 10, 110, 23);
 		getContentPane().add(myprofilebtn);
 
@@ -180,12 +198,14 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JPanel panel = new JPanel();
+				panel.setBackground(Color.pink);
 				JLabel label = new JLabel("비밀번호를 입력해주세요.");
 				JPasswordField pwField = new JPasswordField(20);
 				panel.add(label);
 				panel.add(pwField);
 				String[] options = { "확인", "취소" };
 				while (true) {
+					new CustomizedOptionPane();
 					int optionSelect = JOptionPane.showOptionDialog(null, panel, "비밀번호 입력", JOptionPane.NO_OPTION,
 							JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 					if (optionSelect == 0) {
@@ -202,12 +222,13 @@ public class MainPage extends JFrame {
 //								myPage.score.setText(Score + " 초");	
 								myPage.showGUI();
 							} else { // 사진이 등록 되어있지않을때
-								int Score = user.getHighScore(); 
+								int Score = user.getHighScore();
 								myPage.score.setText(Score + " 초");
 								myPage.showGUI();
 							}
 							break;
 						} else {
+							new CustomizedOptionPane();
 							JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.", "경고", JOptionPane.ERROR_MESSAGE);
 						}
 					}
@@ -228,10 +249,15 @@ public class MainPage extends JFrame {
 		getContentPane().add(picture_lbl);
 
 		nick_lbl = new JLabel("닉네임 들어갈");
-		nick_lbl.setBounds(105, 14, 88, 20);
+		nick_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		nick_lbl.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		nick_lbl.setBounds(98, 11, 88, 20);
 		getContentPane().add(nick_lbl);
 
 		logoutbtn = new JButton("로그아웃");
+		logoutbtn.setBackground(Color.PINK);
+		logoutbtn.setBorder(new LineBorder(new Color(0, 0, 0)));
+		logoutbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		logoutbtn.setBounds(320, 469, 97, 23);
 		getContentPane().add(logoutbtn);
 		logoutbtn.addActionListener(new ActionListener() {
