@@ -183,18 +183,9 @@ public class MainPage extends JFrame {
 		minigamebtn.setBounds(160, 345, 113, 23);
 		getContentPane().add(minigamebtn);
 
-		myprofilebtn = new JButton("");
-		myprofilebtn.setIconTextGap(-8);
+		myprofilebtn = new JButton("ㅁㄴㅇㄹ");
 		myprofilebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		myprofilebtn.setBounds(375, 14, 50, 50);
-		String imagePath = "/picture/마이프로필2.png";
-		ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
-		Image image = icon.getImage();
-		Image scaledImage = image.getScaledInstance(myprofilebtn.getWidth(), myprofilebtn.getHeight(),
-				Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon = new ImageIcon(scaledImage);
-		myprofilebtn.setIcon(scaledIcon);
-		myprofilebtn.setToolTipText("마이프로필");
 		getContentPane().add(myprofilebtn);
 
 		myprofilebtn.addActionListener(new ActionListener() {
