@@ -41,8 +41,8 @@ public class MyPage {
 	private File selectedImageFile;
 	private JLabel nick;
 	public JLabel picture;
-	public JLabel currentPhoto;
 	private ImageIcon currentSelectedIcon;
+	public JLabel currentPhoto;
 	private MyPageDAO dao;
 	private Image image;
 	public ImageIcon scaledIcon;
@@ -54,7 +54,7 @@ public class MyPage {
 	public MyPage(User user, MainPage mainPage) {
 		this.user = user;
 		this.mainPage = mainPage;
-		
+
 		mainDL = new JDialog();
 		mainDL.setTitle("마이 프로필");
 		mainDL.setModal(true);
@@ -68,7 +68,7 @@ public class MyPage {
 		picture = new JLabel(user.getImage());
 		picture.setBounds(288, 58, 150, 150);
 		panel.add(picture);
-		
+
 		JLabel userNick = new JLabel("내 별명");
 		userNick.setHorizontalAlignment(SwingConstants.CENTER);
 		userNick.setFont(new Font("한컴 고딕", Font.BOLD, 14));
@@ -79,7 +79,7 @@ public class MyPage {
 		nick.setFont(new Font("한컴 고딕", Font.BOLD, 16));
 		nick.setBounds(40, 95, 91, 30);
 		panel.add(nick);
-		
+
 		userScore = new JLabel("내 최고점수");
 		userScore.setHorizontalAlignment(SwingConstants.CENTER);
 		userScore.setFont(new Font("한컴 고딕", Font.BOLD, 14));
@@ -298,8 +298,6 @@ public class MyPage {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JFileChooser fileChooser = new JFileChooser();
-						FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "png", "jpeg", "gif");
-						fileChooser.setFileFilter(filter);
 						fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 						fileChooser.setMultiSelectionEnabled(true);
 						int result = fileChooser.showOpenDialog(frame);
@@ -366,6 +364,7 @@ public class MyPage {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						label.setText("현재 사진");
+						currentSelectedIcon = null;
 						ImageIcon icon = user.getImage();
 						Image scaledImage = icon.getImage().getScaledInstance(currentPhoto.getWidth(),
 								currentPhoto.getHeight(), Image.SCALE_SMOOTH);
@@ -382,8 +381,8 @@ public class MyPage {
 		mainDL.setLocationRelativeTo(mainPage);
 		mainDL.setResizable(false);
 	}
-	
+
 	public void showGUI() {
 		mainDL.setVisible(true);
 	}
-}	
+}

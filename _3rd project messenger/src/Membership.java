@@ -53,7 +53,7 @@ public class Membership extends JFrame {
 	File filePath;
 
 	public Membership() {
-		getContentPane().setBackground(Color.PINK);
+		getContentPane().setBackground(Color.WHITE);
 		extracted();
 		frame = this;
 		membershipdao = new MembershipDAO();
