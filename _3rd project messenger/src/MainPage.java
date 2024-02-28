@@ -38,36 +38,25 @@ public class MainPage extends JFrame {
 	private JButton logoutbtn;
 
 	MembershipDAO mdao = new MembershipDAO();
-	private JLabel backgroundLabel;
 
 	public MainPage(User user) {
 		getContentPane().setBackground(Color.PINK);
 		this.user = user;
 		setTitle("");
-		showGUI();
+		extracted();
 		changelbl();
 		listenerAll();
+		showGUI();
 		openingList = new ArrayList<>();
 		openingPublic = false;
 
 	}
 
 	private void showGUI() {
-	    setSize(469, 574);
-	    setVisible(true);
-	    setLocationRelativeTo(null);
-	    setDefaultCloseOperation(EXIT_ON_CLOSE);
-	    
-	    // backgroundLabel 초기화
-	    ImageIcon backgroundIcon = new ImageIcon("C:/Users/GGG/Desktop/사진/일러.png");
-	    Image backgroundImage = backgroundIcon.getImage().getScaledInstance(469, 574, Image.SCALE_SMOOTH);
-	    backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
-	    backgroundLabel.setBounds(0, 0, 469, 574);
-	    setContentPane(backgroundLabel);
-	    getContentPane().setLayout(null);
-	    
-	    // extracted() 메서드 호출
-	    extracted();
+		setSize(469, 574);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public void changelbl() {
@@ -169,41 +158,42 @@ public class MainPage extends JFrame {
 	}
 
 	private void extracted() {
+		getContentPane().setLayout(null);
 
 		userListbtn = new JButton("가입자 목록");
 		userListbtn.setBackground(Color.PINK);
 		userListbtn.setBorder(new LineBorder(Color.BLACK));
 		userListbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		userListbtn.setBounds(160, 103, 113, 23);
-		backgroundLabel.add(userListbtn);
+		getContentPane().add(userListbtn);
 
 		chatRoomListbtn = new JButton("채팅방 목록");
 		chatRoomListbtn.setBackground(Color.PINK);
 		chatRoomListbtn.setBorder(new LineBorder(Color.BLACK));
 		chatRoomListbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		chatRoomListbtn.setBounds(160, 183, 113, 23);
-		backgroundLabel.add(chatRoomListbtn);
+		getContentPane().add(chatRoomListbtn);
 
 		votebtn = new JButton("투표 하기");
 		votebtn.setBackground(Color.PINK);
 		votebtn.setBorder(new LineBorder(Color.BLACK));
 		votebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		votebtn.setBounds(160, 270, 113, 23);
-		backgroundLabel.add(votebtn);
+		getContentPane().add(votebtn);
 
 		minigamebtn = new JButton("미니 게임");
 		minigamebtn.setBorder(new LineBorder(Color.BLACK));
 		minigamebtn.setBackground(Color.PINK);
 		minigamebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		minigamebtn.setBounds(160, 345, 113, 23);
-		backgroundLabel.add(minigamebtn);
+		getContentPane().add(minigamebtn);
 
 		myprofilebtn = new JButton("마이프로필");
 		myprofilebtn.setBorder(new LineBorder(Color.BLACK));
 		myprofilebtn.setBackground(Color.PINK);
 		myprofilebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		myprofilebtn.setBounds(326, 10, 110, 23);
-		backgroundLabel.add(myprofilebtn);
+		getContentPane().add(myprofilebtn);
 
 		myprofilebtn.addActionListener(new ActionListener() {
 			@Override
@@ -271,23 +261,22 @@ public class MainPage extends JFrame {
 				dialog.setVisible(true);
 			}
 		});
-
 		picture_lbl = new JLabel();
 		picture_lbl.setBounds(12, 14, 50, 50);
-		backgroundLabel.add(picture_lbl);
+		getContentPane().add(picture_lbl);
 
 		nick_lbl = new JLabel("닉네임 들어갈");
-		nick_lbl.setHorizontalAlignment(SwingConstants.LEFT);
+		nick_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		nick_lbl.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		nick_lbl.setBounds(98, 11, 150, 20);
-		backgroundLabel.add(nick_lbl);
+		nick_lbl.setBounds(98, 11, 88, 20);
+		getContentPane().add(nick_lbl);
 
 		logoutbtn = new JButton("로그아웃");
 		logoutbtn.setBackground(Color.PINK);
 		logoutbtn.setBorder(new LineBorder(new Color(0, 0, 0)));
 		logoutbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		logoutbtn.setBounds(320, 469, 97, 23);
-		backgroundLabel.add(logoutbtn);
+		getContentPane().add(logoutbtn);
 		logoutbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -302,4 +291,5 @@ public class MainPage extends JFrame {
 			}
 		});
 	}
+
 }
