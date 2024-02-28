@@ -36,7 +36,7 @@ public class Login extends JFrame {
 	User user;
 
 	public Login() {
-		getContentPane().setBackground(Color.PINK);
+		getContentPane().setBackground(Color.WHITE);
 		extracted();
 		user = new User();
 		membershipDAO = new MembershipDAO();
@@ -203,23 +203,18 @@ public class Login extends JFrame {
 
 		loginbtn = new JButton("로그인");
 		loginbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		loginbtn.setBackground(Color.PINK);
-		loginbtn.setBorder(new LineBorder(Color.BLACK));
 		loginbtn.setBounds(316, 270, 97, 23);
 		getContentPane().add(loginbtn);
 
 		membershipbtn = new JButton("회원가입");
-		membershipbtn.setBorder(new LineBorder(Color.BLACK));
 		membershipbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		membershipbtn.setForeground(Color.BLACK);
-		membershipbtn.setBackground(Color.PINK);
 		membershipbtn.setBounds(12, 10, 97, 23);
 		getContentPane().add(membershipbtn);
 	}
 
 	public static void main(String[] args) {
 		new MySqlConnectionProvider();
-		new CustomizedOptionPane();
 		new Login();
 	}
 }

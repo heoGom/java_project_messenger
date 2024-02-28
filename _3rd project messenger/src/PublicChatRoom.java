@@ -63,7 +63,6 @@ public class PublicChatRoom extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
 		panel.setPreferredSize(new Dimension(10, 55));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
@@ -249,7 +248,7 @@ public class PublicChatRoom extends JFrame {
 		JLabel fileLabel = new JLabel(file_name);
 		fileLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
 
-		fileLabel.setFont(new Font("굴림", Font.PLAIN, 20));
+		fileLabel.setFont(new Font("굴림", Font.PLAIN, 12));
 		if (!sender_id.equals(user.id)) {
 			fileLabel.setForeground(new Color(color[0], color[1], color[2]));
 		}

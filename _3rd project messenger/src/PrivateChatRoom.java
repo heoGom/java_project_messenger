@@ -56,7 +56,6 @@ public class PrivateChatRoom extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.PINK);
 		panel.setPreferredSize(new Dimension(10, 55));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
@@ -95,7 +94,7 @@ public class PrivateChatRoom extends JFrame {
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.PINK);
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		panel_2.addContainerListener(new ContainerAdapter() {
 			@Override
