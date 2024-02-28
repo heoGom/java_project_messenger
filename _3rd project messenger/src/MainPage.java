@@ -3,6 +3,8 @@ import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class MainPage extends JFrame {
 	private JButton logoutbtn;
 
 	MembershipDAO mdao = new MembershipDAO();
+	private JLabel lblNewLabel;
 
 	public MainPage(User user) {
 		getContentPane().setBackground(Color.WHITE);
@@ -204,7 +207,7 @@ public class MainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JDialog dialog = new JDialog();
-				dialog.setSize(300,200);
+				dialog.setSize(300, 200);
 				dialog.setTitle("비밀번호 입력");
 				dialog.setResizable(false);
 				dialog.setLocationRelativeTo(null);
@@ -245,6 +248,15 @@ public class MainPage extends JFrame {
 						}
 					}
 				});
+				pwField.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+							btnOK.doClick(); // 버튼 클릭 동작을 호출합니다.
+						}
+					}
+				});
+
 				JButton btnCancle = new JButton("취소");
 				btnCancle.addActionListener(new ActionListener() {
 					@Override
@@ -252,7 +264,7 @@ public class MainPage extends JFrame {
 						dialog.dispose();
 					}
 				});
-				
+
 				btnCancle.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 				btnCancle.setBounds(180, 100, 60, 30);
 				panel.add(label);
@@ -277,8 +289,19 @@ public class MainPage extends JFrame {
 		logoutbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		logoutbtn.setBounds(320, 469, 97, 23);
 		getContentPane().add(logoutbtn);
-		
-		
+
+
+		lblNewLabel = new JLabel("사진");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(12, 418, 296, 70);
+		String imagePath2 = "/picture/하트일러.png";
+		ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath2));
+		Image image2 = icon2.getImage();
+		Image scaledImage2 = image2.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(),
+				Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
+		lblNewLabel.setIcon(scaledIcon2);
+		getContentPane().add(lblNewLabel);
 		logoutbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
