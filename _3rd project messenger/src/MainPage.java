@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,25 +38,36 @@ public class MainPage extends JFrame {
 	private JButton logoutbtn;
 
 	MembershipDAO mdao = new MembershipDAO();
+	private JLabel backgroundLabel;
 
 	public MainPage(User user) {
 		getContentPane().setBackground(Color.PINK);
 		this.user = user;
 		setTitle("");
-		extracted();
+		showGUI();
 		changelbl();
 		listenerAll();
-		showGUI();
 		openingList = new ArrayList<>();
 		openingPublic = false;
 
 	}
 
 	private void showGUI() {
-		setSize(469, 574);
-		setVisible(true);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    setSize(469, 574);
+	    setVisible(true);
+	    setLocationRelativeTo(null);
+	    setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    
+	    // backgroundLabel 초기화
+	    ImageIcon backgroundIcon = new ImageIcon("C:/Users/GGG/Desktop/사진/일러.png");
+	    Image backgroundImage = backgroundIcon.getImage().getScaledInstance(469, 574, Image.SCALE_SMOOTH);
+	    backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
+	    backgroundLabel.setBounds(0, 0, 469, 574);
+	    setContentPane(backgroundLabel);
+	    getContentPane().setLayout(null);
+	    
+	    // extracted() 메서드 호출
+	    extracted();
 	}
 
 	public void changelbl() {
@@ -157,61 +169,70 @@ public class MainPage extends JFrame {
 	}
 
 	private void extracted() {
-		getContentPane().setLayout(null);
 
 		userListbtn = new JButton("가입자 목록");
 		userListbtn.setBackground(Color.PINK);
 		userListbtn.setBorder(new LineBorder(Color.BLACK));
 		userListbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		userListbtn.setBounds(160, 103, 113, 23);
-		getContentPane().add(userListbtn);
+		backgroundLabel.add(userListbtn);
 
 		chatRoomListbtn = new JButton("채팅방 목록");
 		chatRoomListbtn.setBackground(Color.PINK);
 		chatRoomListbtn.setBorder(new LineBorder(Color.BLACK));
 		chatRoomListbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		chatRoomListbtn.setBounds(160, 183, 113, 23);
-		getContentPane().add(chatRoomListbtn);
+		backgroundLabel.add(chatRoomListbtn);
 
 		votebtn = new JButton("투표 하기");
 		votebtn.setBackground(Color.PINK);
 		votebtn.setBorder(new LineBorder(Color.BLACK));
 		votebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		votebtn.setBounds(160, 270, 113, 23);
-		getContentPane().add(votebtn);
+		backgroundLabel.add(votebtn);
 
 		minigamebtn = new JButton("미니 게임");
 		minigamebtn.setBorder(new LineBorder(Color.BLACK));
 		minigamebtn.setBackground(Color.PINK);
 		minigamebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		minigamebtn.setBounds(160, 345, 113, 23);
-		getContentPane().add(minigamebtn);
+		backgroundLabel.add(minigamebtn);
 
 		myprofilebtn = new JButton("마이프로필");
 		myprofilebtn.setBorder(new LineBorder(Color.BLACK));
 		myprofilebtn.setBackground(Color.PINK);
 		myprofilebtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		myprofilebtn.setBounds(326, 10, 110, 23);
-		getContentPane().add(myprofilebtn);
+		backgroundLabel.add(myprofilebtn);
 
 		myprofilebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = new JDialog();
+				dialog.setSize(300,200);
+				dialog.setTitle("비밀번호 입력");
+				dialog.setResizable(false);
+				dialog.setLocationRelativeTo(null);
+				dialog.setModal(true);
 				JPanel panel = new JPanel();
 				panel.setBackground(Color.pink);
+				panel.setLayout(null);
 				JLabel label = new JLabel("비밀번호를 입력해주세요.");
+				label.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+				label.setBounds(70, 25, 180, 20);
 				JPasswordField pwField = new JPasswordField(20);
-				panel.add(label);
-				panel.add(pwField);
-				String[] options = { "확인", "취소" };
-				while (true) {
-					new CustomizedOptionPane();
-					int optionSelect = JOptionPane.showOptionDialog(null, panel, "비밀번호 입력", JOptionPane.NO_OPTION,
-							JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-					if (optionSelect == 0) {
+				pwField.setBounds(70, 60, 150, 20);
+				JButton btnOK = new JButton("확인");
+				btnOK.setBackground(Color.pink);
+				btnOK.setFont(new Font("한컴 고딕", Font.BOLD, 13));
+				btnOK.setBounds(50, 100, 60, 30);
+				btnOK.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
 						if (user.getPw().equals(pwField.getText())) {
 							MyPage myPage = new MyPage(user, MainPage.this);
 							if (user.getImage() != null) { // 사진이 등록이 되어있을때
+								dialog.dispose();
 								ImageIcon icon = user.getImage();
 								Image scaledImage2 = icon.getImage().getScaledInstance(myPage.picture.getWidth(),
 										myPage.picture.getHeight(), Image.SCALE_SMOOTH);
@@ -226,40 +247,47 @@ public class MainPage extends JFrame {
 								myPage.score.setText(Score + " 초");
 								myPage.showGUI();
 							}
-							break;
 						} else {
-							new CustomizedOptionPane();
 							JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.", "경고", JOptionPane.ERROR_MESSAGE);
 						}
 					}
-					if (optionSelect == 1) {
-						setVisible(true);
-						break;
+				});
+				JButton btnCancle = new JButton("취소");
+				btnCancle.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						dialog.dispose();
 					}
-					if (optionSelect == JOptionPane.CLOSED_OPTION) {
-						setVisible(true);
-						break;
-					}
-				}
+				});
+				
+				btnCancle.setBackground(Color.pink);
+				btnCancle.setFont(new Font("한컴 고딕", Font.BOLD, 13));
+				btnCancle.setBounds(180, 100, 60, 30);
+				panel.add(label);
+				panel.add(pwField);
+				panel.add(btnOK);
+				panel.add(btnCancle);
+				dialog.add(panel);
+				dialog.setVisible(true);
 			}
 		});
 
 		picture_lbl = new JLabel();
 		picture_lbl.setBounds(12, 14, 50, 50);
-		getContentPane().add(picture_lbl);
+		backgroundLabel.add(picture_lbl);
 
 		nick_lbl = new JLabel("닉네임 들어갈");
-		nick_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		nick_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		nick_lbl.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		nick_lbl.setBounds(98, 11, 88, 20);
-		getContentPane().add(nick_lbl);
+		nick_lbl.setBounds(98, 11, 150, 20);
+		backgroundLabel.add(nick_lbl);
 
 		logoutbtn = new JButton("로그아웃");
 		logoutbtn.setBackground(Color.PINK);
 		logoutbtn.setBorder(new LineBorder(new Color(0, 0, 0)));
 		logoutbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		logoutbtn.setBounds(320, 469, 97, 23);
-		getContentPane().add(logoutbtn);
+		backgroundLabel.add(logoutbtn);
 		logoutbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -274,5 +302,4 @@ public class MainPage extends JFrame {
 			}
 		});
 	}
-
 }

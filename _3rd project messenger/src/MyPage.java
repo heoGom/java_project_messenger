@@ -87,7 +87,7 @@ public class MyPage {
 		userScore.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		userScore.setBounds(183, 29, 80, 15);
 		panel.add(userScore);
-		score = new JLabel(user.getHighScore() + "초");
+		score = new JLabel(user.highScore + "초");
 		score.setHorizontalAlignment(SwingConstants.CENTER);
 		score.setFont(new Font("한컴 고딕", Font.BOLD, 16));
 		score.setBounds(183, 103, 75, 15);
@@ -141,7 +141,6 @@ public class MyPage {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (changetx.getText().isEmpty()) {
-//							new CustomizedOptionPane();
 							JOptionPane.showMessageDialog(null, "닉네임을 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
 						} else {
 							boolean Check = false;
@@ -152,7 +151,6 @@ public class MyPage {
 								}
 							}
 							if (Check) {
-//								new CustomizedOptionPane();
 								JOptionPane.showMessageDialog(null, "이미 사용중인 닉네임 입니다.", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
@@ -161,7 +159,6 @@ public class MyPage {
 								nick.setText(changetx.getText());
 								dao = new MyPageDAO();
 								dao.changeNick(changetx.getText(), user.id);
-								new CustomizedOptionPane();
 								JOptionPane.showMessageDialog(null, "닉네임이 변경되었습니다.", "알림",
 										JOptionPane.INFORMATION_MESSAGE);
 								dialog.dispose();
@@ -317,7 +314,6 @@ public class MyPage {
 						if (result == JFileChooser.APPROVE_OPTION) {
 							File[] selectedFiles = fileChooser.getSelectedFiles();
 							for (File file : selectedFiles) {
-								System.out.println("Selected File: " + file.getAbsolutePath());
 								label.setText("바뀐 사진");
 								// 이미지 파일을 ImageIcon으로 읽어옵니다.
 								ImageIcon selectedIcon = new ImageIcon(file.getAbsolutePath());
