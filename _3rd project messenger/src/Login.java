@@ -1,10 +1,7 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Blob;
@@ -12,15 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-import java.awt.ComponentOrientation;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class Login extends JFrame {
@@ -89,7 +86,6 @@ public class Login extends JFrame {
 				int offsetX = -membership.getWidth(); // 왼쪽으로 이동할 거리 (Membership 창의 너비만큼)
 				membership.setLocation(currentX + offsetX, currentY);
 
-				
 			}
 		});
 		textField_1.addActionListener(new ActionListener() {
@@ -173,44 +169,61 @@ public class Login extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("사내 메신저");
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/Image/\uADF8\uB9B0\uD1A1-removebg-preview.png")));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 16));
-		lblNewLabel.setBounds(158, 123, 102, 39);
+		lblNewLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
+		lblNewLabel.setBounds(148, 42, 152, 183);
 		getContentPane().add(lblNewLabel);
 
 		textField = new JTextField();
-		textField.setBounds(155, 200, 116, 21);
+		textField.setFont(new Font("굴림", Font.PLAIN, 16));
+		Insets insetid = new Insets(0, 5, 0, 0); // 여백 설정 (상, 좌, 하, 우)
+		textField.setMargin(insetid);
+		textField.setBounds(122, 271, 206, 30);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 
 		textField_1 = new JPasswordField();
-		textField_1.setBounds(155, 271, 116, 21);
+		textField_1.setBounds(122, 311, 206, 30);
+		Insets insetpw = new Insets(0, 5, 0, 0); // 여백 설정 (상, 좌, 하, 우)
+		textField.setMargin(insetpw);
 		getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("ID");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(70, 203, 57, 15);
+		lblNewLabel_1.setBounds(53, 279, 57, 15);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("PW");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		lblNewLabel_2.setBounds(70, 274, 57, 15);
+		lblNewLabel_2.setBounds(53, 318, 57, 15);
 		getContentPane().add(lblNewLabel_2);
 
-		loginbtn = new JButton("로그인");
-		loginbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		loginbtn.setBounds(316, 270, 97, 23);
+		loginbtn = new JButton("");
+		loginbtn.setBorderPainted(false);
+		loginbtn.setFocusPainted(false);
+		loginbtn.setContentAreaFilled(false);
+		loginbtn.setIcon(new ImageIcon(Login.class.getResource("/Image/\uB85C\uADF8\uC778 \uBC84\uD2BC.png")));
+		loginbtn.setBounds(122, 358, 97, 30);
 		getContentPane().add(loginbtn);
 
-		membershipbtn = new JButton("회원가입");
-		membershipbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
+		membershipbtn = new JButton("");
+		membershipbtn.setIcon(new ImageIcon(Login.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uBC84\uD2BC.png")));
+		membershipbtn.setBorderPainted(false);
+		membershipbtn.setFocusPainted(false);
+		membershipbtn.setContentAreaFilled(false);
 		membershipbtn.setForeground(Color.BLACK);
-		membershipbtn.setBounds(12, 10, 97, 23);
+		membershipbtn.setBounds(231, 359, 97, 30);
 		getContentPane().add(membershipbtn);
+
+		JLabel mainLbl = new JLabel();
+		mainLbl.setIcon(new ImageIcon(Login.class.getResource("/Image/\uB85C\uADF8\uC778\uCC3D.png")));
+		mainLbl.setSize(445, 450);
+		getContentPane().add(mainLbl);
 	}
 
 	public static void main(String[] args) {
