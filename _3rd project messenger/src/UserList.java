@@ -160,7 +160,7 @@ public class UserList extends JFrame {
 					int userStatus = rs.getInt("status");
 					if (userStatus == 0) {
 						lbl2List.get(index).setText("비접속");
-						lbl2List.get(index).setForeground(Color.GRAY);
+						lbl2List.get(index).setForeground(Color.RED);
 					} else {
 						lbl2List.get(index).setText("접속중");
 						lbl2List.get(index).setForeground(new Color(50, 205, 50));

@@ -173,7 +173,8 @@ public class Login extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("사내 메신저");
+		JLabel lblNewLabel = new JLabel("초록 톡");
+		lblNewLabel.setForeground(new Color(0, 255, 127));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 16));
 		lblNewLabel.setBounds(158, 123, 102, 39);
@@ -215,6 +216,11 @@ public class Login extends JFrame {
 		membershipbtn.setBackground(Color.PINK);
 		membershipbtn.setBounds(12, 10, 97, 23);
 		getContentPane().add(membershipbtn);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\GGG\\Desktop\\KakaoTalk_20240228_150654991.png"));
+		lblNewLabel_3.setBounds(106, 115, 64, 57);
+		getContentPane().add(lblNewLabel_3);
 	}
 
 	public static void main(String[] args) {

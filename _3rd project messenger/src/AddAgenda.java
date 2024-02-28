@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
+import javax.swing.JCheckBox;
 
 public class AddAgenda extends JFrame {
 	private JTextField agendatf;
@@ -45,17 +46,18 @@ public class AddAgenda extends JFrame {
 	private Agendas ad;
 	private int generatedNo;
 	private VoteMainPage voteMainPage;
-	private JPanel pnl;
+	private JPanel pnl = new JPanel();;
 	private JLabel lbl;
 	private JLabel lblNewLabel_3;
-
+	public  JCheckBox chckbxNewCheckBox;
+	private VoteStatus voteStatus ;
+	private PastAgendas pastAgendas;
 	public AddAgenda(User user, VoteMainPage voteMainPage) {
 		this.user = user;
 		this.voteMainPage = voteMainPage;
 		extracted();
 		listenerAll();
 		showGUI();
-
 	}
 
 	private void showGUI() {
@@ -110,13 +112,15 @@ public class AddAgenda extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				checkvalidate();
-
+				checkvalid();
 			}
 		});
+		
 	}
+	
 
-	private void checkvalidate() {
+	private void checkvalid() {
+
 		boolean containsLabel = false;
 		Component[] components = pnl.getComponents();
 		for (Component component : components) {
@@ -125,7 +129,6 @@ public class AddAgenda extends JFrame {
 				break;
 			}
 		}
-
 		if (resultagenda.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "투표주제를 설정해주세요");
 			btnNewButton_2.setEnabled(false);
@@ -151,7 +154,7 @@ public class AddAgenda extends JFrame {
 	public void saveAgenda() {
 		System.out.println(user.getId());
 		System.out.println(resultagenda.getText());
-		String sql1 = "insert into jae.agendas(id,agenda,regist_time,final_time)values(?, ?, ?, ?)";
+		String sql1 = "insert into jae.agendas(id,agenda,regist_time,final_time,unknown)values(?, ?, ?, ?, ?)";
 		LocalDateTime lt = LocalDateTime.now();
 		LocalDateTime ltPlusOneHour = lt.plusHours(1);
 		LocalDateTime ltPlusTwoHour = lt.plusHours(2);
@@ -168,6 +171,11 @@ public class AddAgenda extends JFrame {
 				stmt.setTimestamp(4, stamp2);
 			} else if (comboBox.getSelectedIndex() == 2) {
 				stmt.setTimestamp(4, stamp3);
+			}
+			if(chckbxNewCheckBox.isSelected()) {
+				stmt.setInt(5, 1);
+			} else {
+				stmt.setInt(5, 0);
 			}
 			stmt.executeUpdate();
 
@@ -238,20 +246,25 @@ public class AddAgenda extends JFrame {
 		getContentPane().add(btn2);
 
 		btnNewButton_2 = new JButton("완료");
-		btnNewButton_2.setBounds(156, 410, 97, 23);
+		btnNewButton_2.setBounds(145, 426, 97, 23);
 		getContentPane().add(btnNewButton_2);
 
 		comboBoxLists = new String[] { "----", "1시간", "2시간" };
 		comboBox = new JComboBox(comboBoxLists);
-		comboBox.setBounds(147, 344, 113, 21);
+		comboBox.setBounds(200, 344, 113, 21);
 		getContentPane().add(comboBox);
 
 		JLabel lblNewLabel_1 = new JLabel("투표마감시간");
-		lblNewLabel_1.setBounds(50, 347, 97, 15);
+		lblNewLabel_1.setBounds(95, 347, 97, 15);
 		getContentPane().add(lblNewLabel_1);
 		
 		lblNewLabel_3 = new JLabel("투표주제:");
 		lblNewLabel_3.setBounds(12, 120, 57, 15);
 		getContentPane().add(lblNewLabel_3);
+		
+		chckbxNewCheckBox = new JCheckBox("익명 투표");
+		chckbxNewCheckBox.setBounds(145, 381, 115, 23);
+		getContentPane().add(chckbxNewCheckBox);
+		
 	}
 }

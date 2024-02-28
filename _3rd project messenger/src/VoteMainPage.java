@@ -43,11 +43,9 @@ public class VoteMainPage extends JFrame {
 	GoVotePage goVotePage;
 	VoteStatus voteStatus;
 	Agendas agendas;
-	private List<Votes> voteId;
-
-	private int selectedAgendaNo;
-
 	PastAgendas pastAgendas;
+	private List<Votes> voteId;
+	private int selectedAgendaNo;
 
 	public VoteMainPage(User user) {
 		getContentPane().setBackground(Color.PINK);
@@ -60,7 +58,6 @@ public class VoteMainPage extends JFrame {
 		updatePanel();
 		voteId = new ArrayList<>();
 		System.out.println(selectedAgendaNo);
-
 	}
 
 	private void showGUI() {
@@ -82,7 +79,7 @@ public class VoteMainPage extends JFrame {
 		panel.setBounds(12, 84, 400, 426);
 		getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(6); // 스크롤바 속도 조절
 		scrollPane.setBounds(12, 84, 450, 426);
@@ -147,11 +144,11 @@ public class VoteMainPage extends JFrame {
 
 		for (int i = 0; i < agendas.agendaList.size(); i++) {
 			if (agendas.agendaList.get(i).getProgress_or_not() == 1) {
-			pnl = new JPanel();
-			Dimension preferredSize = new Dimension(panel.getWidth(), 80); // 원하는 크기로 조절
-			pnl.setPreferredSize(preferredSize);
-			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
-			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				pnl = new JPanel();
+				Dimension preferredSize = new Dimension(panel.getWidth(), 80); // 원하는 크기로 조절
+				pnl.setPreferredSize(preferredSize);
+				pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
+				pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				lbl1 = new JLabel(agendas.agendaList.get(i).getAgenda());
 				lbl2 = new JLabel("투표하기");
 				lbl3 = new JLabel("현황보기");
@@ -163,7 +160,7 @@ public class VoteMainPage extends JFrame {
 				JPanel pnl2 = new JPanel();
 				JPanel pnl3 = new JPanel();
 				int currentAgendaNo = agendas.agendaList.get(i).getNo();
-
+				int unknown = agendas.agendaList.get(i).getUn();
 				lbl2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				pnl2.add(lbl5);
@@ -177,7 +174,6 @@ public class VoteMainPage extends JFrame {
 				pnl.add(pnl2);
 				pnl.add(pnl3);
 				panel.add(pnl);
-
 
 				lbl2.addMouseListener(new MouseAdapter() {
 					@Override
@@ -214,6 +210,9 @@ public class VoteMainPage extends JFrame {
 					public void mouseClicked(MouseEvent e) {
 						selectedAgendaNo = currentAgendaNo;
 						voteStatus = new VoteStatus(VoteMainPage.this, pastAgendas);
+						if(unknown==1) {
+							voteStatus.lblNewLabel_2.setVisible(false);
+						}
 					}
 				});
 			}

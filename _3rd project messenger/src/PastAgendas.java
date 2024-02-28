@@ -51,7 +51,7 @@ public class PastAgendas extends JFrame {
 				JLabel lbl6 = new JLabel(String.valueOf(agendas.agendaList.get(i).getLt()));
 				JLabel lbl7 = new JLabel("투표 주제: ");
 				lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
+				int unknown = agendas.agendaList.get(i).getUn();
 				int currentAgendaNo = agendas.agendaList.get(i).getNo();
 				System.out.println(agendas.agendaList.get(i).getNo());
 				pnl.add(lbl7);
@@ -69,7 +69,9 @@ public class PastAgendas extends JFrame {
 					public void mouseClicked(MouseEvent e) {
 						selectedAgendaNo = currentAgendaNo;
 						pastVoteStatus = new PastVoteStatus(PastAgendas.this);
-
+						if(unknown==1) {
+							pastVoteStatus.lblNewLabel_2.setVisible(false);
+						}
 					}
 				});
 			}
@@ -86,7 +88,7 @@ public class PastAgendas extends JFrame {
 		panel.setBounds(1, 1, 340, 400);
 		getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(10); // 스크롤바 속도 조절
 		scrollPane.setBounds(12, 108, 402, 402);

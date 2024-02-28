@@ -277,6 +277,10 @@ public class MainPage extends JFrame {
 		logoutbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		logoutbtn.setBounds(320, 469, 97, 23);
 		getContentPane().add(logoutbtn);
+		
+		
+		
+		
 		logoutbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

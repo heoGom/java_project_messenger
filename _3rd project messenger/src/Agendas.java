@@ -18,12 +18,41 @@ public class Agendas {
 	User user;
 	private Timestamp ft;
 	private Timestamp lt;
-
+	private int un;
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
 	public static List<Agendas> itemList = new ArrayList<>();
 
 	
-	
+
+
+
+	public int getUn() {
+		return un;
+	}
+
+
+	public void setUn(int un) {
+		this.un = un;
+	}
+
+
+	public Agendas(String id, String agenda, int progress_or_not, String nickname, int no, String item, int count,
+			User user, Timestamp ft, Timestamp lt, int un) {
+		super();
+		this.id = id;
+		this.agenda = agenda;
+		this.progress_or_not = progress_or_not;
+		this.nickname = nickname;
+		this.no = no;
+		this.item = item;
+		this.count = count;
+		this.user = user;
+		this.ft = ft;
+		this.lt = lt;
+		this.un = un;
+	}
+
+
 	public Timestamp getFt() {
 		return ft;
 	}
@@ -111,6 +140,9 @@ public class Agendas {
 			return false;
 		return true;
 	}
+
+
+	
 
 
 	public void setCount(int count) {
@@ -258,7 +290,7 @@ public class Agendas {
 				int no = rs.getInt("no");
 				Timestamp ft =rs.getTimestamp("regist_time");
 				Timestamp lt = rs.getTimestamp("final_time");
-			
+				int un = rs.getInt("unknown");
 				Agendas agendas = new Agendas();
 			
 					agendas.setId(id);
@@ -268,6 +300,7 @@ public class Agendas {
 					agendas.setNo(no);
 					agendas.setFt(ft);
 					agendas.setLt(lt);
+					agendas.setUn(un);
 
 					agendaList.add(agendas);
 				

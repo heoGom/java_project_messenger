@@ -71,6 +71,25 @@ public class PublicChatRoom extends JFrame {
 		JLabel another_NN_Lbl = new JLabel("단체방");
 		another_NN_Lbl.setBounds(20, 20, 64, 15);
 		panel.add(another_NN_Lbl);
+		
+		JButton btnVote = new JButton("투표 하기");
+		btnVote.setBounds(357, 12, 77, 30);
+		panel.add(btnVote);
+		btnVote.setMargin(new Insets(2, 10, 2, 10));
+		btnVote.addActionListener(new ActionListener() {
+			private VoteMainPage voteMainPage;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (voteMainPage == null || !voteMainPage.isVisible()) {
+					voteMainPage = new VoteMainPage(user);
+				} else {
+					voteMainPage.toFront();
+				}
+				int mainPageX = getX();
+				int mainPageY = getY();
+				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth(), mainPageY);
+			}
+		});
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setPreferredSize(new Dimension(10, 110));
@@ -86,11 +105,8 @@ public class PublicChatRoom extends JFrame {
 		panel_3.add(sendbtn, BorderLayout.EAST);
 
 		sendFileBtn = new JButton("\uD30C\uC77C \uBCF4\uB0B4\uAE30");
-		sendFileBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		sendFileBtn.setMargin(new Insets(2, 10, 2, 10));
+		
 		panel_3.add(sendFileBtn, BorderLayout.WEST);
 
 		sendTextArea = new JTextArea();

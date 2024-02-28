@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,9 +31,10 @@ public class VoteStatus extends JFrame {
 	private JLabel lbl2;
 	private Votes votes;
 	private PastAgendas pastAgendas;
-	private JPanel panel_2;
 	private JLabel lbl3;
 	private JPanel panel_1;
+	public  JLabel lblNewLabel_2;
+	private VoteStatus voteStatus;
 
 	public VoteStatus(VoteMainPage voteMainPage, PastAgendas pastAgendas) {
 		this.voteMainPage = voteMainPage;
@@ -45,9 +48,9 @@ public class VoteStatus extends JFrame {
 	}
 
 	private void showGUI() {
-		setSize(657, 527);
+		setSize(339, 525);
 		getContentPane().setLayout(null);
-
+		setResizable(false);
 		panel = new JPanel();
 		panel.setBounds(12, 53, 119, 435);
 		// GridLayout 적용
@@ -64,19 +67,30 @@ public class VoteStatus extends JFrame {
 		getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("투표자");
-		lblNewLabel_1.setBounds(421, 28, 57, 15);
+		lblNewLabel_1.setBounds(504, 28, 57, 15);
 		getContentPane().add(lblNewLabel_1);
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(264, 53, 365, 435);
+		panel_1.setBounds(340, 53, 365, 435);
 		getContentPane().add(panel_1);
-
-		panel_2 = new JPanel();
-		panel_2.setBounds(256, 0, 5, 488);
-		getContentPane().add(panel_2);
-		panel_2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		panel_2.setBackground(Color.black);
-
+		
+		lblNewLabel_2 = new JLabel("투표자 보기");
+		lblNewLabel_2.setBounds(258, 228, 70, 15);
+		getContentPane().add(lblNewLabel_2);
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if (lblNewLabel_2.getText().equals("투표자 보기")) {
+		            setSize(722, 525);
+		            setResizable(false);
+		            lblNewLabel_2.setText("접기");
+		        } else if (lblNewLabel_2.getText().equals("접기")) {
+		            setSize(339, 525);
+		            setResizable(false);
+		            lblNewLabel_2.setText("투표자 보기");
+		        }
+		    }
+		});
 		setVisible(true);
 	}
 
