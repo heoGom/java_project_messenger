@@ -4,6 +4,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -15,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
@@ -29,6 +32,7 @@ public class GoVotePage extends JFrame {
 	private User user;
 
 	private List<String> selectedButtonTextList;
+	private JLabel lbl2;
 
 
 	public GoVotePage(VoteMainPage voteMainPage, User user) {
@@ -54,11 +58,11 @@ public class GoVotePage extends JFrame {
 		getContentPane().add(agenda_name);
 
 		panel = new JPanel();
-		panel.setBounds(45, 98, 208, 184);
+		panel.setBounds(45, 98, 208, 256);
 		getContentPane().add(panel);
 
 		votebtn = new JButton("투표하기");
-		votebtn.setBounds(108, 311, 97, 23);
+		votebtn.setBounds(95, 364, 97, 23);
 		getContentPane().add(votebtn);
 		votebtn.addActionListener(new ActionListener() {
 			@Override
@@ -92,14 +96,25 @@ public class GoVotePage extends JFrame {
 	}
 
 	public void createPanel(int no) {
+		int count = 1;
 		for (int j = 0; j < agendas.itemList.size(); j++) {
 			if (agendas.itemList.get(j).getNo() == no) {
 				JLabel lbl = new JLabel(agendas.itemList.get(j).getItem());
 				JCheckBox btn = new JCheckBox();
-
-				panel.add(lbl);
-				panel.add(btn);
-				agenda_name.setText(agendas.itemList.get(j).getAgenda());
+				JPanel pnl = new JPanel();
+				Dimension preferredSize = new Dimension(panel.getWidth(), 50);
+				
+				lbl2 = new JLabel(String.valueOf(count)+"번 항목: ");
+				count++;
+				pnl.setPreferredSize(preferredSize);
+				pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
+				pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				pnl.add(lbl2);
+				pnl.add(lbl);
+				pnl.add(btn);
+				
+				panel.add(pnl);
+				agenda_name.setText("투표 주제: "+agendas.itemList.get(j).getAgenda());
 
 				String buttonText = lbl.getText(); // 각 아이템에 대해 새로운 buttonText 생성
 

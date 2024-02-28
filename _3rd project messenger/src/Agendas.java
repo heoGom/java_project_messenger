@@ -20,7 +20,6 @@ public class Agendas {
 	private Timestamp lt;
 
 	public static List<Agendas> agendaList = new ArrayList<Agendas>();
-	public static List<Agendas> pastAgendaList = new ArrayList<>();
 	public static List<Agendas> itemList = new ArrayList<>();
 
 	
