@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Blob;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -34,78 +36,103 @@ public class ChatRoomListPage extends JFrame {
 	}
 
 	private void showGUI() {
-		setSize(500, 500);
+		setSize(300, 500);
 		setVisible(true);
 
 	}
 
 	private void extracted() {
+		getContentPane().setLayout(null);
 		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 284, 50);
 		panel.setPreferredSize(new Dimension(10, 50));
 		panel.setMinimumSize(new Dimension(10, 50));
-		getContentPane().add(panel, BorderLayout.NORTH);
+		getContentPane().add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JLabel lblNewLabel = new JLabel("\uCC44\uD305\uCC3D \uBAA9\uB85D");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel, BorderLayout.CENTER);
 
-		JScrollPane scrollPane = new JScrollPane();
-		getContentPane().add(scrollPane, BorderLayout.CENTER);
+		JPanel chatPnl = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(chatPnl, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(0, 50, 284, 411);
+		getContentPane().add(scrollPane);
+		chatPnl.setLayout(new BoxLayout(chatPnl, BoxLayout.Y_AXIS));
+		JPanel pbPnl = new JPanel();
+		pbPnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-		JPanel panel_1 = new JPanel();
-		scrollPane.setViewportView(panel_1);
-		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		JLabel labelpb = new JLabel("단체방");
+		pbPnl.add(labelpb);
+		chatPnl.add(pbPnl);
+		labelpb.setHorizontalAlignment(SwingConstants.CENTER);
 
-		Dimension preferredSizepb = new Dimension(labelpb.getPreferredSize());
+		Dimension preferredSizepb = new Dimension(pbPnl.getPreferredSize());
 		preferredSizepb.height = 50; // 원하는 세로 크기로 조절
-		labelpb.setPreferredSize(preferredSizepb);
+		pbPnl.setPreferredSize(preferredSizepb);
 
 		// 가로 길이 창에 맞추기
-		labelpb.setMaximumSize(new Dimension(Integer.MAX_VALUE, labelpb.getPreferredSize().height));
+		pbPnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, pbPnl.getPreferredSize().height));
 		// 테두리 표현
-		labelpb.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-		labelpb.addMouseListener(new MouseAdapter() {
+		pbPnl.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(!MainPage.openingPublic) {
-				new PublicChatClient(user);
-				MainPage.openingPublic = true;
+				if (!MainPage.openingPublic) {
+					new PublicChatClient(user);
+					MainPage.openingPublic = true;
 				}
-				
+
 			}
 
 		});
-		panel_1.add(labelpb);
 
 		for (int i = 0; i < list.size(); i++) {
 			final int INDEX = i;
+			JPanel userpnl = new JPanel();
+			userpnl.setLayout(new BoxLayout(userpnl, BoxLayout.X_AXIS));
+			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
+			userpnl.setPreferredSize(preferredSize);
+			userpnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
+
 			JLabel label = new JLabel(list.get(i).getNick());
-
-			Dimension preferredSize = new Dimension(label.getPreferredSize());
-			preferredSize.height = 50; // 원하는 세로 크기로 조절
-			label.setPreferredSize(preferredSize);
-
-			// 가로 길이 창에 맞추기
-			label.setMaximumSize(new Dimension(Integer.MAX_VALUE, label.getPreferredSize().height));
-			// 테두리 표현
-			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-			label.addMouseListener(new MouseAdapter() {
+			JLabel imageLbl = new JLabel();
+			imageLbl.setBounds(12, 12, 40, 40);
+			imageLbl.setMaximumSize(new Dimension(40,40));
+			setImageLbl(list.get(i), imageLbl);
+			JLabel emptyLbl = new JLabel();
+			emptyLbl.setMaximumSize(new Dimension(10, Integer.MAX_VALUE));
+			JLabel emptyLbl2 = new JLabel();
+			emptyLbl2.setMaximumSize(new Dimension(20, Integer.MAX_VALUE));
+			
+			userpnl.add(emptyLbl);
+			userpnl.add(imageLbl);
+			userpnl.add(emptyLbl2);
+			userpnl.add(label);
+			userpnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			userpnl.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(!MainPage.openingList.contains(list.get(INDEX))){
+					if (!MainPage.openingList.contains(list.get(INDEX))) {
 						new PrivateChatClient(user, list.get(INDEX));
 						MainPage.openingList.add(list.get(INDEX));
 					}
-					
+
+				}
+			});
+			imageLbl.addMouseListener(new MouseAdapter() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if(list.get(INDEX).image!=null) {
+						new showProfileImage(list.get(INDEX));
+					}
 				}
 			});
 
-			panel_1.add(label);
+			chatPnl.add(userpnl);
 		}
 	}
 
@@ -179,5 +206,14 @@ public class ChatRoomListPage extends JFrame {
 		return null;
 	}
 
+	private void setImageLbl(User u, JLabel imageLbl) {
+		if (u.getImage() != null) {
+			ImageIcon icon = u.getImage();
+			Image scaledImage = icon.getImage().getScaledInstance(imageLbl.getWidth(), imageLbl.getHeight(),
+					Image.SCALE_SMOOTH);
+			ImageIcon scaledIcon = new ImageIcon(scaledImage);
+			imageLbl.setIcon(scaledIcon);
+		}
+	}
 
 }

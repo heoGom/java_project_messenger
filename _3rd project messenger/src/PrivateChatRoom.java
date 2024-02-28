@@ -91,6 +91,7 @@ public class PrivateChatRoom extends JFrame {
 		panel_3.add(sendbtn, BorderLayout.EAST);
 
 		sendTextArea = new JTextArea();
+		sendTextArea.setLineWrap(true);
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
 		panel_2 = new JPanel();
