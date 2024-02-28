@@ -50,7 +50,6 @@ public class MyPage {
 	private JDialog mainDL;
 	private JLabel userScore;
 	public JLabel score;
-	CustomizedOptionPane customizedOptionPane;
 
 	public MyPage(User user, MainPage mainPage) {
 		this.user = user;
@@ -60,7 +59,6 @@ public class MyPage {
 		mainDL.setTitle("마이 프로필");
 		mainDL.setModal(true);
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.PINK);
 		panel.setLayout(null);
 		JLabel myImage = new JLabel("현재 사진");
 		myImage.setHorizontalAlignment(SwingConstants.CENTER);
@@ -98,7 +96,6 @@ public class MyPage {
 		btnNickCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 		btnNickCh.setBounds(20, 220, 120, 30);
 		panel.add(btnNickCh);
-		btnNickCh.setBackground(Color.PINK);
 		btnNickCh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -108,7 +105,6 @@ public class MyPage {
 				dialog.setSize(400, 300);
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
-				panel.setBackground(Color.pink);
 				panel.setLayout(null);
 				JLabel label = new JLabel("현재 닉네임");
 				label.setFont(new Font("한컴 고딕", Font.BOLD, 13));
@@ -181,7 +177,6 @@ public class MyPage {
 		btnPwCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 		btnPwCh.setBounds(160, 220, 120, 30);
 		panel.add(btnPwCh);
-		btnPwCh.setBackground(Color.PINK);
 		btnPwCh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,7 +186,6 @@ public class MyPage {
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
 				panel.setLayout(null);
-				panel.setBackground(Color.pink);
 				JLabel label = new JLabel("새 비밀번호를 입력");
 				label.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 				JPasswordField pwfield = new JPasswordField(20);
@@ -223,7 +217,6 @@ public class MyPage {
 					public void actionPerformed(ActionEvent e) {
 						String password1 = new String(pwfield.getPassword());
 						String password2 = new String(pwfield2.getPassword());
-						new CustomizedOptionPane();
 						if (password1.isEmpty() || password2.isEmpty()) {
 							JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
 						} else if (user.getPw().equals(password2)) {
@@ -260,7 +253,6 @@ public class MyPage {
 		btnImageCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
 		btnImageCh.setBounds(300, 220, 125, 30);
 		panel.add(btnImageCh);
-		btnImageCh.setBackground(Color.PINK);
 
 		btnImageCh.addActionListener(new ActionListener() {
 			@Override

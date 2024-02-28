@@ -48,7 +48,6 @@ public class VoteMainPage extends JFrame {
 	private int selectedAgendaNo;
 
 	public VoteMainPage(User user) {
-		getContentPane().setBackground(Color.PINK);
 		this.user = user;
 		showGUI();
 		extracted();
@@ -69,13 +68,13 @@ public class VoteMainPage extends JFrame {
 		getContentPane().setLayout(null);
 
 		btnNewButton = new JButton("안건 등록");
-		btnNewButton.setBackground(Color.PINK);
 		btnNewButton.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		btnNewButton.setBorder(new LineBorder(Color.BLACK));
 		btnNewButton.setBounds(370, 10, 97, 23);
 		getContentPane().add(btnNewButton);
 
 		panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(12, 84, 400, 426);
 		getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -94,7 +93,6 @@ public class VoteMainPage extends JFrame {
 		btnNewButton_1 = new JButton("종료된 안건 보기");
 		btnNewButton_1.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		btnNewButton_1.setBorder(new LineBorder(Color.BLACK));
-		btnNewButton_1.setBackground(Color.PINK);
 		btnNewButton_1.setBounds(12, 10, 158, 23);
 		getContentPane().add(btnNewButton_1);
 	}

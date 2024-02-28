@@ -36,7 +36,7 @@ public class ChatRoomListPage extends JFrame {
 	}
 
 	private void showGUI() {
-		setSize(300, 500);
+		setSize(400, 500);
 		setVisible(true);
 
 	}
@@ -44,7 +44,7 @@ public class ChatRoomListPage extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 284, 50);
+		panel.setBounds(0, 0, 384, 50);
 		panel.setPreferredSize(new Dimension(10, 50));
 		panel.setMinimumSize(new Dimension(10, 50));
 		getContentPane().add(panel);
@@ -55,12 +55,14 @@ public class ChatRoomListPage extends JFrame {
 		panel.add(lblNewLabel, BorderLayout.CENTER);
 
 		JPanel chatPnl = new JPanel();
+		chatPnl.setBackground(Color.WHITE);
 		JScrollPane scrollPane = new JScrollPane(chatPnl, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(0, 50, 284, 411);
+		scrollPane.setBounds(10, 55, 362, 398);
 		getContentPane().add(scrollPane);
 		chatPnl.setLayout(new BoxLayout(chatPnl, BoxLayout.Y_AXIS));
 		JPanel pbPnl = new JPanel();
+		pbPnl.setBackground(Color.WHITE);
 		pbPnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		JLabel labelpb = new JLabel("단체방");
@@ -92,6 +94,7 @@ public class ChatRoomListPage extends JFrame {
 		for (int i = 0; i < list.size(); i++) {
 			final int INDEX = i;
 			JPanel userpnl = new JPanel();
+			userpnl.setBackground(Color.WHITE);
 			userpnl.setLayout(new BoxLayout(userpnl, BoxLayout.X_AXIS));
 			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
 			userpnl.setPreferredSize(preferredSize);
