@@ -136,7 +136,7 @@ public class VoteMainPage extends JFrame {
 		for (int i = 0; i < agendas.agendaList.size(); i++) {
 			if (agendas.agendaList.get(i).getProgress_or_not() == 1) {
 			pnl = new JPanel();
-			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
+			Dimension preferredSize = new Dimension(panel.getWidth(), 80); // 원하는 크기로 조절
 			pnl.setPreferredSize(preferredSize);
 			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -144,17 +144,28 @@ public class VoteMainPage extends JFrame {
 				lbl2 = new JLabel("투표하기");
 				lbl3 = new JLabel("현황보기");
 				lbl4 = new JLabel(agendas.agendaList.get(i).getNickname());
-
+				JLabel lbl5 = new JLabel("투표 주제: ");
+				JLabel lbl6 = new JLabel("투표 의결자: ");
+				JLabel lbl7 = new JLabel("투표 종료시간: ");
+				JLabel lbl8 = new JLabel(String.valueOf(agendas.agendaList.get(i).getLt()));
+				JPanel pnl2 = new JPanel();
+				JPanel pnl3 = new JPanel();
 				int currentAgendaNo = agendas.agendaList.get(i).getNo();
 
 				lbl2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-				pnl.add(lbl1);
-				pnl.add(lbl2);
-				pnl.add(lbl3);
-				pnl.add(lbl4);
+				pnl2.add(lbl5);
+				pnl2.add(lbl1);
+				pnl2.add(lbl6);
+				pnl2.add(lbl4);
+				pnl2.add(lbl2);
+				pnl2.add(lbl3);
+				pnl3.add(lbl7);
+				pnl3.add(lbl8);
+				pnl.add(pnl2);
+				pnl.add(pnl3);
 				panel.add(pnl);
+
 
 				lbl2.addMouseListener(new MouseAdapter() {
 					@Override
