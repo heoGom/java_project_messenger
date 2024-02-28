@@ -42,11 +42,12 @@ public class GoVotePage extends JFrame {
 		showGUI();
 		selectedButtonTextList = new ArrayList<>();
 		System.out.println(user.getId());
+		System.out.println(voteMainPage.getSelectedAgendaNo());
 
 	}
 
 	private void showGUI() {
-		setSize(328, 453);
+		setSize(328, 493);
 		setVisible(true);
 	}
 
@@ -54,15 +55,15 @@ public class GoVotePage extends JFrame {
 		getContentPane().setLayout(null);
 
 		agenda_name = new JLabel("투표주제");
-		agenda_name.setBounds(111, 61, 112, 15);
+		agenda_name.setBounds(68, 61, 166, 15);
 		getContentPane().add(agenda_name);
 
 		panel = new JPanel();
-		panel.setBounds(45, 98, 208, 256);
+		panel.setBounds(45, 98, 208, 285);
 		getContentPane().add(panel);
 
 		votebtn = new JButton("투표하기");
-		votebtn.setBounds(95, 364, 97, 23);
+		votebtn.setBounds(98, 393, 97, 23);
 		getContentPane().add(votebtn);
 		votebtn.addActionListener(new ActionListener() {
 			@Override

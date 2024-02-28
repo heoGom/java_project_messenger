@@ -3,10 +3,15 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,10 +21,14 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import javax.swing.JToolBar;
 
 public class AddAgenda extends JFrame {
 	private JTextField agendatf;
@@ -36,6 +45,9 @@ public class AddAgenda extends JFrame {
 	private Agendas ad;
 	private int generatedNo;
 	private VoteMainPage voteMainPage;
+	private JPanel pnl;
+	private JLabel lbl;
+	private JLabel lblNewLabel_3;
 
 	public AddAgenda(User user, VoteMainPage voteMainPage) {
 		this.user = user;
@@ -52,26 +64,39 @@ public class AddAgenda extends JFrame {
 	}
 
 	private void listenerAll() {
+
 		resitagendabtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				resultagenda.setText(agendatf.getText());
-				resultagenda.getText();
+				if (agendatf.getText().length() >= 1 && agendatf.getText().length() < 15) {
+					resultagenda.setText(agendatf.getText());
+					resultagenda.getText();
+				} else {
+					resitagendabtn.setEnabled(false);
+					resitagendabtn.setEnabled(true);
+				}
 			}
 		});
 		btn2.addActionListener(new ActionListener() {
 			int count = 0;
+			
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (count < 5) {
-					if (resultagenda.getText().length() > 1) {
+					if (itemtf.getText().length() >= 1 &&itemtf.getText().length() < 15) {
 						agList.add(itemtf.getText());
 						System.out.println("적재완료");
 						int newIndex = agList.size() - 1;
-						JLabel lbl = new JLabel(newIndex + 1 + "." + agList.get(newIndex));
+						lbl = new JLabel(newIndex + 1 + "." + agList.get(newIndex));
 						lbl.setLayout(new GridLayout(0, 1));
-						panel.add(lbl);
+						pnl = new JPanel();
+						pnl.add(lbl);
+						Dimension preferredSize = new Dimension(panel.getWidth(), 25); // 원하는 크기로 조절
+						pnl.setPreferredSize(preferredSize);
+						pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
+						pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+						panel.add(pnl);
 						panel.revalidate();
 						panel.repaint();
 						count++;
@@ -86,28 +111,27 @@ public class AddAgenda extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				checkvalidate();
-			
-				
+
 			}
 		});
 	}
 
 	private void checkvalidate() {
 		boolean containsLabel = false;
-		Component[] components = panel.getComponents();
+		Component[] components = pnl.getComponents();
 		for (Component component : components) {
-		    if (component instanceof JLabel) {
-		        containsLabel = true;
-		        break;
-		    }
+			if (component instanceof JLabel) {
+				containsLabel = true;
+				break;
+			}
 		}
-		
+
 		if (resultagenda.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "투표주제를 설정해주세요");
 			btnNewButton_2.setEnabled(false);
 			btnNewButton_2.setEnabled(true);
 
-		} else if(!containsLabel) {
+		} else if (!containsLabel) {
 			JOptionPane.showMessageDialog(null, "투표항목을 1개이상 등록해주세요");
 			btnNewButton_2.setEnabled(false);
 			btnNewButton_2.setEnabled(true);
@@ -115,13 +139,14 @@ public class AddAgenda extends JFrame {
 			JOptionPane.showMessageDialog(null, "마감시간을 설정해주세요");
 			btnNewButton_2.setEnabled(false);
 			btnNewButton_2.setEnabled(true);
-		}else {
+		} else {
 			saveAgenda();
 			saveResit();
 			dispose();
 			voteMainPage.updatePanel();
 		}
 	}
+
 
 	public void saveAgenda() {
 		System.out.println(user.getId());
@@ -175,7 +200,6 @@ public class AddAgenda extends JFrame {
 
 	}
 
-
 	private void extracted() {
 		getContentPane().setLayout(null);
 
@@ -193,24 +217,24 @@ public class AddAgenda extends JFrame {
 		getContentPane().add(resitagendabtn);
 
 		panel = new JPanel();
-		panel.setBounds(12, 139, 113, 113);
+		panel.setBounds(12, 139, 180, 171);
 		getContentPane().add(panel);
 
 		resultagenda = new JLabel("");
-		resultagenda.setBounds(12, 120, 224, 15);
+		resultagenda.setBounds(77, 120, 236, 15);
 		getContentPane().add(resultagenda);
 
-		JLabel lblNewLabel_2 = new JLabel("주제 항목 등록");
-		lblNewLabel_2.setBounds(137, 148, 97, 15);
+		JLabel lblNewLabel_2 = new JLabel("주제 항목 등록 (5개까지 입력가능)");
+		lblNewLabel_2.setBounds(204, 145, 198, 15);
 		getContentPane().add(lblNewLabel_2);
 
 		itemtf = new JTextField();
-		itemtf.setBounds(134, 185, 107, 21);
+		itemtf.setBounds(238, 192, 107, 21);
 		getContentPane().add(itemtf);
 		itemtf.setColumns(10);
 
 		btn2 = new JButton("확인");
-		btn2.setBounds(263, 184, 97, 23);
+		btn2.setBounds(238, 238, 107, 23);
 		getContentPane().add(btn2);
 
 		btnNewButton_2 = new JButton("완료");
@@ -225,5 +249,9 @@ public class AddAgenda extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("투표마감시간");
 		lblNewLabel_1.setBounds(50, 347, 97, 15);
 		getContentPane().add(lblNewLabel_1);
+		
+		lblNewLabel_3 = new JLabel("투표주제:");
+		lblNewLabel_3.setBounds(12, 120, 57, 15);
+		getContentPane().add(lblNewLabel_3);
 	}
 }

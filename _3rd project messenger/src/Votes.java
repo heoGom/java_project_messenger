@@ -4,8 +4,24 @@ public class Votes {
 	private int count;
 	private String id;
 	private int agend_num;
-
+	private String nickname;
+	
 	public Votes() {}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public Votes(String vote_item, int count, String nickname) {
+		super();
+		this.vote_item = vote_item;
+		this.count = count;
+		this.nickname = nickname;
+	}
 
 	public Votes(String vote_item, int count,boolean a) {
 		super();
