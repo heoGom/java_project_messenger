@@ -44,10 +44,11 @@ public class PastAgendas extends JFrame {
 		for (int i = 0; i < agendas.agendaList.size(); i++) {
 			if (agendas.agendaList.get(i).getProgress_or_not() == 0) {
 				JPanel pnl = new JPanel();
-				Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
-				pnl.setPreferredSize(preferredSize);
-				pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
-				pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				Dimension preferredSize = new Dimension(panel.getWidth(), 75); // 원하는 크기로 조절
+				JPanel pnl3 = new JPanel();
+				pnl3.setPreferredSize(preferredSize);
+				pnl3.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
+				
 				JLabel lbl1 = new JLabel(agendas.agendaList.get(i).getNickname());
 				JLabel lbl2 = new JLabel(agendas.agendaList.get(i).getAgenda());
 				JLabel lbl3 = new JLabel("  결과 보기  ");
@@ -62,15 +63,18 @@ public class PastAgendas extends JFrame {
 				lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				int unknown = agendas.agendaList.get(i).getUn();
 				int currentAgendaNo = agendas.agendaList.get(i).getNo();
+				JPanel pnl2 = new JPanel();
 				pnl.add(lbl7);
 				pnl.add(lbl2);
 				pnl.add(lbl4);
 				pnl.add(lbl1);
 				pnl.add(lbl3);
-				pnl.add(lbl5);
-				pnl.add(lbl6);
-
-				panel.add(pnl);
+				pnl2.add(lbl5);
+				pnl2.add(lbl6);
+				pnl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				pnl3.add(pnl);
+				pnl3.add(pnl2);
+				panel.add(pnl3);
 
 				lbl3.addMouseListener(new MouseAdapter() {
 					@Override
