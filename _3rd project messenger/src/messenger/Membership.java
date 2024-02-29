@@ -54,7 +54,7 @@ public class Membership extends JFrame {
 	File filePath;
 
 	public Membership() {
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(new Color(250,255,243));
 		extracted();
 		frame = this;
 		membershipdao = new MembershipDAO();
@@ -331,6 +331,7 @@ public class Membership extends JFrame {
 		getContentPane().setLayout(null);
 
 		pictureLabel = new JLabel();
+		pictureLabel.setBackground(new Color(128, 128, 128));
 		pictureLabel.setFont(new Font("한컴 고딕", Font.BOLD, 20));
 		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pictureLabel.setText("사진등록하기");
@@ -357,9 +358,12 @@ public class Membership extends JFrame {
 		getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 
-		confirmbtn = new JButton("확인");
-		confirmbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		confirmbtn.setBounds(273, 411, 97, 23);
+		confirmbtn = new JButton("");
+		confirmbtn.setIcon(new ImageIcon(Membership.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uD655\uC778 \uBC84\uD2BC.png")));
+		confirmbtn.setBorderPainted(false);
+		confirmbtn.setFocusPainted(false);
+		confirmbtn.setContentAreaFilled(false);
+		confirmbtn.setBounds(273, 411, 100, 23);
 		getContentPane().add(confirmbtn);
 
 		JLabel lblNewLabel = new JLabel("ID");
@@ -409,14 +413,20 @@ public class Membership extends JFrame {
 		nick_lbl.setBounds(94, 252, 185, 15);
 		getContentPane().add(nick_lbl);
 
-		idDupbtn = new JButton("중복 확인");
-		idDupbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		idDupbtn.setBounds(273, 54, 97, 23);
+		idDupbtn = new JButton("");
+		idDupbtn.setIcon(new ImageIcon(Membership.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uC911\uBCF5\uD655\uC778 \uBC84\uD2BC.png")));
+		idDupbtn.setBorderPainted(false);
+		idDupbtn.setFocusPainted(false);
+		idDupbtn.setContentAreaFilled(false);
+		idDupbtn.setBounds(273, 54, 100, 23);
 		getContentPane().add(idDupbtn);
 
-		nickDupbtn = new JButton("중복 확인");
-		nickDupbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		nickDupbtn.setBounds(273, 220, 97, 23);
+		nickDupbtn = new JButton("");
+		nickDupbtn.setIcon(new ImageIcon(Membership.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uC911\uBCF5\uD655\uC778 \uBC84\uD2BC.png")));
+		nickDupbtn.setBorderPainted(false);
+		nickDupbtn.setFocusPainted(false);
+		nickDupbtn.setContentAreaFilled(false);
+		nickDupbtn.setBounds(273, 220, 100, 23);
 		getContentPane().add(nickDupbtn);
 
 	}

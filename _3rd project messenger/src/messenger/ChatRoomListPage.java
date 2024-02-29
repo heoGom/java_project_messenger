@@ -149,7 +149,12 @@ public class ChatRoomListPage extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (list.get(INDEX).image != null) {
-						new showProfileImage(list.get(INDEX));
+						if (MainPage.showProfileImage == null) {
+							MainPage.showProfileImage = new ShowProfileImage(list.get(INDEX));
+						} else {
+							MainPage.showProfileImage.dispose();;
+							MainPage.showProfileImage = new ShowProfileImage(list.get(INDEX));
+						}
 					}
 				}
 			});

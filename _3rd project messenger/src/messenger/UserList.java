@@ -118,7 +118,12 @@ public class UserList extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (u.image != null) {
-						new showProfileImage(u);
+						if (MainPage.showProfileImage == null) {
+							MainPage.showProfileImage = new ShowProfileImage(u);
+						} else {
+							MainPage.showProfileImage.dispose();;
+							MainPage.showProfileImage = new ShowProfileImage(u);
+						}
 					}
 				}
 

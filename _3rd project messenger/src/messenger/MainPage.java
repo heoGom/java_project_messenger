@@ -38,6 +38,7 @@ public class MainPage extends JFrame {
 	private JButton minigamebtn;
 	private JButton myprofilebtn;
 	private JButton logoutbtn;
+	static ShowProfileImage showProfileImage;
 
 	MembershipDAO mdao = new MembershipDAO();
 	private JLabel lblNewLabel;
@@ -52,6 +53,7 @@ public class MainPage extends JFrame {
 		showGUI();
 		openingList = new ArrayList<>();
 		openingPublic = false;
+		showProfileImage=null;
 
 	}
 

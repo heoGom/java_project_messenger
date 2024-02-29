@@ -9,10 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class showProfileImage extends JFrame {
+public class ShowProfileImage extends JFrame {
 	private User user;
 
-	public showProfileImage(User user) {
+	public ShowProfileImage(User user) {
 		this.user = user;
 		JPanel pnl = new JPanel();
 		JLabel lbl = new JLabel();
