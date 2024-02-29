@@ -215,6 +215,7 @@ public class MainPage extends JFrame {
 				dialog.setLocationRelativeTo(null);
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
+				panel.setBackground(new Color(250,255,243));
 				panel.setLayout(null);
 				JLabel label = new JLabel("");
 				label.setIcon(new ImageIcon(MainPage.class.getResource("/picture/비밀번호입력.png")));

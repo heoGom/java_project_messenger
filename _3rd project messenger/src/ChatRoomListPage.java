@@ -28,6 +28,7 @@ public class ChatRoomListPage extends JFrame {
 	List<User> list;
 
 	public ChatRoomListPage(User user) {
+		getContentPane().setBackground(new Color(233,255,223));
 		this.user = user;
 		list = privateChatUserList(user);
 		showGUI();
@@ -44,6 +45,7 @@ public class ChatRoomListPage extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(250,255,243));
 		panel.setBounds(0, 0, 384, 50);
 		panel.setPreferredSize(new Dimension(10, 50));
 		panel.setMinimumSize(new Dimension(10, 50));

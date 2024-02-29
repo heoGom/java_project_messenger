@@ -39,6 +39,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
+import javax.swing.ImageIcon;
 
 public class PublicChatRoom extends JFrame {
 	private User user;
@@ -63,6 +64,7 @@ public class PublicChatRoom extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(233,255,223));
 		panel.setPreferredSize(new Dimension(10, 55));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
@@ -71,8 +73,12 @@ public class PublicChatRoom extends JFrame {
 		another_NN_Lbl.setBounds(20, 20, 64, 15);
 		panel.add(another_NN_Lbl);
 		
-		JButton btnVote = new JButton("투표 하기");
-		btnVote.setBounds(357, 12, 77, 30);
+		JButton btnVote = new JButton("");
+		btnVote.setIcon(new ImageIcon(PublicChatRoom.class.getResource("/Image/\uCC44\uD305\uCC3D \uD22C\uD45C \uBC84\uD2BC.png")));
+		btnVote.setBorderPainted(false);
+		btnVote.setFocusPainted(false);
+		btnVote.setContentAreaFilled(false);
+		btnVote.setBounds(328, 12, 94, 30);
 		panel.add(btnVote);
 		btnVote.setMargin(new Insets(2, 10, 2, 10));
 		btnVote.addActionListener(new ActionListener() {
@@ -96,19 +102,37 @@ public class PublicChatRoom extends JFrame {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(233,255,223));
 		panel_3.setPreferredSize(new Dimension(10, 30));
 		panel_1.add(panel_3, BorderLayout.SOUTH);
 		panel_3.setLayout(new BorderLayout(0, 0));
 
-		sendbtn = new JButton("\uC804   \uC1A1");
+		sendbtn = new JButton("");
+		sendbtn.setIcon(new ImageIcon(PublicChatRoom.class.getResource("/Image/\uC804\uC1A1 \uBC84\uD2BC.png")));
+		sendbtn.setBorderPainted(false);
+		sendbtn.setFocusPainted(false);
+		sendbtn.setContentAreaFilled(false);
+		sendbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_3.add(sendbtn, BorderLayout.EAST);
 
-		sendFileBtn = new JButton("\uD30C\uC77C \uBCF4\uB0B4\uAE30");
+		sendFileBtn = new JButton("");
+		sendFileBtn.setBorderPainted(false);
+		sendFileBtn.setFocusPainted(false);
+		sendFileBtn.setContentAreaFilled(false);
+		sendFileBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		sendFileBtn.setIcon(new ImageIcon(PublicChatRoom.class.getResource("/Image/\uD30C\uC77C\uBCF4\uB0B4\uAE30 \uBC84\uD2BC.png")));
 		sendFileBtn.setMargin(new Insets(2, 10, 2, 10));
 		
 		panel_3.add(sendFileBtn, BorderLayout.WEST);
 
 		sendTextArea = new JTextArea();
+		sendTextArea.setBackground(new Color(250,255,243));
 		sendTextArea.setLineWrap(true);
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 

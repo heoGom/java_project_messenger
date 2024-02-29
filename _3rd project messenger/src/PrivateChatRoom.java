@@ -56,6 +56,7 @@ public class PrivateChatRoom extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(233,255,223));
 		panel.setPreferredSize(new Dimension(10, 55));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
@@ -82,14 +83,21 @@ public class PrivateChatRoom extends JFrame {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(233,255,223));
 		panel_3.setPreferredSize(new Dimension(10, 30));
 		panel_1.add(panel_3, BorderLayout.SOUTH);
 		panel_3.setLayout(new BorderLayout(0, 0));
 
-		sendbtn = new JButton("\uC804   \uC1A1");
+		sendbtn = new JButton("");
+		sendbtn.setIcon(new ImageIcon(PrivateChatRoom.class.getResource("/Image/\uC804\uC1A1 \uBC84\uD2BC.png")));
+		sendbtn.setBorderPainted(false);
+		sendbtn.setFocusPainted(false);
+		sendbtn.setContentAreaFilled(false);
 		panel_3.add(sendbtn, BorderLayout.EAST);
+		
 
 		sendTextArea = new JTextArea();
+		sendTextArea.setBackground(new Color(250,255,243));
 		sendTextArea.setLineWrap(true);
 		panel_1.add(sendTextArea, BorderLayout.CENTER);
 
