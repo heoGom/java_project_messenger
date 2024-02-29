@@ -62,6 +62,7 @@ public class VoteMainPage extends JFrame {
 		setSize(482, 559);
 		setVisible(true);
 		setResizable(false);
+		setLocation(1178, 233);
 	}
 
 	private void extracted() {

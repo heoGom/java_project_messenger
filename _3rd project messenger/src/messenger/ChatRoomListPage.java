@@ -42,6 +42,7 @@ public class ChatRoomListPage extends JFrame {
 	private void showGUI() {
 		setSize(400, 500);
 		setVisible(true);
+		setLocation(326, 233);
 
 	}
 

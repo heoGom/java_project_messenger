@@ -43,7 +43,7 @@ public class MainPage extends JFrame {
 	private JLabel lblNewLabel;
 
 	public MainPage(User user) {
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(new Color(250, 255, 243));
 		this.user = user;
 		setTitle("");
 		extracted();
