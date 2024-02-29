@@ -16,6 +16,7 @@ import java.util.List;
 
 import messenger.MySqlConnectionProvider;
 
+
 class ClientsList {
 	private List<ClientPerThread> list = new ArrayList<>();
 

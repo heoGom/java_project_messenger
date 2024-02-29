@@ -222,13 +222,14 @@ public class MainPage extends JFrame {
 				panel.setBackground(new Color(250, 255, 243));
 				panel.setLayout(null);
 				JLabel label = new JLabel("");
-				label.setIcon(new ImageIcon(MainPage.class.getResource("/image/비밀번호입력.png")));
+				label.setIcon(
+						new ImageIcon(MainPage.class.getResource("/Image/\uBE44\uBC00\uBC88\uD638\uC785\uB825.png")));
 				label.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 				label.setBounds(55, 25, 180, 20);
 				JPasswordField pwField = new JPasswordField(20);
 				pwField.setBounds(70, 60, 150, 20);
 				JButton btnOK = new JButton("");
-				btnOK.setIcon(new ImageIcon(MainPage.class.getResource("/image/확인.png")));
+				btnOK.setIcon(new ImageIcon(MainPage.class.getResource("/Image/\uD655\uC778.png")));
 				btnOK.setBorderPainted(false);
 				btnOK.setFocusPainted(false);
 				btnOK.setContentAreaFilled(false);
@@ -268,7 +269,7 @@ public class MainPage extends JFrame {
 				});
 
 				JButton btnCancle = new JButton();
-				btnCancle.setIcon(new ImageIcon(MainPage.class.getResource("/image/취소.png")));
+				btnCancle.setIcon(new ImageIcon(MainPage.class.getResource("/Image/\uCDE8\uC18C.png")));
 				btnCancle.setBorderPainted(false);
 				btnCancle.setFocusPainted(false);
 				btnCancle.setContentAreaFilled(false);
@@ -311,13 +312,6 @@ public class MainPage extends JFrame {
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 449, 439, 70);
-		String imagePath2 = "/image/하트일러.png";
-		ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath2));
-		Image image2 = icon2.getImage();
-		Image scaledImage2 = image2.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(),
-				Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
-		lblNewLabel.setIcon(scaledIcon2);
 		getContentPane().add(lblNewLabel);
 		logoutbtn.addActionListener(new ActionListener() {
 			@Override

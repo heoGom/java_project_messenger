@@ -39,7 +39,6 @@ public class UserList extends JFrame {
 	private JLabel lblNewLabel_2;
 
 	public JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 
 	public UserList(User user) {
 		getContentPane().setBackground(new Color(250, 255, 243));
@@ -80,18 +79,6 @@ public class UserList extends JFrame {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(12, 108, 402, 402);
 		getContentPane().add(scrollPane);
-
-		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(135, 35, 264, 65);
-		String imagePath = "/image/하트일러.png";
-		ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
-		Image image = icon.getImage();
-		Image scaledImage = image.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),
-				Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon = new ImageIcon(scaledImage);
-		lblNewLabel_1.setIcon(scaledIcon);
-		getContentPane().add(lblNewLabel_1);
 	}
 
 	public void createPanel() {
