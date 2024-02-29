@@ -162,6 +162,7 @@ public class Login extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		textField.requestFocusInWindow();
 	}

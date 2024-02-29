@@ -18,6 +18,7 @@ public class PastAgendas extends JFrame {
 	private VoteStatus voteStatus;
 	private int selectedAgendaNo;
 	private PastVoteStatus pastVoteStatus;
+
 	public PastAgendas(VoteMainPage voteMainPage) {
 		this.voteMainPage = voteMainPage;
 		extracted();
@@ -28,6 +29,7 @@ public class PastAgendas extends JFrame {
 	private void showGUI() {
 		setSize(441, 553);
 		setVisible(true);
+		setResizable(false);
 	}
 
 	private void createPanel() {
@@ -61,22 +63,30 @@ public class PastAgendas extends JFrame {
 				pnl.add(lbl3);
 				pnl.add(lbl5);
 				pnl.add(lbl6);
-				
+
 				panel.add(pnl);
 
 				lbl3.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						selectedAgendaNo = currentAgendaNo;
-						pastVoteStatus = new PastVoteStatus(PastAgendas.this);
-						if(unknown==1) {
-							pastVoteStatus.lblNewLabel_2.setVisible(false);
+						if (pastVoteStatus == null || !pastVoteStatus.isVisible()) {
+							pastVoteStatus = new PastVoteStatus(PastAgendas.this);
+							if (unknown == 1) {
+								pastVoteStatus.lblNewLabel_2.setVisible(false);
+							}
+						} else {
+							pastVoteStatus.toFront();
 						}
+						int mainPageX = getX();
+						int mainPageY = getY();
+						pastVoteStatus.setLocation(mainPageX-pastVoteStatus.getWidth() , mainPageY);
 					}
 				});
 			}
 		}
 	}
+
 	public int getSelectedAgendaNo() {
 		return selectedAgendaNo;
 	}

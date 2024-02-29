@@ -49,6 +49,7 @@ public class GoVotePage extends JFrame {
 	private void showGUI() {
 		setSize(328, 493);
 		setVisible(true);
+		setResizable(false);
 	}
 
 	private void extracted() {

@@ -49,9 +49,11 @@ public class AddAgenda extends JFrame {
 	private JPanel pnl = new JPanel();;
 	private JLabel lbl;
 	private JLabel lblNewLabel_3;
-	public  JCheckBox chckbxNewCheckBox;
-	private VoteStatus voteStatus ;
+	public JCheckBox chckbxNewCheckBox;
+	private VoteStatus voteStatus;
 	private PastAgendas pastAgendas;
+	private JLabel zz;
+
 	public AddAgenda(User user, VoteMainPage voteMainPage) {
 		this.user = user;
 		this.voteMainPage = voteMainPage;
@@ -63,6 +65,7 @@ public class AddAgenda extends JFrame {
 	private void showGUI() {
 		setSize(441, 553);
 		setVisible(true);
+		setResizable(false);
 	}
 
 	private void listenerAll() {
@@ -73,20 +76,44 @@ public class AddAgenda extends JFrame {
 				if (agendatf.getText().length() >= 1 && agendatf.getText().length() < 15) {
 					resultagenda.setText(agendatf.getText());
 					resultagenda.getText();
+					zz.setText("");
+					zz.getText();
+					itemtf.requestFocusInWindow();
 				} else {
+					zz.setText("앗 주제 길이가 너무 길어버렷..!!");
+					agendatf.setText("");
+					agendatf.requestFocusInWindow();
 					resitagendabtn.setEnabled(false);
 					resitagendabtn.setEnabled(true);
 				}
 			}
 		});
+		agendatf.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (agendatf.getText().length() >= 1 && agendatf.getText().length() < 15) {
+					resultagenda.setText(agendatf.getText());
+					resultagenda.getText();
+					zz.setText("");
+					zz.getText();
+					itemtf.requestFocusInWindow();
+				} else {
+					zz.setText("앗 주제 길이가 너무 길어버렷..!!");
+					agendatf.setText("");
+					agendatf.requestFocusInWindow();
+					resitagendabtn.setEnabled(false);
+					resitagendabtn.setEnabled(true);
+				}
+			}
+		});
+
 		btn2.addActionListener(new ActionListener() {
 			int count = 0;
-			
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (count < 5) {
-					if (itemtf.getText().length() >= 1 &&itemtf.getText().length() < 15) {
+					if (itemtf.getText().length() >= 1 && itemtf.getText().length() < 15) {
 						agList.add(itemtf.getText());
 						System.out.println("적재완료");
 						int newIndex = agList.size() - 1;
@@ -101,12 +128,47 @@ public class AddAgenda extends JFrame {
 						panel.add(pnl);
 						panel.revalidate();
 						panel.repaint();
+						itemtf.setText("");
 						count++;
+					}else {
+						itemtf.setText("");
+						itemtf.requestFocusInWindow();
+						btn2.setEnabled(false);
+						btn2.setEnabled(true);
 					}
-				} else {
-					btn2.setEnabled(false);
-					btn2.setEnabled(true);
-				}
+				} 
+			}
+		});
+		
+		itemtf.addActionListener(new ActionListener() {
+			int count = 0;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (count < 5) {
+					if (itemtf.getText().length() >= 1 && itemtf.getText().length() < 15) {
+						agList.add(itemtf.getText());
+						System.out.println("적재완료");
+						int newIndex = agList.size() - 1;
+						lbl = new JLabel(newIndex + 1 + "." + agList.get(newIndex));
+						lbl.setLayout(new GridLayout(0, 1));
+						pnl = new JPanel();
+						pnl.add(lbl);
+						Dimension preferredSize = new Dimension(panel.getWidth(), 25); // 원하는 크기로 조절
+						pnl.setPreferredSize(preferredSize);
+						pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
+						pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+						panel.add(pnl);
+						panel.revalidate();
+						panel.repaint();
+						itemtf.setText("");
+						count++;
+					}else {
+						itemtf.setText("");
+						itemtf.requestFocusInWindow();
+						btn2.setEnabled(false);
+						btn2.setEnabled(true);
+					}
+				} 
 			}
 		});
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -115,9 +177,8 @@ public class AddAgenda extends JFrame {
 				checkvalid();
 			}
 		});
-		
+
 	}
-	
 
 	private void checkvalid() {
 
@@ -150,7 +211,6 @@ public class AddAgenda extends JFrame {
 		}
 	}
 
-
 	public void saveAgenda() {
 		System.out.println(user.getId());
 		System.out.println(resultagenda.getText());
@@ -172,7 +232,7 @@ public class AddAgenda extends JFrame {
 			} else if (comboBox.getSelectedIndex() == 2) {
 				stmt.setTimestamp(4, stamp3);
 			}
-			if(chckbxNewCheckBox.isSelected()) {
+			if (chckbxNewCheckBox.isSelected()) {
 				stmt.setInt(5, 1);
 			} else {
 				stmt.setInt(5, 0);
@@ -257,14 +317,18 @@ public class AddAgenda extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("투표마감시간");
 		lblNewLabel_1.setBounds(95, 347, 97, 15);
 		getContentPane().add(lblNewLabel_1);
-		
+
 		lblNewLabel_3 = new JLabel("투표주제:");
 		lblNewLabel_3.setBounds(12, 120, 57, 15);
 		getContentPane().add(lblNewLabel_3);
-		
+
 		chckbxNewCheckBox = new JCheckBox("익명 투표");
 		chckbxNewCheckBox.setBounds(145, 381, 115, 23);
 		getContentPane().add(chckbxNewCheckBox);
 		
+		zz = new JLabel("");
+		zz.setBounds(72, 94, 241, 15);
+		getContentPane().add(zz);
+
 	}
 }

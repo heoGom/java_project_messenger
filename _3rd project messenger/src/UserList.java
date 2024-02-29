@@ -55,7 +55,7 @@ public class UserList extends JFrame {
 	private void showGUI() {
 		setSize(441, 553);
 		setVisible(true);
-
+		setResizable(false);
 	}
 
 	private void extracted() {

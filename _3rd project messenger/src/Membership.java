@@ -329,7 +329,7 @@ public class Membership extends JFrame {
 		setSize(416, 500);
 		setVisible(true);
 		setLocationRelativeTo(null);
-
+		setResizable(false);
 		 id_tf.requestFocusInWindow();
 	}
 

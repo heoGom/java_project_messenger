@@ -59,6 +59,7 @@ public class MainPage extends JFrame {
 		setSize(469, 574);
 		setVisible(true);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
@@ -126,7 +127,7 @@ public class MainPage extends JFrame {
 				}
 				int mainPageX = getX();
 				int mainPageY = getY();
-				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth(), mainPageY);
+				voteMainPage.setLocation(mainPageX + voteMainPage.getWidth()-30, mainPageY);
 			}
 		});
 

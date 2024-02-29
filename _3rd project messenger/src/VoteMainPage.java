@@ -46,6 +46,7 @@ public class VoteMainPage extends JFrame {
 	PastAgendas pastAgendas;
 	private List<Votes> voteId;
 	private int selectedAgendaNo;
+	private AddAgenda addAgenda;
 
 	public VoteMainPage(User user) {
 		this.user = user;
@@ -62,6 +63,7 @@ public class VoteMainPage extends JFrame {
 	private void showGUI() {
 		setSize(495, 559);
 		setVisible(true);
+		setResizable(false);
 	}
 
 	private void extracted() {
@@ -120,15 +122,29 @@ public class VoteMainPage extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PastAgendas pa = new PastAgendas(VoteMainPage.this);
-				pa.setVisible(true);
+				if (pastAgendas == null || !pastAgendas.isVisible()) {
+					pastAgendas = new PastAgendas(VoteMainPage.this);
+				} else {
+					pastAgendas.toFront();
+				}
+				pastAgendas.setVisible(true);
+				int mainPageX = getX();
+				int mainPageY = getY();
+				pastAgendas.setLocation(mainPageX - pastAgendas.getWidth() , mainPageY);
 			}
 		});
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AddAgenda aa = new AddAgenda(user, VoteMainPage.this);
-				aa.setVisible(true);
+				if (addAgenda == null || !addAgenda.isVisible()) {
+					addAgenda = new AddAgenda(user, VoteMainPage.this);
+				} else {
+					addAgenda.toFront();
+				}
+				addAgenda.setVisible(true);
+				int mainPageX = getX();
+				int mainPageY = getY();
+				addAgenda.setLocation(mainPageX - addAgenda.getWidth(), mainPageY);
 			}
 		});
 	}
@@ -152,7 +168,7 @@ public class VoteMainPage extends JFrame {
 				lbl3 = new JLabel("현황보기");
 				lbl4 = new JLabel(agendas.agendaList.get(i).getNickname());
 				JLabel lbl5 = new JLabel("투표 주제: ");
-				JLabel lbl6 = new JLabel("투표 의결자: ");
+				JLabel lbl6 = new JLabel("의결자: ");
 				JLabel lbl7 = new JLabel("투표 종료시간: ");
 				JLabel lbl8 = new JLabel(String.valueOf(agendas.agendaList.get(i).getLt()));
 				JPanel pnl2 = new JPanel();
@@ -198,8 +214,15 @@ public class VoteMainPage extends JFrame {
 
 						if (!hasVoted) {
 							selectedAgendaNo = currentAgendaNo;
-							goVotePage = new GoVotePage(VoteMainPage.this, user);
-							goVotePage.createPanel(selectedAgendaNo);
+							if (goVotePage == null || !goVotePage.isVisible()) {
+								goVotePage = new GoVotePage(VoteMainPage.this, user);
+								goVotePage.createPanel(selectedAgendaNo);
+							} else {
+								goVotePage.toFront();
+							}
+							int mainPageX = getX();
+							int mainPageY = getY();
+							goVotePage.setLocation(mainPageX , mainPageY);
 						}
 					}
 				});
@@ -207,7 +230,14 @@ public class VoteMainPage extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						selectedAgendaNo = currentAgendaNo;
-						voteStatus = new VoteStatus(VoteMainPage.this, pastAgendas);
+						if (voteStatus == null || !voteStatus.isVisible()) {
+							voteStatus = new VoteStatus(VoteMainPage.this, pastAgendas);
+						} else {
+							voteStatus.toFront();
+						}
+						int mainPageX = getX();
+						int mainPageY = getY();
+						voteStatus.setLocation(mainPageX , mainPageY);
 						if(unknown==1) {
 							voteStatus.lblNewLabel_2.setVisible(false);
 						}
