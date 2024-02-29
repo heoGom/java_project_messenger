@@ -86,7 +86,7 @@ public class UserList extends JFrame {
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(135, 35, 264, 65);
-		String imagePath = "/picture/하트일러.png";
+		String imagePath = "/image/하트일러.png";
 		ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
 		Image image = icon.getImage();
 		Image scaledImage = image.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH);
@@ -99,6 +99,7 @@ public class UserList extends JFrame {
 		for (User u : user.list) {
 
 			pnl = new JPanel();
+			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			pnl.setBackground(Color.WHITE);
 			Dimension preferredSize = new Dimension(panel.getWidth(), 50); // 원하는 크기로 조절
 			pnl.setPreferredSize(preferredSize);

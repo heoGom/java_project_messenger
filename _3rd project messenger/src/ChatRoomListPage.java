@@ -26,9 +26,11 @@ public class ChatRoomListPage extends JFrame {
 
 	User user;
 	List<User> list;
+	private String id;
+	private int status;
 
 	public ChatRoomListPage(User user) {
-		getContentPane().setBackground(new Color(233,255,223));
+		getContentPane().setBackground(new Color(233, 255, 223));
 		this.user = user;
 		list = privateChatUserList(user);
 		showGUI();
@@ -45,7 +47,7 @@ public class ChatRoomListPage extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(250,255,243));
+		panel.setBackground(new Color(250, 255, 243));
 		panel.setBounds(0, 0, 384, 50);
 		panel.setPreferredSize(new Dimension(10, 50));
 		panel.setMinimumSize(new Dimension(10, 50));
@@ -94,6 +96,7 @@ public class ChatRoomListPage extends JFrame {
 		});
 
 		for (int i = 0; i < list.size(); i++) {
+			readStatus(list.get(i).getId());
 			final int INDEX = i;
 			JPanel userpnl = new JPanel();
 			userpnl.setBackground(Color.WHITE);
@@ -105,17 +108,29 @@ public class ChatRoomListPage extends JFrame {
 			JLabel label = new JLabel(list.get(i).getNick());
 			JLabel imageLbl = new JLabel();
 			imageLbl.setBounds(12, 12, 40, 40);
-			imageLbl.setMaximumSize(new Dimension(40,40));
+			imageLbl.setMaximumSize(new Dimension(40, 40));
 			setImageLbl(list.get(i), imageLbl);
 			JLabel emptyLbl = new JLabel();
 			emptyLbl.setMaximumSize(new Dimension(10, Integer.MAX_VALUE));
 			JLabel emptyLbl2 = new JLabel();
 			emptyLbl2.setMaximumSize(new Dimension(20, Integer.MAX_VALUE));
-			
+			JLabel emptyLbl3 = new JLabel();
+			emptyLbl3.setMaximumSize(new Dimension(20, Integer.MAX_VALUE));
+			JLabel lblStatus = new JLabel();
+			if(status==1) {
+				lblStatus.setText("접속중");
+				lblStatus.setForeground( new Color(50, 205, 50));
+			}else {
+				lblStatus.setText("비접속");
+				lblStatus.setForeground(Color.RED);
+			}
 			userpnl.add(emptyLbl);
 			userpnl.add(imageLbl);
 			userpnl.add(emptyLbl2);
 			userpnl.add(label);
+			userpnl.add(emptyLbl3);
+			userpnl.add(lblStatus);
+
 			userpnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			userpnl.addMouseListener(new MouseAdapter() {
 				@Override
@@ -131,7 +146,7 @@ public class ChatRoomListPage extends JFrame {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(list.get(INDEX).image!=null) {
+					if (list.get(INDEX).image != null) {
 						new showProfileImage(list.get(INDEX));
 					}
 				}
@@ -201,6 +216,22 @@ public class ChatRoomListPage extends JFrame {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private void readStatus(String str) {
+		String sql = "SELECT * FROM jae.user where id = ?";
+		try (Connection conn = MySqlConnectionProvider.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, str);
+			try(ResultSet rs = stmt.executeQuery()){
+				if(rs.next()) {
+					id = rs.getString("id");
+					status = rs.getInt("status");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private ImageIcon blobToImageIcon(Blob blob) throws SQLException {
