@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class PastAgendas extends JFrame {
 	private JPanel panel;
@@ -20,6 +21,7 @@ public class PastAgendas extends JFrame {
 	private PastVoteStatus pastVoteStatus;
 
 	public PastAgendas(VoteMainPage voteMainPage) {
+		getContentPane().setBackground(new Color(233,255,223));
 		this.voteMainPage = voteMainPage;
 		extracted();
 		showGUI();
@@ -102,7 +104,8 @@ public class PastAgendas extends JFrame {
 		getContentPane().setLayout(null);
 
 		panel = new JPanel();
-		panel.setBounds(1, 1, 340, 400);
+		panel.setBackground(new Color(250,255,243));
+		panel.setBounds(12, 0, 340, 400);
 		getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -111,8 +114,9 @@ public class PastAgendas extends JFrame {
 		scrollPane.setBounds(12, 108, 402, 402);
 		getContentPane().add(scrollPane);
 
-		JLabel lblNewLabel = new JLabel("종료된 안건들");
-		lblNewLabel.setBounds(12, 62, 110, 15);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(PastAgendas.class.getResource("/Image/\uC885\uB8CC\uB41C \uC548\uAC74\uB4E4.png")));
+		lblNewLabel.setBounds(30, 42, 143, 31);
 		getContentPane().add(lblNewLabel);
 	}
 

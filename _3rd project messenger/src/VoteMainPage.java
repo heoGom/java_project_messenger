@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class VoteMainPage extends JFrame {
 	private JPanel pnl;
@@ -49,6 +50,7 @@ public class VoteMainPage extends JFrame {
 	private AddAgenda addAgenda;
 
 	public VoteMainPage(User user) {
+		getContentPane().setBackground(new Color(233,255,223));
 		this.user = user;
 		showGUI();
 		extracted();
@@ -69,14 +71,16 @@ public class VoteMainPage extends JFrame {
 	private void extracted() {
 		getContentPane().setLayout(null);
 
-		btnNewButton = new JButton("안건 등록");
-		btnNewButton.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		btnNewButton.setBorder(new LineBorder(Color.BLACK));
-		btnNewButton.setBounds(365, 10, 97, 23);
+		btnNewButton = new JButton("");
+		btnNewButton.setIcon(new ImageIcon(VoteMainPage.class.getResource("/Image/\uC548\uAC74 \uB4F1\uB85D \uBC84\uD2BC.png")));
+		btnNewButton.setBounds(362, 10, 100, 30);
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setFocusPainted(false);
+		btnNewButton.setContentAreaFilled(false);
 		getContentPane().add(btnNewButton);
 
 		panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(new Color(250,255,243));
 		panel.setBounds(12, 84, 400, 426);
 		getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -87,15 +91,18 @@ public class VoteMainPage extends JFrame {
 		getContentPane().add(scrollPane);
 
 		JLabel lblNewLabel = new JLabel("투표 안건 목록");
+		lblNewLabel.setForeground(Color.DARK_GRAY);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		lblNewLabel.setBounds(185, 59, 105, 15);
 		getContentPane().add(lblNewLabel);
 
-		btnNewButton_1 = new JButton("종료된 안건 보기");
-		btnNewButton_1.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		btnNewButton_1.setBorder(new LineBorder(Color.BLACK));
-		btnNewButton_1.setBounds(12, 10, 158, 23);
+		btnNewButton_1 = new JButton("");
+		btnNewButton_1.setIcon(new ImageIcon(VoteMainPage.class.getResource("/Image/\uC885\uB8CC\uB41C \uC548\uAC74 \uBCF4\uAE30 \uBC84\uD2BC.png")));
+		btnNewButton_1.setBorderPainted(false);
+		btnNewButton_1.setFocusPainted(false);
+		btnNewButton_1.setContentAreaFilled(false);
+		btnNewButton_1.setBounds(12, 10, 160, 30);
 		getContentPane().add(btnNewButton_1);
 	}
 
