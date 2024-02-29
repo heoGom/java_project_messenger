@@ -38,7 +38,7 @@ public class Ranking extends JFrame {
 		JPanel panel = new JPanel();
 		imageLabel = new JLabel();
 		imageLabel.setBounds(0, 0, 400, 300);
-		String imagePath = "/picture/등수3.png";
+		String imagePath = "/image/등수3.png";
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath));
 		Image scaledImage = imageIcon.getImage().getScaledInstance(imageLabel.getWidth()
 				, imageLabel.getHeight(), Image.SCALE_SMOOTH);
