@@ -169,7 +169,7 @@ public class MainPage extends JFrame {
 		userListbtn.setBorderPainted(false);
 		userListbtn.setFocusPainted(false);
 		userListbtn.setContentAreaFilled(false);
-		userListbtn.setBounds(143, 117, 160, 60);
+		userListbtn.setBounds(143, 97, 160, 60);
 		getContentPane().add(userListbtn);
 
 		chatRoomListbtn = new JButton("");
@@ -177,7 +177,7 @@ public class MainPage extends JFrame {
 		chatRoomListbtn.setBorderPainted(false);
 		chatRoomListbtn.setFocusPainted(false);
 		chatRoomListbtn.setContentAreaFilled(false);
-		chatRoomListbtn.setBounds(143, 208, 160, 60);
+		chatRoomListbtn.setBounds(143, 188, 160, 60);
 		getContentPane().add(chatRoomListbtn);
 
 		votebtn = new JButton("");
@@ -185,7 +185,7 @@ public class MainPage extends JFrame {
 		votebtn.setBorderPainted(false);
 		votebtn.setFocusPainted(false);
 		votebtn.setContentAreaFilled(false);
-		votebtn.setBounds(143, 294, 160, 60);
+		votebtn.setBounds(143, 274, 160, 60);
 		getContentPane().add(votebtn);
 
 		minigamebtn = new JButton("");
@@ -193,7 +193,7 @@ public class MainPage extends JFrame {
 		minigamebtn.setBorderPainted(false);
 		minigamebtn.setFocusPainted(false);
 		minigamebtn.setContentAreaFilled(false);
-		minigamebtn.setBounds(143, 379, 160, 60);
+		minigamebtn.setBounds(143, 359, 160, 60);
 		getContentPane().add(minigamebtn);
 
 		myprofilebtn = new JButton("");
@@ -286,15 +286,19 @@ public class MainPage extends JFrame {
 		nick_lbl.setBounds(74, 32, 142, 20);
 		getContentPane().add(nick_lbl);
 
-		logoutbtn = new JButton("로그아웃");
-		logoutbtn.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-		logoutbtn.setBounds(320, 469, 97, 23);
+		logoutbtn = new JButton("");
+		logoutbtn.setIcon(new ImageIcon(MainPage.class.getResource("/Image/\uB85C\uADF8\uC544\uC6C3 \uBC84\uD2BC.png")));
+		logoutbtn.setBorderPainted(false);
+		logoutbtn.setFocusPainted(false);
+		logoutbtn.setContentAreaFilled(false);
+		
+		logoutbtn.setBounds(362, 449, 68, 70);
 		getContentPane().add(logoutbtn);
 
 
-		lblNewLabel = new JLabel("사진");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 418, 296, 70);
+		lblNewLabel.setBounds(12, 449, 329, 70);
 		String imagePath2 = "/picture/하트일러.png";
 		ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath2));
 		Image image2 = icon2.getImage();
