@@ -293,13 +293,13 @@ public class MainPage extends JFrame {
 		logoutbtn.setFocusPainted(false);
 		logoutbtn.setContentAreaFilled(false);
 		
-		logoutbtn.setBounds(362, 449, 68, 70);
+		logoutbtn.setBounds(12, 438, 68, 70);
 		getContentPane().add(logoutbtn);
 
 
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 449, 329, 70);
+		lblNewLabel.setBounds(12, 449, 439, 70);
 		String imagePath2 = "/picture/하트일러.png";
 		ImageIcon icon2 = new ImageIcon(getClass().getResource(imagePath2));
 		Image image2 = icon2.getImage();

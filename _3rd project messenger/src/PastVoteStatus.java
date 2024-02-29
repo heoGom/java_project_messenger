@@ -35,6 +35,7 @@ public class PastVoteStatus extends JFrame {
 	private JPanel panel_1;
 	private JPanel panel_2;
 	public JLabel lblNewLabel_2;
+	public JLabel unknownlbl;
 
 	public PastVoteStatus(PastAgendas pastAgendas) {
 		this.pastAgendas = pastAgendas;
@@ -75,6 +76,10 @@ public class PastVoteStatus extends JFrame {
 		lblNewLabel_2 = new JLabel("투표자 보기");
 		lblNewLabel_2.setBounds(258, 228, 70, 15);
 		getContentPane().add(lblNewLabel_2);
+		
+		unknownlbl = new JLabel("익명투표");
+		unknownlbl.setBounds(258, 10, 57, 15);
+		getContentPane().add(unknownlbl);
 		lblNewLabel_2.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {

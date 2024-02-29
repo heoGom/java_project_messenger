@@ -33,8 +33,9 @@ public class VoteStatus extends JFrame {
 	private PastAgendas pastAgendas;
 	private JLabel lbl3;
 	private JPanel panel_1;
-	public  JLabel lblNewLabel_2;
+	public  JLabel showlbl;
 	private VoteStatus voteStatus;
+	public JLabel unknownlbl;
 
 	public VoteStatus(VoteMainPage voteMainPage, PastAgendas pastAgendas) {
 		this.voteMainPage = voteMainPage;
@@ -74,20 +75,24 @@ public class VoteStatus extends JFrame {
 		panel_1.setBounds(340, 53, 365, 435);
 		getContentPane().add(panel_1);
 		
-		lblNewLabel_2 = new JLabel("투표자 보기");
-		lblNewLabel_2.setBounds(258, 228, 70, 15);
-		getContentPane().add(lblNewLabel_2);
-		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+		showlbl = new JLabel("투표자 보기");
+		showlbl.setBounds(258, 228, 70, 15);
+		getContentPane().add(showlbl);
+		
+		unknownlbl = new JLabel("익명투표");
+		unknownlbl.setBounds(258, 10, 57, 15);
+		getContentPane().add(unknownlbl);
+		showlbl.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
-		        if (lblNewLabel_2.getText().equals("투표자 보기")) {
+		        if (showlbl.getText().equals("투표자 보기")) {
 		            setSize(722, 525);
 		            setResizable(false);
-		            lblNewLabel_2.setText("접기");
-		        } else if (lblNewLabel_2.getText().equals("접기")) {
+		            showlbl.setText("접기");
+		        } else if (showlbl.getText().equals("접기")) {
 		            setSize(339, 525);
 		            setResizable(false);
-		            lblNewLabel_2.setText("투표자 보기");
+		            showlbl.setText("투표자 보기");
 		        }
 		    }
 		});

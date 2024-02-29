@@ -61,7 +61,7 @@ public class VoteMainPage extends JFrame {
 	}
 
 	private void showGUI() {
-		setSize(495, 559);
+		setSize(482, 559);
 		setVisible(true);
 		setResizable(false);
 	}
@@ -72,7 +72,7 @@ public class VoteMainPage extends JFrame {
 		btnNewButton = new JButton("안건 등록");
 		btnNewButton.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		btnNewButton.setBorder(new LineBorder(Color.BLACK));
-		btnNewButton.setBounds(370, 10, 97, 23);
+		btnNewButton.setBounds(365, 10, 97, 23);
 		getContentPane().add(btnNewButton);
 
 		panel = new JPanel();
@@ -165,11 +165,16 @@ public class VoteMainPage extends JFrame {
 				pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				lbl1 = new JLabel(agendas.agendaList.get(i).getAgenda());
 				lbl2 = new JLabel("투표하기");
+				lbl2.setForeground(Color.BLUE);
 				lbl3 = new JLabel("현황보기");
+				lbl3.setForeground(Color.BLUE);
 				lbl4 = new JLabel(agendas.agendaList.get(i).getNickname());
 				JLabel lbl5 = new JLabel("투표 주제: ");
+				lbl5.setForeground(Color.GRAY);
 				JLabel lbl6 = new JLabel("의결자: ");
+				lbl6.setForeground(Color.GRAY);
 				JLabel lbl7 = new JLabel("투표 종료시간: ");
+				lbl7.setForeground(Color.GRAY);
 				JLabel lbl8 = new JLabel(String.valueOf(agendas.agendaList.get(i).getLt()));
 				JPanel pnl2 = new JPanel();
 				JPanel pnl3 = new JPanel();
@@ -218,11 +223,13 @@ public class VoteMainPage extends JFrame {
 								goVotePage = new GoVotePage(VoteMainPage.this, user);
 								goVotePage.createPanel(selectedAgendaNo);
 							} else {
-								goVotePage.toFront();
+								goVotePage.dispose();
+								goVotePage = new GoVotePage(VoteMainPage.this, user);
+								goVotePage.createPanel(selectedAgendaNo);
 							}
 							int mainPageX = getX();
 							int mainPageY = getY();
-							goVotePage.setLocation(mainPageX , mainPageY);
+							goVotePage.setLocation(mainPageX -goVotePage.getWidth() , mainPageY);
 						}
 					}
 				});
@@ -233,13 +240,16 @@ public class VoteMainPage extends JFrame {
 						if (voteStatus == null || !voteStatus.isVisible()) {
 							voteStatus = new VoteStatus(VoteMainPage.this, pastAgendas);
 						} else {
-							voteStatus.toFront();
+							voteStatus.dispose();
+							voteStatus = new VoteStatus(VoteMainPage.this, pastAgendas);
 						}
 						int mainPageX = getX();
 						int mainPageY = getY();
 						voteStatus.setLocation(mainPageX , mainPageY);
 						if(unknown==1) {
-							voteStatus.lblNewLabel_2.setVisible(false);
+							voteStatus.showlbl.setVisible(false);
+						}else {
+							voteStatus.unknownlbl.setVisible(false);
 						}
 					}
 				});

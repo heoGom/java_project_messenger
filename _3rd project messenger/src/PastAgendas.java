@@ -48,10 +48,14 @@ public class PastAgendas extends JFrame {
 				JLabel lbl1 = new JLabel(agendas.agendaList.get(i).getNickname());
 				JLabel lbl2 = new JLabel(agendas.agendaList.get(i).getAgenda());
 				JLabel lbl3 = new JLabel("  결과 보기  ");
-				JLabel lbl4 = new JLabel("투표 의결자: ");
+				lbl3.setForeground(Color.BLUE);
+				JLabel lbl4 = new JLabel("의결자: ");
 				JLabel lbl5 = new JLabel("투표 종료시간: ");
 				JLabel lbl6 = new JLabel(String.valueOf(agendas.agendaList.get(i).getLt()));
 				JLabel lbl7 = new JLabel("투표 주제: ");
+				lbl7.setForeground(Color.GRAY);
+				lbl4.setForeground(Color.GRAY);
+				lbl5.setForeground(Color.GRAY);
 				lbl3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				int unknown = agendas.agendaList.get(i).getUn();
 				int currentAgendaNo = agendas.agendaList.get(i).getNo();
@@ -72,15 +76,18 @@ public class PastAgendas extends JFrame {
 						selectedAgendaNo = currentAgendaNo;
 						if (pastVoteStatus == null || !pastVoteStatus.isVisible()) {
 							pastVoteStatus = new PastVoteStatus(PastAgendas.this);
-							if (unknown == 1) {
-								pastVoteStatus.lblNewLabel_2.setVisible(false);
-							}
 						} else {
-							pastVoteStatus.toFront();
+							pastVoteStatus.dispose();
+							pastVoteStatus =new PastVoteStatus(PastAgendas.this);
 						}
 						int mainPageX = getX();
 						int mainPageY = getY();
 						pastVoteStatus.setLocation(mainPageX-pastVoteStatus.getWidth() , mainPageY);
+						if (unknown == 1) {
+							pastVoteStatus.lblNewLabel_2.setVisible(false);
+						}else {
+							pastVoteStatus.unknownlbl.setVisible(false);
+						}
 					}
 				});
 			}

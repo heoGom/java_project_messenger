@@ -1,9 +1,13 @@
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +35,7 @@ public class Login extends JFrame {
 	Boolean isRight;
 	Boolean isRightPw;
 	User user;
+	private JLabel url;
 
 	public Login() {
 		getContentPane().setBackground(Color.WHITE);
@@ -39,6 +44,7 @@ public class Login extends JFrame {
 		membershipDAO = new MembershipDAO();
 		allListener();
 		showGUI();
+		
 
 	}
 
@@ -120,6 +126,12 @@ public class Login extends JFrame {
 				}
 			}
 		});
+		url.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				openWebPage();
+			}
+		});
 	}
 
 	public User readDB() {
@@ -172,6 +184,20 @@ public class Login extends JFrame {
 
 		textField.requestFocusInWindow();
 	}
+	
+	private void openWebPage() {
+        String url = "https://greenart.co.kr/";
+
+        try {
+            // 주소를 URI로 변환하여 웹 브라우저로 열기
+            URI uri = new URI(url);
+            Desktop.getDesktop().browse(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error opening web page: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
 	private void extracted() {
 		getContentPane().setLayout(null);
@@ -215,9 +241,14 @@ public class Login extends JFrame {
 		getContentPane().add(membershipbtn);
 
 		JLabel mainLbl = new JLabel();
+		mainLbl.setLocation(0, 0);
 		mainLbl.setIcon(new ImageIcon(Login.class.getResource("/Image/\uB85C\uADF8\uC778\uCC3D \uBC30\uACBD.png")));
 		mainLbl.setSize(445, 450);
 		getContentPane().add(mainLbl);
+		
+		url = new JLabel("");
+		url.setBounds(157, 21, 126, 135);
+		getContentPane().add(url);
 
 	}
 
