@@ -57,13 +57,13 @@ public class Ranking extends JFrame {
 		lbl_4thImage = new JLabel("");
 		lbl_5thImage = new JLabel("");
 		lbl_1st.setFont(new Font("굴림", Font.BOLD, 14));
-		lbl_1st.setForeground(new Color(240, 79, 79));
+		lbl_1st.setForeground(new Color(255, 255, 255));
 		lbl_2nd.setFont(new Font("굴림", Font.BOLD, 14));
-		lbl_2nd.setForeground(Color.yellow);
+		lbl_2nd.setForeground(new Color(249, 248, 113));
 		lbl_3rd.setFont(new Font("굴림", Font.BOLD, 14));
-		lbl_3rd.setForeground(new Color(194, 119 , 27));
+		lbl_3rd.setForeground(new Color(254, 67, 73));
 		lbl_4th.setFont(new Font("굴림", Font.BOLD, 14));
-		lbl_4th.setForeground(Color.yellow);
+		lbl_4th.setForeground(new Color(255, 130, 99));
 		lbl_5th.setFont(new Font("굴림", Font.BOLD, 14));
 		lbl_5th.setForeground(Color.yellow);
 		
