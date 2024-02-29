@@ -216,28 +216,31 @@ public class MainPage extends JFrame {
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
 				panel.setLayout(null);
-				JLabel label = new JLabel("비밀번호를 입력해주세요.");
+				JLabel label = new JLabel("");
+				label.setIcon(new ImageIcon(MainPage.class.getResource("/picture/비밀번호입력.png")));
 				label.setFont(new Font("한컴 고딕", Font.BOLD, 14));
-				label.setBounds(70, 25, 180, 20);
+				label.setBounds(55, 25, 180, 20);
 				JPasswordField pwField = new JPasswordField(20);
 				pwField.setBounds(70, 60, 150, 20);
-				JButton btnOK = new JButton("확인");
-				btnOK.setFont(new Font("한컴 고딕", Font.BOLD, 13));
-				btnOK.setBounds(50, 100, 60, 30);
+				JButton btnOK = new JButton("");
+				btnOK.setIcon(new ImageIcon(MainPage.class.getResource("/picture/확인.png")));
+				btnOK.setBorderPainted(false);
+				btnOK.setFocusPainted(false);
+				btnOK.setContentAreaFilled(false);
+				btnOK.setBounds(55, 120, 60, 30);
 				btnOK.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (user.getPw().equals(pwField.getText())) {
+							dialog.setVisible(false);
 							MyPage myPage = new MyPage(user, MainPage.this);
 							if (user.getImage() != null) { // 사진이 등록이 되어있을때
-								dialog.dispose();
 								ImageIcon icon = user.getImage();
 								Image scaledImage2 = icon.getImage().getScaledInstance(myPage.picture.getWidth(),
 										myPage.picture.getHeight(), Image.SCALE_SMOOTH);
 								ImageIcon scalecIcon2 = new ImageIcon(scaledImage2);
 								myPage.picture.setIcon(scalecIcon2);
 								int Score = user.getHighScore();
-								System.out.println(Score);
 //								myPage.score.setText(Score + " 초");	
 								myPage.showGUI();
 							} else { // 사진이 등록 되어있지않을때
@@ -259,7 +262,11 @@ public class MainPage extends JFrame {
 					}
 				});
 
-				JButton btnCancle = new JButton("취소");
+				JButton btnCancle = new JButton();
+				btnCancle.setIcon(new ImageIcon(MainPage.class.getResource("/picture/취소.png")));
+				btnCancle.setBorderPainted(false);
+				btnCancle.setFocusPainted(false);
+				btnCancle.setContentAreaFilled(false);
 				btnCancle.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -267,8 +274,7 @@ public class MainPage extends JFrame {
 					}
 				});
 
-				btnCancle.setFont(new Font("한컴 고딕", Font.BOLD, 13));
-				btnCancle.setBounds(180, 100, 60, 30);
+				btnCancle.setBounds(180, 120, 60, 30);
 				panel.add(label);
 				panel.add(pwField);
 				panel.add(btnOK);

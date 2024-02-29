@@ -366,10 +366,15 @@ public class MyPage {
 						label.setText("현재 사진");
 						currentSelectedIcon = null;
 						ImageIcon icon = user.getImage();
-						Image scaledImage = icon.getImage().getScaledInstance(currentPhoto.getWidth(),
-								currentPhoto.getHeight(), Image.SCALE_SMOOTH);
-						ImageIcon scaledIcon = new ImageIcon(scaledImage);
-						currentPhoto.setIcon(scaledIcon);
+						if (user.getImage() != null) {
+							Image scaledImage = icon.getImage().getScaledInstance(currentPhoto.getWidth(),
+									currentPhoto.getHeight(), Image.SCALE_SMOOTH);
+							ImageIcon scaledIcon = new ImageIcon(scaledImage);
+							currentPhoto.setIcon(scaledIcon);
+						} else {
+							JOptionPane.showMessageDialog(null, "되돌릴 사진이 없습니다.", 
+									"알림", JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				});
 				dialog.setVisible(true);
