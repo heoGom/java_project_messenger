@@ -54,6 +54,9 @@ public class Login extends JFrame {
 					user = readDB();
 					membershipDAO.changeStatus(textField.getText());
 					MainPage mainPage = new MainPage(user);
+					if (membership != null) {
+						membership.setVisible(false);
+					}
 					mainPage.setVisible(true);
 					if (user.getImage() != null) {
 						ImageIcon icon = user.getImage();
@@ -99,6 +102,9 @@ public class Login extends JFrame {
 					user = readDB();
 					membershipDAO.changeStatus(textField.getText());
 					MainPage mainPage = new MainPage(user);
+					if (membership != null) {
+						membership.setVisible(false);
+					}
 					mainPage.setVisible(true);
 					if (user.getImage() != null) {
 						ImageIcon icon = user.getImage();
@@ -199,7 +205,8 @@ public class Login extends JFrame {
 		getContentPane().add(loginbtn);
 
 		membershipbtn = new JButton("");
-		membershipbtn.setIcon(new ImageIcon(Login.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uBC84\uD2BC.png")));
+		membershipbtn
+				.setIcon(new ImageIcon(Login.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uBC84\uD2BC.png")));
 		membershipbtn.setBorderPainted(false);
 		membershipbtn.setFocusPainted(false);
 		membershipbtn.setContentAreaFilled(false);
@@ -211,7 +218,7 @@ public class Login extends JFrame {
 		mainLbl.setIcon(new ImageIcon(Login.class.getResource("/Image/\uB85C\uADF8\uC778\uCC3D \uBC30\uACBD.png")));
 		mainLbl.setSize(445, 450);
 		getContentPane().add(mainLbl);
-		
+
 	}
 
 	public static void main(String[] args) {
