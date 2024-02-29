@@ -215,6 +215,7 @@ public class MainPage extends JFrame {
 				dialog.setLocationRelativeTo(null);
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
+				panel.setBackground(new Color(250,255,243));
 				panel.setLayout(null);
 				JLabel label = new JLabel("비밀번호를 입력해주세요.");
 				label.setFont(new Font("한컴 고딕", Font.BOLD, 14));

@@ -59,6 +59,7 @@ public class MyPage {
 		mainDL.setTitle("마이 프로필");
 		mainDL.setModal(true);
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(233,255,223));
 		panel.setLayout(null);
 		JLabel myImage = new JLabel("현재 사진");
 		myImage.setHorizontalAlignment(SwingConstants.CENTER);
@@ -91,9 +92,11 @@ public class MyPage {
 		score.setBounds(183, 103, 75, 15);
 		panel.add(score);
 
-		JButton btnNickCh = new JButton("닉네임 변경");
-		btnNickCh.setBorder(new LineBorder(new Color(0, 0, 0)));
-		btnNickCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
+		JButton btnNickCh = new JButton("");
+		btnNickCh.setIcon(new ImageIcon(MyPage.class.getResource("/Image/\uB2C9\uB124\uC784 \uBCC0\uACBD \uBC84\uD2BC.png")));
+		btnNickCh.setBorderPainted(false);
+		btnNickCh.setFocusPainted(false);
+		btnNickCh.setContentAreaFilled(false);
 		btnNickCh.setBounds(20, 220, 120, 30);
 		panel.add(btnNickCh);
 		btnNickCh.addActionListener(new ActionListener() {
@@ -172,10 +175,13 @@ public class MyPage {
 			}
 		});
 
-		JButton btnPwCh = new JButton("비밀번호 변경");
-		btnPwCh.setBorder(new LineBorder(Color.BLACK));
-		btnPwCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
-		btnPwCh.setBounds(160, 220, 120, 30);
+		JButton btnPwCh = new JButton("");
+		btnPwCh.setIcon(new ImageIcon(MyPage.class.getResource("/Image/\uBE44\uBC00\uBC88\uD638 \uBCC0\uACBD \uBC84\uD2BC.png")));
+		btnPwCh.setBorderPainted(false);
+		btnPwCh.setFocusPainted(false);
+		btnPwCh.setContentAreaFilled(false);
+		
+		btnPwCh.setBounds(167, 220, 120, 30);
 		panel.add(btnPwCh);
 		btnPwCh.addActionListener(new ActionListener() {
 			@Override
@@ -248,10 +254,12 @@ public class MyPage {
 			}
 		});
 
-		JButton btnImageCh = new JButton("프로필사진 변경");
-		btnImageCh.setBorder(new LineBorder(Color.BLACK));
-		btnImageCh.setFont(new Font("한컴 고딕", Font.BOLD, 13));
-		btnImageCh.setBounds(300, 220, 125, 30);
+		JButton btnImageCh = new JButton("");
+		btnImageCh.setIcon(new ImageIcon(MyPage.class.getResource("/Image/\uD504\uB85C\uD544 \uC0AC\uC9C4 \uBCC0\uACBD \uBC84\uD2BC.png")));
+		btnImageCh.setBorderPainted(false);
+		btnImageCh.setFocusPainted(false);
+		btnImageCh.setContentAreaFilled(false);
+		btnImageCh.setBounds(318, 220, 120, 30);
 		panel.add(btnImageCh);
 
 		btnImageCh.addActionListener(new ActionListener() {

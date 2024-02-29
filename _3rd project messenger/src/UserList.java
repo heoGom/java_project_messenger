@@ -44,6 +44,7 @@ public class UserList extends JFrame {
 	private JLabel lblNewLabel_1;
 
 	public UserList(User user) {
+		getContentPane().setBackground(new Color(250,255,243));
 		this.user = user;
 		this.membershipDAO = new MembershipDAO();
 		extracted();
