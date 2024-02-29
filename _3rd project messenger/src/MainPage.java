@@ -199,6 +199,7 @@ public class MainPage extends JFrame {
 		myprofilebtn.setBorderPainted(false);
 		myprofilebtn.setFocusPainted(false);
 		myprofilebtn.setContentAreaFilled(false);
+		myprofilebtn.setToolTipText("마이프로필");
 		myprofilebtn.setIcon(new ImageIcon(MainPage.class.getResource("/Image/\uB9C8\uC774\uD504\uB85C\uD544 \uBC84\uD2BC.png")));
 		myprofilebtn.setBounds(356, 14, 74, 50);
 		getContentPane().add(myprofilebtn);
