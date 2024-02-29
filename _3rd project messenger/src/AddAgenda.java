@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
 import javax.swing.JCheckBox;
+import javax.swing.ImageIcon;
 
 public class AddAgenda extends JFrame {
 	private JTextField agendatf;
@@ -55,6 +56,7 @@ public class AddAgenda extends JFrame {
 	private JLabel zz;
 
 	public AddAgenda(User user, VoteMainPage voteMainPage) {
+		getContentPane().setBackground(new Color(233,255,223));
 		this.user = user;
 		this.voteMainPage = voteMainPage;
 		extracted();
@@ -124,7 +126,7 @@ public class AddAgenda extends JFrame {
 						Dimension preferredSize = new Dimension(panel.getWidth(), 25); // 원하는 크기로 조절
 						pnl.setPreferredSize(preferredSize);
 						pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
-						pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+						pnl.setBackground(new Color(130, 255, 120));
 						panel.add(pnl);
 						panel.revalidate();
 						panel.repaint();
@@ -280,11 +282,16 @@ public class AddAgenda extends JFrame {
 		lblNewLabel.setBounds(28, 69, 57, 15);
 		getContentPane().add(lblNewLabel);
 
-		resitagendabtn = new JButton("확인");
-		resitagendabtn.setBounds(289, 65, 97, 23);
+		resitagendabtn = new JButton("");
+		resitagendabtn.setIcon(new ImageIcon(AddAgenda.class.getResource("/Image/\uC548\uAC74\uB4F1\uB85D \uD655\uC778 \uBC84\uD2BC.png")));
+		resitagendabtn.setBorderPainted(false);
+		resitagendabtn.setFocusPainted(false);
+		resitagendabtn.setContentAreaFilled(false);
+		resitagendabtn.setBounds(289, 65, 107, 23);
 		getContentPane().add(resitagendabtn);
 
 		panel = new JPanel();
+		panel.setBackground(new Color(200, 255, 193));
 		panel.setBounds(12, 139, 180, 171);
 		getContentPane().add(panel);
 
@@ -301,12 +308,20 @@ public class AddAgenda extends JFrame {
 		getContentPane().add(itemtf);
 		itemtf.setColumns(10);
 
-		btn2 = new JButton("확인");
+		btn2 = new JButton("");
+		btn2.setIcon(new ImageIcon(AddAgenda.class.getResource("/Image/\uC548\uAC74\uB4F1\uB85D \uD655\uC778 \uBC84\uD2BC.png")));
+		btn2.setBorderPainted(false);
+		btn2.setFocusPainted(false);
+		btn2.setContentAreaFilled(false);
 		btn2.setBounds(238, 238, 107, 23);
 		getContentPane().add(btn2);
 
-		btnNewButton_2 = new JButton("완료");
-		btnNewButton_2.setBounds(145, 426, 97, 23);
+		btnNewButton_2 = new JButton("");
+		btnNewButton_2.setIcon(new ImageIcon(AddAgenda.class.getResource("/Image/\uC548\uAC74\uB4F1\uB85D \uC644\uB8CC \uBC84\uD2BC.png")));
+		btnNewButton_2.setBorderPainted(false);
+		btnNewButton_2.setFocusPainted(false);
+		btnNewButton_2.setContentAreaFilled(false);
+		btnNewButton_2.setBounds(145, 426, 107, 23);
 		getContentPane().add(btnNewButton_2);
 
 		comboBoxLists = new String[] { "----", "1시간", "2시간" };
@@ -323,7 +338,8 @@ public class AddAgenda extends JFrame {
 		getContentPane().add(lblNewLabel_3);
 
 		chckbxNewCheckBox = new JCheckBox("익명 투표");
-		chckbxNewCheckBox.setBounds(145, 381, 115, 23);
+		chckbxNewCheckBox.setBackground(new Color(200, 255, 193));
+		chckbxNewCheckBox.setBounds(156, 383, 84, 23);
 		getContentPane().add(chckbxNewCheckBox);
 		
 		zz = new JLabel("");
