@@ -229,7 +229,7 @@ public class MyPage {
 						if (password1.isEmpty() || password2.isEmpty()) {
 							JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요", "경고", JOptionPane.ERROR_MESSAGE);
 						} else if (user.getPw().equals(password2)) {
-							JOptionPane.showMessageDialog(null, "전에 비밀번호와 다른비밀번호를 입력하세요.", "경고",
+							JOptionPane.showMessageDialog(null, "기존 비밀번호와 일치합니다.", "경고",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							if (password1.equals(password2)) {
