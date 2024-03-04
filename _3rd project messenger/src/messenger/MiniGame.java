@@ -124,6 +124,8 @@ public class MiniGame extends JFrame {
 			JPanel panel = new JPanel();
 			panel.setLayout(null);
 			JLabel label = new JLabel("GAME OVER");
+			label.setFont(new Font("한컴 고딕", Font.BOLD, 16));
+			label.setForeground(Color.red);
 			JLabel label2 = new JLabel("나의 기록 : " + timeElapsed + " 초");
 			JButton btn = new JButton("확인");
 			JButton btn2 = new JButton("랭킹 보기");
@@ -158,7 +160,7 @@ public class MiniGame extends JFrame {
 			panel.add(btn);
 			panel.add(btn2);
 			dialog.getContentPane().add(panel);
-			label.setBounds(105, 20, 100, 30);
+			label.setBounds(100, 20, 100, 30);
 			label2.setBounds(98, 60, 150, 30);
 			btn.setBounds(35, 100, 100, 30);
 			btn2.setBounds(155, 100, 100, 30);

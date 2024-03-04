@@ -18,11 +18,14 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class Login extends JFrame {
 	private JTextField textField;
@@ -36,6 +39,7 @@ public class Login extends JFrame {
 	Boolean isRightPw;
 	User user;
 	private JLabel url;
+	private JLabel versionLbl;
 
 	public Login() {
 		getContentPane().setBackground(Color.WHITE);
@@ -129,6 +133,35 @@ public class Login extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				openWebPage();
+			}
+		});
+		
+		versionLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JDialog dialog = new JDialog();
+				dialog.setTitle("개발자");
+				dialog.setSize(300,200);
+				dialog.setModal(true);
+				JPanel panel = new JPanel();
+				panel.setBackground(new Color(233, 255, 223));
+				panel.setLayout(null);
+				JLabel label1 = new JLabel("허성재 : https://github.com/heoGom");
+				JLabel label2 = new JLabel("김동수 : https://github.com/dongso03");
+				JLabel label3 = new JLabel("정일웅 : https://github.com/ilung2");
+				label1.setBounds(30, 30, 250, 50);
+				label2.setBounds(30, 60, 250, 50);
+				label3.setBounds(30, 90, 250, 50);
+				label1.setFont(new Font("한컴 고딕", Font.BOLD, 13));
+				label2.setFont(new Font("한컴 고딕", Font.BOLD, 13));
+				label3.setFont(new Font("한컴 고딕", Font.BOLD, 13));
+				panel.add(label1);
+				panel.add(label2);
+				panel.add(label3);
+				dialog.getContentPane().add(panel);
+				dialog.setLocationRelativeTo(null);
+				dialog.setVisible(true);
+				dialog.setResizable(false);
 			}
 		});
 	}
@@ -248,7 +281,12 @@ public class Login extends JFrame {
 		url = new JLabel("");
 		url.setBounds(157, 21, 126, 135);
 		getContentPane().add(url);
-
+		
+		versionLbl = new JLabel("Ver 1.0.1");
+		versionLbl.setFont(new Font("한컴 고딕", Font.BOLD, 15));
+		versionLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		versionLbl.setBounds(12, 400, 80, 29);
+		mainLbl.add(versionLbl);
 	}
 
 	public static void main(String[] args) {
