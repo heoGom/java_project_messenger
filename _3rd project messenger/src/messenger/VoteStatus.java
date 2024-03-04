@@ -120,7 +120,6 @@ public class VoteStatus extends JFrame {
 		votes = new Votes();
 		countUsers();
 
-
 		for (int i = 0; i < countList.size(); i++) {
 			lbl = new JLabel(countList.get(i).getVote_item());
 			lbl2 = new JLabel(String.valueOf(countList.get(i).getCount()) + " 명");

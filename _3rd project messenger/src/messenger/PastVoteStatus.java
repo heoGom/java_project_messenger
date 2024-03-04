@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -122,18 +123,18 @@ public class PastVoteStatus extends JFrame {
 			lbl2 = new JLabel(String.valueOf(countList.get(i).getCount()) + " 명");
 			JPanel Listpnl = new JPanel();
 			JPanel Listpnl2 = new JPanel();
+			Listpnl2.setLayout(new BoxLayout(Listpnl2, BoxLayout.Y_AXIS));
 			JPanel pnl = new JPanel();
+			pnl.setLayout(new BoxLayout(pnl, BoxLayout.Y_AXIS));
+
+			Dimension preferredSize2 = new Dimension(panel_1.getWidth(), 60);
+			pnl.setPreferredSize(preferredSize2);
+			pnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize2.height));
 			pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
 			JLabel lbl3 = new JLabel(countList.get(i).getVote_item() + " : ");
-			JLabel lbl4 = new JLabel(countList.get(i).getNickname());
-
-			Dimension preferredSize = new Dimension(panel2.getWidth(), 40); // 원하는 크기로 조절
-			// panel2.getWidth(), 25
-			Listpnl.setPreferredSize(preferredSize);
-			Listpnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
-
-			Listpnl2.setPreferredSize(preferredSize);
-			Listpnl2.setMaximumSize(new Dimension(Integer.MAX_VALUE, preferredSize.height));
+			lbl3.setForeground(Color.GRAY);
+			JLabel lbl4 = new JLabel("<html><div style='width:180px;'>"+countList.get(i).getNickname());
 
 			Listpnl.add(lbl3);
 			Listpnl2.add(lbl4);
