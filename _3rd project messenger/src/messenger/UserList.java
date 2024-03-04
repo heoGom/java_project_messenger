@@ -44,8 +44,6 @@ public class UserList extends JFrame {
 
 	public JLabel lblNewLabel;
 
-	private JButton btnNewButton;
-
 	public UserList(User user) {
 		getContentPane().setBackground(new Color(250, 255, 243));
 		this.user = user;
@@ -86,18 +84,6 @@ public class UserList extends JFrame {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(12, 108, 402, 402);
 		getContentPane().add(scrollPane);
-		
-		btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(317, 75, 97, 23);
-		getContentPane().add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(user.getNick());
-				updatePanel();
-				System.out.println(lbl2List.toString());
-			}
-		});
 	}
 
 	public void updatePanel() {
