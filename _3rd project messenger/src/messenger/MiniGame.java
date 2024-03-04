@@ -127,6 +127,7 @@ public class MiniGame extends JFrame {
 			JLabel label2 = new JLabel("나의 기록 : " + timeElapsed + " 초");
 			JButton btn = new JButton("확인");
 			JButton btn2 = new JButton("랭킹 보기");
+			
 			btn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -155,6 +156,15 @@ public class MiniGame extends JFrame {
 			btn2.setBounds(155, 100, 100, 30);
 			dialog.setLocationRelativeTo(null);
 			dialog.setResizable(false);
+			dialog.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					setVisible(false);
+					dispose();
+				}
+			});
+				
+			
 			dialog.setVisible(true);
 		}
 	}
