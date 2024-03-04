@@ -208,7 +208,7 @@ public class VoteMainPage extends JFrame {
 						boolean hasVoted = false;
 						for (int i = 0; i < voteId.size(); i++) {
 							if (voteId.get(i).getAgend_num() == currentAgendaNo
-									&& voteId.get(i).getId().contains(user.getId())) {
+									&& voteId.get(i).getId().equals(user.getId())) {
 								// 이미 투표한 경우
 								JOptionPane.showMessageDialog(null, "이미 투표하셨습니다");
 								lbl2.setEnabled(false);
