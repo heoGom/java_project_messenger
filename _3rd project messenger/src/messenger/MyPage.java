@@ -55,7 +55,7 @@ public class MyPage {
 		picture.setBounds(288, 58, 150, 150);
 		panel.add(picture);
 
-		JLabel userNick = new JLabel("내 별명");
+		JLabel userNick = new JLabel("닉네임");
 		userNick.setHorizontalAlignment(SwingConstants.CENTER);
 		userNick.setFont(new Font("한컴 고딕", Font.BOLD, 14));
 		userNick.setBounds(51, 29, 60, 15);
