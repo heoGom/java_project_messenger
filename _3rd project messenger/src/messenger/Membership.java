@@ -54,7 +54,7 @@ public class Membership extends JFrame {
 	File filePath;
 
 	public Membership() {
-		getContentPane().setBackground(new Color(250,255,243));
+		getContentPane().setBackground(new Color(250, 255, 243));
 		extracted();
 		frame = this;
 		membershipdao = new MembershipDAO();
@@ -136,33 +136,43 @@ public class Membership extends JFrame {
 		idDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (id_lbl.getText().equals("사용가능, 중복확인 필요")) {
+					isRightId = null;
+					isRightId = membershipdao.CheckId(id_tf.getText());
+					if (isRightId) {
+						JOptionPane.showMessageDialog(null, "사용가능한 아이디입니다.");
+						id_lbl.setText("사용가능");
+					} else {
 
-				isRightId = null;
-				isRightId = membershipdao.CheckId(id_tf.getText());
-				if (isRightId) {
-					JOptionPane.showMessageDialog(null, "사용가능한 아이디입니다.");
-					id_lbl.setText("사용가능");
-				} else {
-
-					JOptionPane.showMessageDialog(null, "사용불가한 아이디입니다.");
-					id_lbl.setText("중복된 아이디 입니다.");
-					id_lbl.setText("사용불가");
+						JOptionPane.showMessageDialog(null, "사용불가한 아이디입니다.");
+						id_lbl.setText("중복된 아이디 입니다.");
+						id_lbl.setText("사용불가");
+					}
+				}else {
+					idDupbtn.setEnabled(false);
+					idDupbtn.setEnabled(true);
+					id_tf.requestFocusInWindow();
 				}
-
 			}
 		});
 
 		nickDupbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				isRightNick = membershipdao.CheckNick(textField_3.getText());
-				if (isRightNick) {
-					JOptionPane.showMessageDialog(null, "사용가능한 닉네임입니다.");
-					nick_lbl.setText("사용가능");
+				if (nick_lbl.getText().equals("사용가능, 중복확인 필요")) {
+					isRightNick = membershipdao.CheckNick(textField_3.getText());
+					if (isRightNick) {
+						JOptionPane.showMessageDialog(null, "사용가능한 닉네임입니다.");
+						nick_lbl.setText("사용가능");
 
+					} else {
+						JOptionPane.showMessageDialog(null, "사용불가능한 닉네임입니다.");
+						nick_lbl.setText("사용불가");
+					}
 				} else {
-					JOptionPane.showMessageDialog(null, "사용불가능한 닉네임입니다.");
-					nick_lbl.setText("사용불가");
+					nickDupbtn.setEnabled(false);
+					nickDupbtn.setEnabled(true);
+					textField_3.requestFocusInWindow();
 				}
 			}
 		});
@@ -359,7 +369,8 @@ public class Membership extends JFrame {
 		textField_3.setColumns(10);
 
 		confirmbtn = new JButton("");
-		confirmbtn.setIcon(new ImageIcon(Membership.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uD655\uC778 \uBC84\uD2BC.png")));
+		confirmbtn.setIcon(new ImageIcon(
+				Membership.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uD655\uC778 \uBC84\uD2BC.png")));
 		confirmbtn.setBorderPainted(false);
 		confirmbtn.setFocusPainted(false);
 		confirmbtn.setContentAreaFilled(false);
@@ -414,7 +425,8 @@ public class Membership extends JFrame {
 		getContentPane().add(nick_lbl);
 
 		idDupbtn = new JButton("");
-		idDupbtn.setIcon(new ImageIcon(Membership.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uC911\uBCF5\uD655\uC778 \uBC84\uD2BC.png")));
+		idDupbtn.setIcon(new ImageIcon(Membership.class
+				.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uC911\uBCF5\uD655\uC778 \uBC84\uD2BC.png")));
 		idDupbtn.setBorderPainted(false);
 		idDupbtn.setFocusPainted(false);
 		idDupbtn.setContentAreaFilled(false);
@@ -422,7 +434,8 @@ public class Membership extends JFrame {
 		getContentPane().add(idDupbtn);
 
 		nickDupbtn = new JButton("");
-		nickDupbtn.setIcon(new ImageIcon(Membership.class.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uC911\uBCF5\uD655\uC778 \uBC84\uD2BC.png")));
+		nickDupbtn.setIcon(new ImageIcon(Membership.class
+				.getResource("/Image/\uD68C\uC6D0\uAC00\uC785 \uC911\uBCF5\uD655\uC778 \uBC84\uD2BC.png")));
 		nickDupbtn.setBorderPainted(false);
 		nickDupbtn.setFocusPainted(false);
 		nickDupbtn.setContentAreaFilled(false);

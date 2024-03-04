@@ -3,6 +3,8 @@ package messenger;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -20,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 public class UserList extends JFrame {
 	User user;
@@ -35,10 +38,13 @@ public class UserList extends JFrame {
 	public JLabel lbl2;
 
 	public List<JLabel> lbl2List = new ArrayList<>();
+	public List<Integer> lbl2List2 = new ArrayList<>();
 
 	private JLabel lblNewLabel_2;
 
 	public JLabel lblNewLabel;
+
+	private JButton btnNewButton;
 
 	public UserList(User user) {
 		getContentPane().setBackground(new Color(250, 255, 243));
@@ -46,6 +52,7 @@ public class UserList extends JFrame {
 		this.membershipDAO = new MembershipDAO();
 		extracted();
 		createPanel();
+		readStatus();
 		showGUI();
 
 	}
@@ -79,8 +86,28 @@ public class UserList extends JFrame {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(12, 108, 402, 402);
 		getContentPane().add(scrollPane);
+		
+		btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(317, 75, 97, 23);
+		getContentPane().add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(user.getNick());
+				updatePanel();
+				System.out.println(lbl2List.toString());
+			}
+		});
 	}
 
+	public void updatePanel() {
+		panel.removeAll(); // 패널의 모든 컴포넌트를 제거
+		lbl2List.clear();
+		readStatus();
+		createPanel(); // 패널을 다시 생성
+		panel.revalidate();
+		panel.repaint();
+	}
 	public void createPanel() {
 		for (User u : user.list) {
 
@@ -181,6 +208,8 @@ public class UserList extends JFrame {
 		}
 	}
 
+
+	
 	public int countUser() {
 		String sql = "select count(*) from jae.user;";
 		try (Connection conn = MySqlConnectionProvider.getConnection();
@@ -196,5 +225,4 @@ public class UserList extends JFrame {
 		}
 		return 0;
 	}
-
 }

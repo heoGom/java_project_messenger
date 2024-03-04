@@ -107,6 +107,7 @@ public class MainPage extends JFrame {
 				int mainPageY = getY();
 				userList.setLocation(mainPageX - userList.getWidth(), mainPageY);
 				userList.readStatus();
+				System.out.println(userList.lbl2List.toString());
 				if (user.getImage() != null) {
 					ImageIcon icon = user.getImage();
 					Image scaledImage = icon.getImage().getScaledInstance(userList.lblNewLabel.getWidth(),
