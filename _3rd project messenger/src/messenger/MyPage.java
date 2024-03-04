@@ -309,10 +309,10 @@ public class MyPage {
 				panel.add(btnDelete);
 				label.setBounds(65, 0, 100, 100);
 				currentPhoto.setBounds(20, 70, 150, 150);
-				btnfindPhoto.setBounds(190, 75, 100, 30);
-				btnOK.setBounds(190, 120, 90, 30);
-				btnReturn.setBounds(190, 160, 90, 30);
-				btnDelete.setBounds(190, 200, 150, 30);
+				btnfindPhoto.setBounds(190, 70, 100, 30);
+				btnOK.setBounds(190, 112, 90, 30);
+				btnReturn.setBounds(190, 153, 90, 30);
+				btnDelete.setBounds(190, 195, 150, 30);
 				dialog.getContentPane().add(panel);
 				dialog.setLocationRelativeTo(null);
 				if (user.getImage() == null) {
