@@ -144,6 +144,14 @@ public class MiniGame extends JFrame {
 					ranking.RankingView(user);
 				}
 			});
+			
+			dialog.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					setVisible(false);
+					dispose();
+				}
+			});
 
 			panel.add(label);
 			panel.add(label2);
@@ -156,13 +164,6 @@ public class MiniGame extends JFrame {
 			btn2.setBounds(155, 100, 100, 30);
 			dialog.setLocationRelativeTo(null);
 			dialog.setResizable(false);
-			dialog.addWindowListener(new WindowAdapter() {
-				@Override
-				public void windowClosing(WindowEvent e) {
-					setVisible(false);
-					dispose();
-				}
-			});
 				
 			
 			dialog.setVisible(true);
