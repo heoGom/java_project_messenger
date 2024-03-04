@@ -132,7 +132,7 @@ public class Login extends JFrame {
 		url.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				openWebPage();
+				openWebPage("https://greenart.co.kr/");
 			}
 		});
 		
@@ -147,8 +147,26 @@ public class Login extends JFrame {
 				panel.setBackground(new Color(233, 255, 223));
 				panel.setLayout(null);
 				JLabel label1 = new JLabel("허성재 : https://github.com/heoGom");
+				label1.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						openWebPage("https://github.com/heoGom");
+					}
+				});
 				JLabel label2 = new JLabel("김동수 : https://github.com/dongso03");
+				label2.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						openWebPage("https://github.com/dongso03");
+					}
+				});
 				JLabel label3 = new JLabel("정일웅 : https://github.com/ilung2");
+				label3.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						openWebPage("https://github.com/ilung2");
+					}
+				});
 				label1.setBounds(30, 30, 250, 50);
 				label2.setBounds(30, 60, 250, 50);
 				label3.setBounds(30, 90, 250, 50);
@@ -217,8 +235,8 @@ public class Login extends JFrame {
 		textField.requestFocusInWindow();
 	}
 
-	private void openWebPage() {
-		String url = "https://greenart.co.kr/";
+	private void openWebPage(String url) {
+//		String url = "https://greenart.co.kr/";
 
 		try {
 			// 주소를 URI로 변환하여 웹 브라우저로 열기
