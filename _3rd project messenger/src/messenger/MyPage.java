@@ -120,7 +120,8 @@ public class MyPage {
 				btnApply.setBounds(40, 200, 100, 30);
 				panel.add(btnApply);
 				JButton btnCancle = new JButton("");
-				btnCancle.setIcon(new ImageIcon(MyPage.class.getResource("/Image/\uB9C8\uC774\uD504\uB85C\uD544\uCDE8\uC18C.png")));
+				btnCancle.setIcon(new ImageIcon(
+						MyPage.class.getResource("/Image/\uB9C8\uC774\uD504\uB85C\uD544\uCDE8\uC18C.png")));
 				btnCancle.setBorderPainted(false);
 				btnCancle.setFocusPainted(false);
 				btnCancle.setContentAreaFilled(false);
@@ -198,7 +199,8 @@ public class MyPage {
 				btnChange.setFocusPainted(false);
 				btnChange.setContentAreaFilled(false);
 				JButton btnCancle = new JButton("취소");
-				btnCancle.setIcon(new ImageIcon(MyPage.class.getResource("/Image/\uB9C8\uC774\uD504\uB85C\uD544\uCDE8\uC18C.png")));
+				btnCancle.setIcon(new ImageIcon(
+						MyPage.class.getResource("/Image/\uB9C8\uC774\uD504\uB85C\uD544\uCDE8\uC18C.png")));
 				btnCancle.setBorderPainted(false);
 				btnCancle.setFocusPainted(false);
 				btnCancle.setContentAreaFilled(false);
@@ -285,7 +287,8 @@ public class MyPage {
 				btnfindPhoto.setFocusPainted(false);
 				btnfindPhoto.setContentAreaFilled(false);
 				JButton btnOK = new JButton("");
-				btnOK.setIcon(new ImageIcon(MyPage.class.getResource("/Image/\uC0AC\uC9C4\uC801\uC6A9\uBC84\uD2BC.png")));
+				btnOK.setIcon(
+						new ImageIcon(MyPage.class.getResource("/Image/\uC0AC\uC9C4\uC801\uC6A9\uBC84\uD2BC.png")));
 				btnOK.setBorderPainted(false);
 				btnOK.setFocusPainted(false);
 				btnOK.setContentAreaFilled(false);
@@ -295,7 +298,8 @@ public class MyPage {
 				btnReturn.setFocusPainted(false);
 				btnReturn.setContentAreaFilled(false);
 				JButton btnDelete = new JButton("");
-				btnDelete.setIcon(new ImageIcon(MyPage.class.getResource("/Image/\uD504\uB85C\uD544\uC0AC\uC9C4\uC0AD\uC81C.png")));
+				btnDelete.setIcon(new ImageIcon(
+						MyPage.class.getResource("/Image/\uD504\uB85C\uD544\uC0AC\uC9C4\uC0AD\uC81C.png")));
 				btnDelete.setBorderPainted(false);
 				btnDelete.setFocusPainted(false);
 				btnDelete.setContentAreaFilled(false);
@@ -305,10 +309,10 @@ public class MyPage {
 				panel.add(btnDelete);
 				label.setBounds(65, 0, 100, 100);
 				currentPhoto.setBounds(20, 70, 150, 150);
-				btnfindPhoto.setBounds(190, 75, 100, 30);
-				btnOK.setBounds(190, 120, 90, 30);
-				btnReturn.setBounds(190, 160, 90, 30);
-				btnDelete.setBounds(190, 200, 150, 30);
+				btnfindPhoto.setBounds(190, 70, 100, 30);
+				btnOK.setBounds(190, 112, 90, 30);
+				btnReturn.setBounds(190, 153, 90, 30);
+				btnDelete.setBounds(190, 195, 150, 30);
 				dialog.getContentPane().add(panel);
 				dialog.setLocationRelativeTo(null);
 				if (user.getImage() == null) {
@@ -322,30 +326,39 @@ public class MyPage {
 
 				}
 				btnfindPhoto.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						JFileChooser fileChooser = new JFileChooser();
-						fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-						fileChooser.setMultiSelectionEnabled(true);
-						int result = fileChooser.showOpenDialog(frame);
-						if (result == JFileChooser.APPROVE_OPTION) {
-							File[] selectedFiles = fileChooser.getSelectedFiles();
-							for (File file : selectedFiles) {
-								label.setText("바뀐 사진");
-								// 이미지 파일을 ImageIcon으로 읽어옵니다.
-								ImageIcon selectedIcon = new ImageIcon(file.getAbsolutePath());
-								// JLabel에 이미지를 설정합니다.
-								currentPhoto.setIcon(selectedIcon);
-								// 사용자가 선택한 이미지를 현재 선택된 아이콘으로 설정합니다.
-								currentSelectedIcon = selectedIcon;
-							}
-							Image scaledImage = currentSelectedIcon.getImage().getScaledInstance(
-									currentPhoto.getWidth(), currentPhoto.getHeight(), Image.SCALE_SMOOTH);
-							ImageIcon scaledIcon = new ImageIcon(scaledImage);
-							currentPhoto.setIcon(scaledIcon);
-						}
-					}
+				    @Override
+				    public void actionPerformed(ActionEvent e) {
+				        JFileChooser fileChooser = new JFileChooser();
+
+				        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				        fileChooser.setMultiSelectionEnabled(true);
+				        int result = fileChooser.showOpenDialog(frame);
+				        if (result == JFileChooser.APPROVE_OPTION) {
+				            File[] selectedFiles = fileChooser.getSelectedFiles();
+				            for (File file : selectedFiles) {
+				                if (isImageFile(file)) {
+				                    label.setText("바뀐 사진");
+				                    ImageIcon selectedIcon = new ImageIcon(file.getAbsolutePath());
+				                    currentPhoto.setIcon(selectedIcon);
+				                    currentSelectedIcon = selectedIcon;
+				                    Image scaledImage = currentSelectedIcon.getImage().getScaledInstance(
+											currentPhoto.getWidth(), currentPhoto.getHeight(), Image.SCALE_SMOOTH);
+									ImageIcon scaledIcon = new ImageIcon(scaledImage);
+									currentPhoto.setIcon(scaledIcon);
+				                } else {
+				                    JOptionPane.showMessageDialog(frame, "이미지 파일이 아닙니다: " + file.getName());
+				                }
+				            }
+				        }
+				    }
+
+				    private boolean isImageFile(File file) { // 파일 검열
+				        String name = file.getName().toLowerCase();
+				        return name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png") ||
+				                name.endsWith(".gif") || name.endsWith(".bmp");
+				    }
 				});
+
 
 				btnOK.addActionListener(new ActionListener() {
 					@Override
@@ -374,16 +387,21 @@ public class MyPage {
 				btnDelete.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						currentPhoto.setIcon(null);
-						currentPhoto.setText("기본사진");
-						dao = new MyPageDAO();
-						dao.deleteImage(user.id);
-						JOptionPane.showMessageDialog(null, "이미지가 성공적으로 삭제되었습니다.", "성공",
-								JOptionPane.INFORMATION_MESSAGE);
-						user.setImage(null);
-						mainPage.picture_lbl.setIcon(currentPhoto.getIcon());
-						picture.setIcon(currentPhoto.getIcon());
-						dialog.dispose();
+						if (user.getImage() != null) {
+							currentPhoto.setIcon(null);
+							currentPhoto.setText("기본사진");
+							dao = new MyPageDAO();
+							dao.deleteImage(user.id);
+							JOptionPane.showMessageDialog(null, "이미지가 성공적으로 삭제되었습니다.", "성공",
+									JOptionPane.INFORMATION_MESSAGE);
+							user.setImage(null);
+							mainPage.picture_lbl.setIcon(currentPhoto.getIcon());
+							picture.setIcon(currentPhoto.getIcon());
+							dialog.dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "삭제할 이미지가 없습니다.", "알림"
+									, JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				});
 
@@ -391,6 +409,10 @@ public class MyPage {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						label.setText("현재 사진");
+						currentPhoto.setIcon(user.getImage());
+						if (currentSelectedIcon == null){
+							JOptionPane.showMessageDialog(null, "되돌릴 사진이 없습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+						}
 						currentSelectedIcon = null;
 						ImageIcon icon = user.getImage();
 						if (user.getImage() != null) {
@@ -398,8 +420,6 @@ public class MyPage {
 									currentPhoto.getHeight(), Image.SCALE_SMOOTH);
 							ImageIcon scaledIcon = new ImageIcon(scaledImage);
 							currentPhoto.setIcon(scaledIcon);
-						} else {
-							JOptionPane.showMessageDialog(null, "되돌릴 사진이 없습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
 				});
