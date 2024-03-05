@@ -63,10 +63,11 @@ class ClientsList {
 		}
 	}
 
-	public void sendPrivateMessage(String receiver_id, String time, String message) {
+	public void sendPrivateMessage(String sender_id, String receiver_id, String time, String message) {
 		synchronized (list) {
 			for (ClientPerThread ct : list) {
 				if (ct.getTId().equals(receiver_id)) {
+					ct.getPw().println(sender_id);
 					ct.getPw().println(message);
 					ct.getPw().println(time);
 					ct.getPw().flush();
@@ -174,7 +175,7 @@ class ClientPerThread extends Thread {
 							}
 
 						} else {
-							session.sendPrivateMessage(a[1], a[2], a[3]);
+							session.sendPrivateMessage(a[0], a[1], a[2], a[3]);
 							if (fromClient.equals("Bye Bye")) {
 								throw new InterruptedException("종료");
 							}

@@ -20,7 +20,6 @@ public class PrivateChatClient {
 
 	public PrivateChatClient(User user, User another) {
 
-		Socket socket = null;
 		pr = new PrivateChatRoom(user, another);
 		try {
 			socket = new Socket("192.168.0.100", 12345);
@@ -95,6 +94,7 @@ class ReadThread extends Thread {
 	public void run() {
 		try {
 			while (go && !isInterrupted()) {
+				String Tid = br.readLine();
 				String message = br.readLine();
 				String rawtime = br.readLine();
 				if (message == null || rawtime == null) {
@@ -105,7 +105,9 @@ class ReadThread extends Thread {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
+						if(pr.getAnother().id.equals(Tid)) {
 						pr.addChat(message, false, time);
+						}
 					}
 				});
 

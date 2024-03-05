@@ -300,7 +300,7 @@ public class Login extends JFrame {
 		url.setBounds(157, 21, 126, 135);
 		getContentPane().add(url);
 		
-		versionLbl = new JLabel("Ver 1.0.1");
+		versionLbl = new JLabel("Ver 1.0.2");
 		versionLbl.setFont(new Font("한컴 고딕", Font.BOLD, 15));
 		versionLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		versionLbl.setBounds(12, 400, 80, 29);

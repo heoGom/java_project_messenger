@@ -258,4 +258,8 @@ public class PrivateChatRoom extends JFrame {
 		return a;
 	}
 
+	public User getAnother() {
+		return another;
+	}
+
 }
