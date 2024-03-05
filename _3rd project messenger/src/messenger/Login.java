@@ -135,13 +135,13 @@ public class Login extends JFrame {
 				openWebPage("https://greenart.co.kr/");
 			}
 		});
-		
+
 		versionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JDialog dialog = new JDialog();
 				dialog.setTitle("개발자");
-				dialog.setSize(300,200);
+				dialog.setSize(300, 200);
 				dialog.setModal(true);
 				JPanel panel = new JPanel();
 				panel.setBackground(new Color(233, 255, 223));
@@ -299,7 +299,7 @@ public class Login extends JFrame {
 		url = new JLabel("");
 		url.setBounds(157, 21, 126, 135);
 		getContentPane().add(url);
-		
+
 		versionLbl = new JLabel("Ver 1.0.2");
 		versionLbl.setFont(new Font("한컴 고딕", Font.BOLD, 15));
 		versionLbl.setHorizontalAlignment(SwingConstants.CENTER);
