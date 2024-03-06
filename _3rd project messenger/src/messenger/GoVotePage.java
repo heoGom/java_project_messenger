@@ -41,6 +41,8 @@ public class GoVotePage extends JFrame {
 		selectedButtonTextList = new ArrayList<>();
 
 	}
+	
+	
 
 	private void showGUI() {
 		setSize(328, 493);
